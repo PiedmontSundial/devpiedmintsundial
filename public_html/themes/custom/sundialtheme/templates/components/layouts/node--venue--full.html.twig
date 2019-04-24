@@ -1,0 +1,124 @@
+<article{{ attributes }}>
+  <div class="b-w-label block-title">
+		Venue Profile
+	</div>
+  
+  {% if content.field_venue_cover_photo %}
+    <img src="{{ file_url(node.field_venue_cover_photo.entity.field_image.entity.uri.value) }}"
+         alt="{{ node.field_venue_cover_photo.entity.field_image.entity.alt.value }}" class="img-fluid">
+    {#<div class="img-source">{{ node.field_venue_cover_photo.entity.field_image_source.value }}</div>#}
+  {% endif %}
+  
+  <br>
+  <br>
+  
+  <div class="title-box block-title">
+        {{ node.title.value}}
+  </div>
+  
+  <div id="Venue-wrapper" class="address">
+    {{ node.field_venue_address.value }}<br>{{ node.field_city.entity.name.value }}, {{ node.field_venue_state.value }}
+      {{ node.field_zip_code.value }}<br>
+  </div>
+  
+  <div class="contact-info">
+    {{ content.field_venue_number }}
+  </div>
+  
+  {% if node.field_website.uri|length %}
+    <div class="contact-info"> Website:
+      <a href="{{ node.field_website.uri }}" target="_blank">
+        {{ node.field_website.title }}
+      </a>
+    </div>
+  {% endif %}
+  
+  <br>
+  
+  <div class="description">
+    {{ content.field_venue_description }}
+  </div>
+  
+  {% set imageCount = 0 %}
+	{% for image in node.field_venue_interior_photos %}
+    {% set imageCount = imageCount + 1 %}
+  {% endfor %}
+  
+  {% if imageCount %}
+    {% set loopMax = imageCount - 1 %}
+    {% for i in 0..loopMax %}
+      <div class="venue-image-carousel-element">
+        <p>
+          <img src="{{ file_url(node.field_venue_interior_photos[i].entity.field_image.entity.uri.value)}}"
+               alt="{{ node.field_venue_interior_photos[i].entity.field_image.entity.alt.value }}" class="img-fluid">
+          {#<div class="img-source">{{ node.field_venue_interior_photos[i].entity.field_image_source.value }}</div>#}
+        </p>
+      </div>
+    {% endfor %}
+  {% endif %}
+  
+  {% set imageCount = 0 %}
+	{% for image in node.field_venue_exterior_photos %}
+    {% set imageCount = imageCount + 1 %}
+  {% endfor %}
+  
+  {% if imageCount %}
+	  {% set loopMax = imageCount - 1 %}
+		{% for i in 0..loopMax %}
+      <p>
+		    <img src="{{ file_url(node.field_venue_exterior_photos[i].entity.field_image.entity.uri.value) }}"
+             alt="{{ node.field_venue_exterior_photos[i].entity.field_image.entity.alt.value }}" class="img-fluid">
+        {#<div class="img-source">{{ node.field_venue_exterior_photos[i].entity.field_image_source.value }}</div>#}
+      </p>
+		{% endfor %}
+	{% endif %}
+  
+  <div style="padding: 13px 0;">
+    <div class="map-box" style="display:block;">
+      <iframe class="map-itself" src="https://www.google.com/maps/embed/v1/place?q={{ node.field_venue_address.value }}
+        {{ node.field_city.entity.name.value }},{{ node.field_zip_code.value }}
+          &zoom=17&key=AIzaSyCdQhB6gNRYJLkPLpOsmWOHSf5LTFo_-tg" height="500">
+      </iframe>
+    </div
+  </div>
+  <script>
+	  var x = document.getElementsByClassName("map-icon-box");
+	  x[0].style.display = "none";
+	  x[1].style.display = "none";
+	  
+	  var y = document.getElementsByClassName("map-itself");
+	  y[0].width = "250";
+	  y[1].width = "500";
+	  
+	  var z = document.getElementsByClassName("map-box");
+	  z[0].style.display = "block";
+	  z[1].style.display = "block";
+    
+    var venueImages = document.getElementsByClassName("venue-image-carousel-element");
+    for(var i = 0; i < venueImages.length; i++) {
+      venueImages[i].style.display = "none";
+      venueImages[i].style.visibility = "visible";
+    }
+    venueImages[0].style.display = "block";
+    
+    var venueSlideIndex = 1;
+    showVenueDivs(venueSlideIndex);
+    
+    function plusVenueDivs() {
+      showVenueDivs(venueSlideIndex += 1);
+    }
+    
+    function showVenueDivs(n) {
+      var i;
+      var x = document.getElementsByClassName("venue-image-carousel-element");
+      if (n > x.length) {venueSlideIndex = 1}    
+      if (n < 1) {venueSlideIndex = x.length}
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x[-1].style.display = "block";
+    }
+    setInterval(plusVenueDivs, 3000);
+    
+  </script>
+</article>

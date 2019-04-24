@@ -1,0 +1,22 @@
+<script>
+  function edit(eventId) {
+    
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/edit_event");
+		
+		var nodeIdInput = document.createElement("input");
+		nodeIdInput.setAttribute("type", "hidden");
+		nodeIdInput.setAttribute("name", "eventId");
+		nodeIdInput.setAttribute("value", eventId);
+		form.appendChild(nodeIdInput);
+    
+		document.body.appendChild(form);
+		form.submit();
+  }
+</script>
+
+<h1>Here is a list of upcoming unpublished events Click on title to edit:</h1>
+{% for event in events %}
+  <p onclick="edit({{ event.id }})">{{ event.title.value }}</p>
+{% endfor %}

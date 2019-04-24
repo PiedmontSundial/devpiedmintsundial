@@ -1,0 +1,66 @@
+<article{{ attributes }}>
+ <div class="b-w-label block-title">
+		Performer Profile
+	</div>
+ 
+ {% if content.field_performer_photo %}
+   <img src="{{ file_url(node.field_performer_photo.entity.field_image.entity.uri.value) }}"
+        alt="{{ node.field_performer_photo.entity.field_image.entity.alt.value }}" class="img-fluid">
+   {#<div class="img-source">{{ node.field_performer_photo.entity.field_image_source.value }}</div>#}
+ {% endif %}
+ 
+ <br>
+ <br>
+  
+ <div class="title-box block-title">
+   {{ node.title.value}}
+ </div>
+  
+ <br>
+ 
+ <div class="performer-info">
+   {% set numberOfMembers = 0 %}
+   {% for member in node.field_members %}
+     {% set numberOfMembers = numberOfMembers + 1 %}
+   {% endfor %}
+   {% if numberOfMembers > 0 %}
+     <span class="">Members:</span><br>
+   {% endif %}
+   {% set twigIndex = numberOfMembers - 1 %}
+   {% for i in 0..twigIndex %}
+     <div class="">{{ node.field_members[i].value }}</div>
+   {% endfor %}
+ 
+  <br>
+ 
+  {% if node.field_hometown|length %} Hometown:
+   {{ node.field_hometown.value }}
+  {% endif %}
+  
+  <br><br>
+   
+  {% if node.field_performer_link.uri|length %}
+   Website:
+   <a href="{{ node.field_performer_link.uri }}" target="_blank">
+    {{ node.field_performer_link.title }}
+   </a>
+  {% endif %}
+ </div>
+ 
+ <br>
+ 
+ <div class="description">
+   <p>{{ content.field_description }}</p>
+ </div>
+ 
+ <br>
+ 
+ <div class="booking-info">
+   {% if node.field_booking_agent|length %} Booking: {{ node.field_booking_agent.value }} {% endif %}<br>
+   {% if node.field_agent_number|length %} Phone: <a href="tel:">{{ node.field_agent_number.value }} </a> {% endif %}
+   {% if node.field_agent_ext|length %} Ext: {{	node.field_agent_ext.value }} {% endif %}<br>
+   {% if node.field_agent_email|length %} Email: {{ node.field_agent_email.value }} {% endif %}
+ </div>
+ 
+</article>
+<br><br>

@@ -1,0 +1,23 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+  {% set realRows = rows[0]["#rows"] %}
+  {% for rowKey, row in realRows %}
+    {% set anEntity = row["#row"]._entity %}
+	<div class="border-bottom pb-2 mb-2">
+	  <div class="heading-style-1">
+        <a href="/node/{{ anEntity.id }}" hreflang="en">{{ anEntity.title.value }}</a>
+	  </div>
+	  <div>
+	    <span class="venue-line">{{ anEntity.field_venue.entity.title.value }}</span>
+	  </div>
+	  <div>
+      <span class="date-line">{{ anEntity.field_event_date.0.value|date('D, d M Y g:i A', "America/New_York") }}</span>
+	    {#<span class="date-line">{{ anEntity.field_event_date.value|date('D, d M Y g:i A') }}</span>#}
+	  </div>
+	</div>
+  {% endfor %}
+</article>

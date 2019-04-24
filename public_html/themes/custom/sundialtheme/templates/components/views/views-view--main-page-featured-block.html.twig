@@ -1,0 +1,150 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }} id="Right-main-featured-element">
+  {% set realRows = rows[0]["#rows"] %}
+  {% set performerArray = [] %}
+  {% set venueArray = [] %}
+  {% set eventArray = [] %}
+  {% set hasPerformer = 0 %}
+  {% set hasVenue = 0 %}
+  {% for rowKey, row in realRows %}
+    {% set aNode = row["#node"] %}
+	{% if aNode.bundle() == 'featured_performer' %}
+	  {% if aNode.field_featured_carousel_performe.entity.id != aNode.id %}
+	    {% set performerArray = performerArray|merge([aNode]) %}
+		{% set hasPerformer = 1 %}
+	  {% endif %}
+	{% elseif aNode.bundle() == 'featured_venue' %}
+	  {% if aNode.field_featured_carousel_venue.entity.id != aNode.id %}
+	    {% set venueArray = venueArray|merge([aNode]) %}
+		{% set hasVenue = 1 %}
+      {% endif %}
+    {% elseif aNode.bundle() == 'featured_event' %}
+	  {% set eventArray = eventArray|merge([aNode]) %}
+	{% endif %}
+  {% endfor %}
+  {% set masterArray = [] %}
+  {% set nonEventCount = 0 %}
+  {% if hasPerformer %}
+    {% set masterArray = masterArray|merge([performerArray.0]) %}
+	{% set nonEventCount = nonEventCount + 1 %}
+  {% endif %}
+  {% if hasVenue %}
+    {% set masterArray = masterArray|merge([venueArray.0]) %}
+	{% set nonEventCount = nonEventCount + 1 %}
+  {% endif %}
+  {% set slotsToFill = 5 - nonEventCount %}
+  {% if slotsToFill <= eventArray|length %}
+    {% set remainderIndex = slotsToFill - 1 %}
+  {% else %}
+    {% set remainderIndex = eventArray|length - 1 %}
+  {% endif %}
+  {% for i in 0..remainderIndex %}
+    {% set masterArray = masterArray|merge([eventArray[i]]) %}
+  {% endfor %}
+  {% set masterIndex = masterArray|length - 1 %}
+  {% for i in 0..masterIndex %}
+    {% if masterArray[i].bundle() == 'featured_performer' %}
+	  {% set elementImage = masterArray[i].field_featured_carousel_performe.entity.field_performer_photo.entity.field_image.entity %}
+	  {% set elementTitle = masterArray[i].field_featured_carousel_performe.entity.title.value %}
+      {% set nodeId = masterArray[i].field_featured_carousel_performe.entity.id %}
+	{% elseif masterArray[i].bundle() == 'featured_venue' %}
+	  {% set elementImage = masterArray[i].field_featured_carousel_venue.entity.field_venue_cover_photo.entity.field_image.entity %}
+	  {% set elementTitle = masterArray[i].field_featured_carousel_venue.entity.title.value %}
+      {% set nodeId = masterArray[i].field_featured_carousel_venue.entity.id %}
+	{% elseif masterArray[i].bundle() == 'featured_event' %}
+	  {% set elementImage = masterArray[i].field_featured_carousel_event.entity.field_event_image.entity.field_image.entity %}
+	  {% set elementTitle = masterArray[i].field_featured_carousel_event.entity.title.value %}
+      {% set nodeId = masterArray[i].field_featured_carousel_event.entity.id %}
+	{% endif %}
+    <div  class="right-main-featured-element">
+      <div class="block-title" style="text-align: left;">
+        Featured
+      </div>
+      <a href="/node/{{ nodeId }}">
+        <div class="featured-element">
+          <div>
+            <div class="mx-auto">
+              <figure class="mx-auto">
+                <div class="featured-element-image-container">
+                  <img class="right-main-featured-element-image" src="{{ file_url(elementImage.uri.value) }}"
+                    alt="{{ elementImage.uri.value }}">
+                </div>
+                <figcaption class="right-main-featured-element-title"">{{ elementTitle }}</figcaption>
+              </figure>
+            </div>
+          </div>
+        </div>
+        {#<span class="right_main_featured_element_title">{{ elementTitle }}</span><br>#}
+        {#<img class="right_main_featured_element_image" style="max-width:100%;height:auto;" src="{{ file_url(elementImage.uri.value) }}">#}
+      </a>
+    </div>
+  {% endfor %}
+  
+  <script>
+    var myBoxes = document.getElementsByClassName("featured-element-image-container");
+    var myBoxWidth = myBoxes[0].offsetWidth;
+    for(var i = 0; i < myBoxes.length; i++) {
+      myBoxes[i].style.height = myBoxWidth + "px";
+    }
+    
+    var containers = document.getElementsByClassName("right-main-featured-element");
+    for(var i = 0; i < containers.length; i++) {
+      containers[i].style.display = "none";
+      containers[i].style.visibility = "visible";
+    }
+    containers[0].style.display = "block";
+    
+    window.addEventListener("resize", function() {
+      for(var i = 0; i < containers.length; i++) {
+        if (containers[i].style.display == "block") {
+          var currentIndex = i;
+        }
+        containers[i].style.visibility = "hidden";
+        containers[i].style.display = "block";
+      }
+      
+      var myBoxes = document.getElementsByClassName("featured-element-image-container");
+      var myBoxWidth = 0;
+      for(var i = 0; i < myBoxes.length; i++) {
+        if(myBoxes[i].offsetWidth > myBoxWidth) {
+          myBoxWidth = myBoxes[i].offsetWidth;
+        }
+      }
+      for(var i = 0; i < myBoxes.length; i++) {
+        myBoxes[i].style.height = myBoxWidth + "px";
+      }
+      
+      for(var i = 0; i < containers.length; i++) {
+        containers[i].style.display = "none";
+        containers[i].style.visibility = "visible";
+      }
+      
+      containers[currentIndex].style.display = "block";
+      
+    });
+    
+    var slideIndex = 1;
+    showDivs(slideIndex);
+    
+    function plusDivs() {
+      showDivs(slideIndex += 1);
+    }
+    
+    function showDivs(n) {
+      var i;
+      var x = document.getElementsByClassName("right-main-featured-element");
+      if (n > x.length) {slideIndex = 1}    
+      if (n < 1) {slideIndex = x.length}
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x[slideIndex-1].style.display = "block";
+    }
+    
+    setInterval(plusDivs, 3000);
+  </script>
+</article>

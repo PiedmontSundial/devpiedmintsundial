@@ -1,0 +1,23 @@
+<article{{ attributes }}>
+  <div class="title-box block-title">
+        {{ node.field_featured_carousel_performe.entity.title.value}}
+  </div>
+  
+  <div class="performer-cover-image">
+    {% if node.field_featured_carousel_performe.entity.field_performer_photo %}
+      <img src="{{ file_url(node.field_featured_carousel_performe.entity.field_performer_photo.entity.field_image.entity.uri.value) }}" class="img-fluid">
+    {% endif %}
+  </div>
+  
+  <br>
+  
+  <div class="description">
+    {{ node.field_featured_carousel_performe.entity.field_description.value }}
+  </div>
+  
+ {# {% for type in node.field_performance_type %}
+    <div>
+      {{ type.entity.name.value }}
+    </div>
+  {% endfor %}#}
+</article>

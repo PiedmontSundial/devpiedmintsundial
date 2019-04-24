@@ -1,0 +1,23 @@
+langcode: en
+status: true
+dependencies:
+    config:
+        - field.field.node.ad_server.body
+        - node.type.ad_server
+    module:
+        - text
+        - user
+id: node.ad_server.default
+targetEntityType: node
+bundle: ad_server
+mode: default
+content:
+    body:
+        label: hidden
+        type: text_default
+        weight: 101
+        settings: {  }
+        third_party_settings: {  }
+    links:
+        weight: 100
+hidden: {  }

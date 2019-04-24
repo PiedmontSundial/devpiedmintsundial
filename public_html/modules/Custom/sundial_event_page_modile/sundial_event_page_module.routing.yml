@@ -1,0 +1,7 @@
+sundial_event_page:
+  path: '/event-list'
+  defaults:
+    _controller: 'Drupal\sundial_event_page_module\Controller\EventPageController::listEvent'
+    _title: 'List Events'
+  requirements:
+    _permission: 'access content'

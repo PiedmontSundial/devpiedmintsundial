@@ -1,0 +1,135 @@
+
+<article>
+
+	<script>
+	
+		var nodeID = {{node.id}};
+	
+	</script>
+
+	<div class="ad-carousel-box">
+	
+	{% set isAdvertisingManager = 0 %}
+	{% for role in user.roles %}
+	  {% if role == 'advertising_manager' %}
+	    {% set isAdvertisingManager = 1 %}
+      {% endif %}	
+	{% endfor %}
+	
+		<script>
+		
+			var isAdvertisingManager = {{ isAdvertisingManager }};
+		
+			var managmentURL = "{{file_url("ad_desk_calendar")}}?serverID=" + nodeID;
+		
+		
+		</script>
+		
+		
+		<script>
+		
+		
+			
+			function adPlacer(x) {
+			
+				x.parentNode.id = "AdBoxServer" + nodeID;
+				
+				{#alert(x.parentNode.id);#}
+				
+				{#var proof = document.getElementById("AdBoxServer" + nodeID).className;#}
+				
+				{#alert(proof);#}
+				
+			} 
+			
+		</script>
+	
+		<style onload="adPlacer(this)">
+		</style>
+		
+		
+		<script>
+		
+		
+			function loadAjax{{ node.id }}(url, callback) {
+					var xhttp;
+					if (window.XMLHttpRequest) {
+						xhttp = new XMLHttpRequest();
+					} else {
+						// code for IE6, IE5
+						xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					xhttp.onreadystatechange = function() {
+					if (xhttp.readyState == 4 && xhttp.status == 200) {
+					callback(xhttp);
+					}
+				};
+					xhttp.open("GET", url, true);
+					xhttp.send();
+				}
+		
+			function updateAd{{ node.id }}(xhttp) {
+			
+				document.getElementById("AdBox" + nodeID).innerHTML = xhttp.responseText;
+				
+				
+			}
+		
+		</script>
+		
+		
+		
+		<div id="AdBox{{ node.id }}" style="height:100%;width:100%;">
+			<form id="VariablesForAdBox{{ node.id }}">
+				<input type="hidden" name="adBoxHandle" value="AdBox{{ node.id }}">
+				<input type="hidden" name="adLoaderId" value="0">
+				<input type="hidden" name="adServerLogId" value="0">
+				<input type="hidden" name="adLoaderLogId" value="0">
+			</form>
+		</div>
+		
+		
+		
+		
+		<script>
+			 
+			var adBoxHandle = "AdBox" + nodeID;
+			loadAjax{{ node.id }}("{{ file_url("ad_desk_ad_initializer")}}?adServer=" + nodeID + "&adBoxHandle=" + adBoxHandle + "&isAdvertisingManager=" + isAdvertisingManager + "&managmentURL=" + managmentURL, updateAd{{ node.id }});
+			
+			
+			
+			
+			
+		</script>
+		
+		
+		
+		<script>
+				{#
+				function ticUp{{ node.id }}() {
+				
+					var formObj = document.getElementById("VariablesForAdBox{{ node.id }}");
+					
+					if (formObj) {
+									
+						var adBoxHandle = formObj.adBoxHandle.value;
+						var adLoaderId = formObj.adLoaderId.value;
+						var adServerLogId = formObj.adServerLogId.value;
+						var adLoaderLogId = formObj.adLoaderLogId.value;
+						
+						if(adLoaderId != "0") {
+						
+							loadAjax{{ node.id }}("{{ file_url("ad_desk_ad_updater")}}?adBoxHandle=" 
+								+ adBoxHandle + "&adLoaderId=" + adLoaderId + "&adServerLogId=" 
+								+ adServerLogId + "&adLoaderLogId=" + adLoaderLogId, updateAd{{node.id}});		
+						}
+					
+					}
+				}
+				
+				var adTime = setInterval(ticUp{{ node.id }}, 3000);
+				#}	
+		</script>
+		
+ 	</div>	
+</article>

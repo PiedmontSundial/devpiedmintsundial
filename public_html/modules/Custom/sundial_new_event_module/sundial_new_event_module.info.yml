@@ -1,0 +1,6 @@
+name: sundial_new_event_module
+description: 'A module to add new events without dealing with drupal quirks'
+package: Custom
+
+type: module
+core: 8.x

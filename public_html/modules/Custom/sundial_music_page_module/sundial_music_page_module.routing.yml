@@ -1,0 +1,7 @@
+sundial_music_page:
+  path: '/music-list'
+  defaults:
+    _controller: 'Drupal\sundial_music_page_module\Controller\MusicPageController::musicList'
+    _title: 'Music Related Content'
+  requirements:
+    _permission: 'access content'

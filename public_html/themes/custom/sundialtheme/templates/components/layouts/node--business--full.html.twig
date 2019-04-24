@@ -1,0 +1,68 @@
+<article{{ attributes }}>
+  <div class="title-box block-title">
+        {{ node.title.value}}
+  </div>
+  
+  <div id="Business-wrapper" class="address">
+    {{ node.field_street_address.value }}<br>{{ node.field_business_city.entity.name.value }}, NC 
+      {{ node.field_address_zip_code.value }}<br>
+  </div>
+  
+  <div class="business-cover-photo">
+    {% if content.field_cover_photo %}
+      <img src="{{ file_url(node.field_cover_photo.entity.field_image.entity.uri.value) }}"
+           alt="{{ node.field_cover_photo.entity.field_image.entity.alt.value }}" class="img-fluid">
+      {#<div class="img-source">{{ node.field_cover_photo.entity.field_image_source.value }}</div>#}
+    {% endif %}
+  </div>
+  
+  <br>
+  
+  <div class="contact-info">
+    {{ content.field_phone_number }}
+  </div>
+  {% if node.field_url.uri|length %}
+    <a href="{{ node.field_url.uri }}" target="_blank" class="contact-info">
+      {{ node.field_url.title	}}
+    </a>
+  {% endif %}
+  
+  <br>
+  
+  <div class="description">
+    {{ content.field_business_description }}
+  </div>
+    
+  {% set imageCount = 0 %}
+	{% for image in node.field_exterior_photos %}
+    {% set imageCount = imageCount + 1 %}
+  {% endfor %}
+  
+  {% if imageCount %}
+	  {% set loopMax = imageCount -1 %}
+		{% for i in 0..loopMax %}
+      <p>
+        <img src="{{ file_url(node.field_exterior_photos[i].entity.field_image.entity.uri.value)}}"
+             alt="{{ node.field_exterior_photos[i].entity.field_image.entity.alt.value }}" class="img-fluid">
+        {#<div class="img-source">{{ node.field_exterior_photos[i].entity.field_image_source.value }}</div>#}
+      </p>
+		{% endfor %}
+  {% endif %}
+  
+  
+  {% set imageCount = 0 %}
+	{% for image in node.field_interior_photos %}
+    {% set imageCount = imageCount + 1 %}
+  {% endfor %}
+  
+  {% if imageCount %}
+	  {% set loopMax = imageCount -1 %}
+		{% for i in 0..loopMax %}
+      <p>
+        <img src="{{ file_url(node.field_interior_photos[i].entity.uri.value)}}"
+             alt="{{ node.field_interior_photos[i].entity.field_image.entity.alt.value }}" class="img-fluid">
+        {#<div class="img-source">{{ node.field_interior_photos[i].entity.field_image_source.value }}</div>#}
+      </p>
+		{% endfor %}
+	{% endif %}
+</article>

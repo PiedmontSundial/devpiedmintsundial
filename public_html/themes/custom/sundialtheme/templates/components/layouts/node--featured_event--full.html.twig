@@ -1,0 +1,385 @@
+{#
+/**
+ * @file
+ * Theme override to display a node.
+ *
+ * Available variables:
+ * - node: The node entity with limited access to object properties and methods.
+ *   Only method names starting with "get", "has", or "is" and a few common
+ *   methods such as "id", "label", and "bundle" are available. For example:
+ *   - node.getCreatedTime() will return the node creation timestamp.
+ *   - node.hasField('field_example') returns TRUE if the node bundle includes
+ *     field_example. (This does not indicate the presence of a value in this
+ *     field.)
+ *   - node.isPublished() will return whether the node is published or not.
+ *   Calling other methods, such as node.delete(), will result in an exception.
+ *   See \Drupal\node\Entity\Node for a full list of public properties and
+ *   methods for the node object.
+ * - label: The title of the node.
+ * - content: All node items. Use {{ content }} to print them all,
+ *   or print a subset such as {{ content.field_example }}. Use
+ *   {{ content|without('field_example') }} to temporarily suppress the printing
+ *   of a given child element.
+ * - author_picture: The node author user entity, rendered using the "compact"
+ *   view mode.
+ * - metadata: Metadata for this node.
+ * - date: Themed creation date field.
+ * - author_name: Themed author name field.
+ * - url: Direct URL of the current node.
+ * - display_submitted: Whether submission information should be displayed.
+ * - attributes: HTML attributes for the containing element.
+ *   The attributes.class element may contain one or more of the following
+ *   classes:
+ *   - node: The current template type (also known as a "theming hook").
+ *   - node--type-[type]: The current node type. For example, if the node is an
+ *     "Article" it would result in "node--type-article". Note that the machine
+ *     name will often be in a short form of the human readable label.
+ *   - node--view-mode-[view_mode]: The View Mode of the node; for example, a
+ *     teaser would result in: "node--view-mode-teaser", and
+ *     full: "node--view-mode-full".
+ *   The following are controlled through the node publishing options.
+ *   - node--promoted: Appears on nodes promoted to the front page.
+ *   - node--sticky: Appears on nodes ordered above other non-sticky nodes in
+ *     teaser listings.
+ *   - node--unpublished: Appears on unpublished nodes visible only to site
+ *     admins.
+ * - title_attributes: Same as attributes, except applied to the main title
+ *   tag that appears in the template.
+ * - content_attributes: Same as attributes, except applied to the main
+ *   content tag that appears in the template.
+ * - author_attributes: Same as attributes, except applied to the author of
+ *   the node tag that appears in the template.
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - view_mode: View mode; for example, "teaser" or "full".
+ * - teaser: Flag for the teaser state. Will be true if view_mode is 'teaser'.
+ * - page: Flag for the full page state. Will be true if view_mode is 'full'.
+ * - readmore: Flag for more state. Will be true if the teaser content of the
+ *   node cannot hold the main body content.
+ * - logged_in: Flag for authenticated user status. Will be true when the
+ *   current user is a logged-in member.
+ * - is_admin: Flag for admin user status. Will be true when the current user
+ *   is an administrator.
+ *
+ * @see template_preprocess_node()
+ *
+ * @todo Remove the id attribute (or make it a class), because if that gets
+ *   rendered twice on a page this is invalid CSS for example: two lists
+ *   in different view modes.
+ */
+#}
+<article{{ attributes }}>
+  
+  <div class="b-w-label block-title">
+    Event Details
+  </div>
+  
+  {% if node.field_featured_carousel_event.entity.field_event_image.value %}
+    <div class="event-cover-image">
+      <img src="{{ file_url(node.field_featured_carousel_event.entity.field_event_image.entity.uri.value) }}"
+           alt="{{ node.field_featured_carousel_event.entity.field_event_image.entity.alt.value }}" class="img-fluid">
+    </div>
+  {% endif %}
+  
+	<div id="Event-title-box" class="event-title-box title-box block-title">
+	   {{ node.field_featured_carousel_event.entity.title.value }}
+	</div>
+  
+  <div class="event-category">
+    {% if node.field_featured_carousel_event.entity.field_event_category.value == 'Performance' %}
+      <div class="performer-bill-display">
+        {% set numberOfPerformers = 0 %}
+        {% for performer in node.field_featured_carousel_event.entity.field_bill_performer_reference %}
+          {% set numberOfPerformers = numberOfPerformers + 1 %}
+        {% endfor %}
+        {% if numberOfPerformers > 0 %}
+          <span class="bill-performing-style">PERFORMING:</span><br>
+        {% endif %}
+        {% set twigIndex = numberOfPerformers - 1 %}
+        <div class="block-title lead-performer-display">{{ node.field_featured_carousel_event.entity.field_bill_performer_reference[0].entity.title.value }}</div>
+        {% if numberOfPerformers > 0 %}
+        <div class="secondary-bill">
+          <span class="bill-with-style">WITH:</span><br>
+            {% for i in 1..twigIndex %}
+          <div class="block-title supporting-performer-display">{{ node.field_featured_carousel_event.entity.field_bill_performer_reference[i].entity.title.value }}</div>
+            {% endfor %}
+        </div>
+        {% endif %}
+      </div>
+    {% elseif node.field_featured_carousel_event.entity.field_event_category.value == 'Sports' %}
+      {% if node.field_featured_carousel_event.entity.field_sports_event_type.value == 'Contest' %}
+        {% set teamOne = node.field_featured_carousel_event.entity.field_players_contestants.0.entity.field_display_name.value %}
+        {% set teamTwo = node.field_featured_carousel_event.entity.field_players_contestants.1.entity.field_display_name.value %}
+        <div class="event-sport-label">{{ node.field_featured_carousel_event.entity.field_sport_type.entity.name.value }}: </div>
+        <p class="event-teams-match-display">
+          {{ teamOne }} vs {{ teamTwo }}
+        </p>
+      {% elseif node.field_featured_carousel_event.entity.field_sports_event_type.value == 'Tournament' %}
+        <p class="event-tournament-list">
+          Competing:<br>
+          {% for team in node.field_featured_carousel_event.entity.field_players_contestants %}
+            {{ team.entity.field_display_name.value }}<br>
+          {% endfor %}
+        </p>
+      {% endif %}
+    {% elseif node.field_featured_carousel_event.entity.field_event_category.value == 'Community' %}
+      {% if node.field_featured_carousel_event.entity.field_class_type.value == 'Adult' %}
+        <p>Adult Class</p>
+      {% elseif node.field_featured_carousel_event.entity.field_class_type.value == 'Youth' %}
+        <p>Youth Class</p>
+      {% elseif node.field_featured_carousel_event.entity.field_league_types.value == 'Youth' %}
+        <p>Youth League</p>
+      {% elseif node.field_featured_carousel_event.entity.field_league_types.value == 'Adult' %}
+        <p>Adult League</p>
+      {% elseif node.field_featured_carousel_event.entity.field_league_types.value == 'Parathlete' %}
+        <p>Parathletics League</p>
+      {% elseif node.field_featured_carousel_event.entity.field_league_types.value == 'Special Needs' %}
+        <p>Special Needs League</p>
+      {% elseif node.field_featured_carousel_event.entity.field_group_meetup_type.value == 'Support' %}
+        <p>Support Group</p>
+      {% elseif node.field_featured_carousel_event.entity.field_group_meetup_type.value == 'Volunteer' %}
+        <p>Volunteer Group</p>
+      {% elseif node.field_featured_carousel_event.entity.field_group_meetup_type.value == 'Auxiliary' %}
+        <p>Auxiliary Group</p>
+      {% endif %}
+      <p id="Community-Subject">
+        {{ node.field_featured_carousel_event.entity.field_subject.value }}
+      </p>
+    {% elseif node.field_featured_carousel_event.entity.field_event_category.value == 'Government' %}
+      {% if node.field_featured_carousel_event.entity.field_government_meeting_type.value == 'Municipal' %}
+        Municipality: {{ node.field_featured_carousel_event.entity.field_parent_city_town.entity.name.value }}<br>
+      {% elseif node.field_featured_carousel_event.entity.field_government_meeting_type.value == 'County' %}
+        County: {{ node.field_featured_carousel_event.entity.field_parent_county.entity.name.value }}<br>
+      {% elseif node.field_featured_carousel_event.entity.field_government_meeting_type.value == 'State' %}
+        {% if node.field_featured_carousel_event.entity.field_state_level_government.value|length %}
+          State Level: {{ node.field_featured_carousel_event.entity.field_state_level_government.value }}<br>
+        {% endif %}
+      {% elseif node.field_featured_carousel_event.entity.field_government_meeting_type.value == 'Debate' %}
+        Public Debate<br>
+      {% elseif node.field_featured_carousel_event.entity.field_government_meeting_type.value == 'Town Hall' %}
+        Town Hall<br>
+      {% elseif node.field_featured_carousel_event.entity.field_government_meeting_type.value == 'Public Hearing' %}
+        Public Hearing<br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_meeting_type.value|length %}
+        {{ node.field_featured_carousel_event.entity.field_meeting_type.value }}
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_deliberative_body.value|length %}
+        <div id="Government-Deliberative">
+          Deliberative Body: {{ node.field_featured_carousel_event.entity.field_deliberative_body.value }}<br>
+        </div>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_committee_name.value|length %}
+        <div id="Goverenmet-Committee">
+          Committe Name: {{ node.field_featured_carousel_event.entity.field_committee_name.value }}<br>
+        </div>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_board_name.value|length %}
+        <div id="Government-Board">
+          Board Name: {{ node.field_featured_carousel_event.entity.field_board_name.value }}<br>
+        </div>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_issue_info.value|length %}
+        <div id="Government-Issue">
+          Issue Information: {{ node.field_featured_carousel_event.entity.field_issue_info.value }}<br>
+        </div>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_moderators.0.value|length %}
+        <div id="Governmet-Moderators">
+          {% if node.field_featured_carousel_event.entity.field_moderators.1.value|length %}
+            Moderators:<br>
+            {% for Moderator in node.field_featured_carousel_event.entity.field_moderators %}
+              {{ Moderator.value }}<br>
+            {% endfor %}
+          {% else %}
+            Moderator: {{ node.field_featured_carousel_event.entity.field_moderators.value }}<br>
+          {% endif %}
+        </div>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_speakers.0.value|length %}
+        <div id="Government-Speaker">
+          {% if node.field_featured_carousel_event.entity.field_speakers.1.value|length %}
+            Speakers:<br>
+            {% for Speaker in node.field_featured_carousel_event.entity.field_speakers %}
+              {{ Speaker.value }}<br>
+            {% endfor %}
+          {% else %}
+            Speaker: {{ node.field_featured_carousel_event.entity.field_speakers.value }}<br>
+          {% endif %}
+        </div>
+      {% endif %}
+    {% elseif node.field_featured_carousel_event.entity.field_event_category.value == 'Theatre' %}
+      {% if node.field_featured_carousel_event.entity.field_theatre_type.value == 'Cinema' %}
+        {% if node.field_featured_carousel_event.entity.field_cinema_type.value|length %}
+          {{ node.field_featured_carousel_event.entity.field_cinema_type.value }}<br>
+        {% endif %}
+      {% elseif node.field_featured_carousel_event.entity.field_theatre_type.value == 'Community Theater' %}
+        {% if node.field_featured_carousel_event.entity.field_opening_performance.value == "1" %}
+          <p>Opening Performance</p>
+        {% endif %}
+        {% if node.field_featured_carousel_event.entity.field_practices.value|length %}
+          Practice: {{ node.field_featured_carousel_event.entity.field_practices.value }}<br>
+        {% endif %}
+      {% elseif node.field_featured_carousel_event.entity.field_theatre_type.value == 'Professional' %}
+        {% if node.field_featured_carousel_event.entity.field_opening_performance.value == "1" %}
+          <p>Opening Performance</p>
+        {% endif %}
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_production_name.value|length %}
+        {{ node.field_featured_carousel_event.entity.field_production_name.value }}<br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_directors.value|length %}
+        Director: {{ node.field_featured_carousel_event.entity.field_directors.value }}<br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_producers.value|length %}
+        Producer: {{ node.field_featured_carousel_event.entity.field_producers.value }}<br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_lead_actors.0.value|length %}
+        {% if node.field_featured_carousel_event.entity.field_lead_actors.1.value|length %}
+          Lead Actors:<br>
+          {% for Actor in node.field_featured_carousel_event.entity.field_lead_actors %}
+            {{ Actor.entity.title.value }}<br>
+          {% endfor %}
+        {% else %}
+          Lead Actor: {{ node.field_featured_carousel_event.entity.field_lead_actors.entity.title.value }}<br>
+        {% endif %}
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_musical.value == "1" %}
+        {% if node.field_featured_carousel_event.entity.field_songbook_writers.1.value|length %}
+          Songbook Writers:<br>
+          {% for Writer in node.field_featured_carousel_event.entity.field_soongbook_writers %}
+            {{ Writer.value }}<br>
+          {% endfor %}
+        {% else %}
+          Songbook Writer: {{ node.field_featured_carousel_event.entity.field_soongbook_writers.value }}<br>
+        {% endif %}
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_theater_group_page.uri.value|length %}
+        <a href="{{ node.field_featured_carousel_event.entity.field_theater_group_page.uri }}" target="_blank">
+          See {{ node.field_featured_carousel_event.entity.field_theater_group_page.title }} for more information
+        </a>
+      {% endif %}
+    {% elseif node.field_featured_carousel_event.entity.field_event_category.value == 'Activity' %}
+      {% if node.field_featured_carousel_event.entity.field_activity_event_type.vaule|length %}
+        {{ node.field_featured_carousel_event.entity.field_activity_event_type.value }}<br>
+        {% if node.field_featured_carousel_event.entity.field_how_to_join.value|length %}
+          {{ node.field_featured_carousel_event.entity.field_how_to_join.value }}<br>
+        {% endif %}
+        {% if node.field_featured_carousel_event.entity.field_requirements.value|length %}
+          {{ node.field_featured_carousel_event.entity.field_requirements.value }}<br>
+        {% endif %}
+        {% if node.field_featured_carousel_event.entity.field_participant.1.value|length %}
+          Participants:<br>
+          {% for Participant in node.field_featured_carousel_event.entity.field_participant %}
+            {{ Participant.value }}<br>
+          {% endfor %}
+        {% else %}
+          Participant: {{ node.field_featured_carousel_event.entity.field_participant.value }}<br>
+        {% endif %}
+      {% endif %}
+    {% endif %}
+  </div>
+  
+  <div class="venue-and-time">
+    {{ node.field_featured_carousel_event.entity.field_venue.entity.title.value }}<br>
+    {{ node.field_featured_carousel_event.entity.field_event_date.value|date("l, F j") }}<br>
+    {% if node.field_featured_carousel_event.entity.field_show_time.value == "0" %}
+      {{ node.field_featured_carousel_event.entity.field_event_date.value|date("g:i a") }}
+    {% else %}
+      Door: {{ node.field_featured_carousel_event.entity.field_event_date.value|date("g:i a") }}<br>
+      Show: {{ node.field_featured_carousel_event.entity.field_time_of_show.0.value|date("g:i a") }}
+    {% endif %}
+  </div>
+  
+  <div class="event-ticket-info">
+    {% if node.field_featured_carousel_event.entity.field_is_the_event_free.value == "1" %}
+      <p>This event is free to the public.</p>
+    {% else %}
+      {# see if you need to display a range #}
+      {% set basicCostDisplay = "$"~node.field_featured_carousel_event.entity.field_bottom_cost_range.value|number_format(2, '.', ',') %}
+      {% if node.field_featured_carousel_event.entity.field_cost_range.value == "1" %}
+        {% set basicCostDisplay = "$"~node.field_featured_carousel_event.entity.field_bottom_cost_range.value|number_format(2, '.', ',')~" - "~node.field_featured_carousel_event.entity.field_top_cost_range.value|number_format(2, '.', ',') %}
+      {% endif %}
+      {# now display the basic cost or door and advnce costs #}
+      {% if node.field_featured_carousel_event.entity.field_at_door_price.value == "1" %}
+        Tickets: <span class="price">{{ basicCostDisplay }}</span> advance <span class="price">${{ node.field_featured_carousel_event.entity.field_at_door.value|number_format(2, '.', ',') }}</span> day of<br>
+      {% else %}
+        Tickets: <span class="price">{{ basicCostDisplay }}</span><br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_childrens_price_discount.value == "1" %}
+        Children: <span class="price">${{ node.field_featured_carousel_event.entity.field_childrens_price.value|number_format(2, '.', ',') }}</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_childrens_discount_dollar.value == "1" %}
+        Children: <span class="price">${{ node.field_featured_carousel_event.entity.field_childrens_dollars_discount.value|number_format(2, '.', ',') }} off</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_childrens_discount_percent.value == "1" %}
+        Children: <span class="price">{{ node.field_featured_carousel_event.entity.field_childrens_percent_off.value }}% off</span><br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_senior_price_discount.value == "1" %}
+        Seniors: <span class="price">${{ node.field_featured_carousel_event.entity.field_senior_price.value|number_format(2, '.', ',') }}</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_senior_discount_dollar.value == "1" %}
+        Seniors: <span class="price">${{ node.field_featured_carousel_event.entity.field_senior_dollars_discount.value|number_format(2, '.', ',') }} off</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_senior_discount_percent.value == "1" %}
+        Seniors: <span class="price">{{ node.field_featured_carousel_event.entity.field_senior_percent_off.value }}% off</span><br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_student_price_discount.value == "1" %}
+        Students: <span class="price">${{ node.field_featured_carousel_event.entity.field_student_price.value|number_format(2, '.', ',') }}</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_student_discount_dollar.value == "1" %}
+        Students: <span class="price">${{ node.field_featured_carousel_event.entity.field_student_dollars_off.value|number_format(2, '.', ',') }} off</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_student_discount_percent.value == "1" %}
+        Students: <span class="price">{{ node.field_featured_carousel_event.entity.field_student_percent_off.value }}% off</span><br>
+      {% endif %}
+      {% if node.field_featured_carousel_event.entity.field_veterans_price_discount.value == "1" %}
+        Veterans: <span class="price">${{ node.field_featured_carousel_event.entity.field_veterans_price.value|number_format(2, '.', ',') }}</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_veterans_discount_dollar.value == "1" %}
+        Veterans: <span class="price">${{ node.field_featured_carousel_event.entity.field_veterans_dollars_off.value|number_format(2, '.', ',') }} off</span><br>
+      {% elseif node.field_featured_carousel_event.entity.field_veterans_discount_percent.value == "1" %}
+        Veterans: <span class="price">{{ node.field_featured_carousel_event.entity.field_veterans_percent_off.value }}% off</span><br>
+      {% endif %}
+    {% endif %}
+  </div><br>
+  
+  <div class="event-blurb">
+    <p>{{ node.field_featured_carousel_event.entity.field_event_description.value|raw }}</p>
+  </div>
+  
+  <div class="address-info">
+    {{ node.field_featured_carousel_event.entity.field_venue.entity.field_venue_address.value }}<br>
+	  {{ node.field_featured_carousel_event.entity.field_venue.entity.field_city.entity.name.value }}, {{ node.field_featured_carousel_event.entity.field_venue.entity.field_venue_state.value }}
+    {{ node.field_featured_carousel_event.entity.field_venue.entity.field_zip_code.value }}<br>
+    {#
+    <div class="event-social-links">
+      <a>
+        <img src="/themes/custom/sundialtheme/images/social_facebook.png" class="social-links">
+      </a>
+      <a>
+        <img src="/themes/custom/sundialtheme/images/social_twitter.png" class="social-links">
+      </a>
+    </div>#}
+    <div class="map-container">
+      <div class="map-border-1">
+        <div class="map-border-2">
+          <div class="map-box">
+            <iframe class="map-itself" src="https://www.google.com/maps/embed/v1/place?q={{ node.field_featured_carousel_event.entity.field_venue.entity.field_venue_address.value }}
+              {{ node.field_featured_carousel_event.entity.field_venue.entity.field_city.entity.name.value }},{{ node.field_featured_carousel_event.entity.field_venue.entity.field_zip_code.value }}
+              &zoom=17&key=AIzaSyCdQhB6gNRYJLkPLpOsmWOHSf5LTFo_-tg" height="500">
+            </iframe>
+          </div
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+	  var x = document.getElementsByClassName("map-icon-box");
+	  x[0].style.display = "none";
+	  x[1].style.display = "none";
+	  
+	  var y = document.getElementsByClassName("map-itself");
+	  y[0].width = "250";
+	  y[1].width = "500";
+	  
+	  var z = document.getElementsByClassName("map-box");
+	  z[0].style.display = "block";
+	  z[1].style.display = "block";
+  </script>
+</article>

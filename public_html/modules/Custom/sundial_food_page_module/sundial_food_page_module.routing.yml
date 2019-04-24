@@ -1,0 +1,7 @@
+sundial_food_page:
+  path: '/food-list'
+  defaults:
+    _controller: 'Drupal\sundial_food_page_module\Controller\FoodPageController::foodList'
+    _title: 'Food Related Content'
+  requirements:
+    _permission: 'access content'

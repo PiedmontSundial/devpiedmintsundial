@@ -1,0 +1,35 @@
+name: 'sundial theme'
+type: theme
+description: 'test theme to see if dru breaks'
+core: 8.x
+base theme: stable
+
+libraries:
+  - sundialtheme/global-styling
+
+regions:
+  navbar_top: 'Navbar'
+  mobile_main: 'Mobile Main'
+  mobile_above_content: 'Mobile Above Content'
+  mobile_below_content: 'Mobile Below Content'
+  mobile_events_and_articles: 'Mobile Events and Articles'
+  mobile_front_page_events_and_articles: 'Mobile Front Page Events and Articles'
+  main_menu: 'Main Menu'
+  above_content: 'Above Content'
+  content: 'Main Content'
+  main_column_one: 'Main Column One'
+  main_column_two: 'Main Column Two'
+  main_column_three: 'Main Column Three'
+  main_column_four: 'Main Column Four'
+  mid_banner: 'Mid Banner'
+  mid_left: 'Mid Page Left'
+  mid_right: 'Mid Page Right'
+  footer_menu: 'Footer Menu'
+  footer_about_us: 'About Us'
+  arts_content: 'Arts Content'
+  family_content: 'Family Content'
+  food_content: 'Food Content'
+  free_content: 'Free Content'
+  music_content: 'Music Content'
+  sports_content: 'Sports Content'
+  outdoors_content: 'Outdoors Content'

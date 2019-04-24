@@ -1,0 +1,229 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+{{ attach_library('classy/view') }}{##}
+<article{{ attributes.addClass(classes) }}>
+  <div style="position:absolute;top:80px;width:100%;">
+  	<div class="container" style="border-bottom: solid 5px;margin-bottom: 30px;">
+  		<div class="date-bar clearfix">
+  			<span class="float-left">Real News For North Carolina</span>
+  			<span class="float-right">
+  				{{ "now"|date("D, F j Y") }}
+  			</span>
+  		</div>
+        
+  		<div style="border-bottom: solid 1px #dedede">
+  			<img src="/themes/custom/sundialtheme/images/Sundial_logo_banner.png" style="width: 100%;height: auto;margin-bottom: 1rem;">
+  		</div>
+        
+  		<div class="ad-manager-title">
+  			Ad Calendar
+  		</div>
+      <div id="theServer" style="font-family:roboto slab;color:#212529;font-size:20px;margin:5px;">Scheduling for {{serverTitle}}</div>
+	  <div id="serverType" style="font-family:roboto slab;color:#212529;font-size:20px;margin:5px;"></div>
+        
+      <br>
+        
+      <style>
+          
+        .col2{
+          height:850px;
+          padding-top:30px;
+        }
+          
+        .calendar_month{
+          font:"Times New Roman", Times, serif;
+          font-weight:bold;
+          font-size:30px;
+          text-align:center;
+          color:#a21212;
+          margin-bottom:10px;
+        }
+            
+        .clear{
+          clear:both;
+        }
+          
+        .container_comp{
+          width:880px;
+          height:700px;
+          margin:0 auto;
+          padding:40px;
+          background-color:#f7f7f7;
+          border-radius:20px;
+          border:1px solid #999999;
+          margin-bottom:25px;
+        }
+          
+        .container_calendar{
+          width:802px;
+          height:541px;
+          margin:0 auto;
+          background-color:#cccccc;
+          border-radius:20px;
+          border:2px solid #999999;
+          margin-bottom:25px;
+        }
+          
+        .day{
+          width:114px;
+          height:25px;
+          color:#330000;
+          float:left;
+          padding:5px;
+          text-align:center;
+          font:bold 16px arial;
+          border-bottom:1px solid #999999;
+          border-right:1px solid #999999;
+          background-color:#cccccc;
+        }
+          
+        .date{
+          width:114px;
+          height:82px;
+          float:left;
+          border-bottom:1px solid #999999;
+          border-right:1px solid #999999;
+          background-color:#ffffff;
+        }
+      </style>
+        
+      <div style="font-family:roboto slab;color:#212529;font-size:15px;margin:5px;">Month Selection:</div>
+      <select id="monthy" onchange="setMonth()">
+        <option></option>
+        {% for i in 0..23 %}
+          <option value="{{ futures[i][0] }}">{{ futures[i][1] }}</option>{##}
+        {% endfor %}
+      </select>
+        
+      {# Calendar Output Below #}
+        
+      <div>
+        <div class="col2">
+          <div class="container_comp">
+            <div class="calendar_month">{# Put month and year here #} {{ displayMonth }}  {{ displayYear }}</div>
+            <div class="container_calendar">
+              <div>
+                <div class="day" style="border-top-left-radius:18px;">Sunday</div>
+                <div class="day">Monday</div>
+                <div class="day">Tuesday</div>
+                <div class="day">Wednesday</div>
+                <div class="day">Thursday</div>
+                <div class="day">Friday</div>
+                <div class="day" style="border-top-right-radius:18px;">Saturday</div>
+                <div class="clear"></div>
+              </div>
+                
+              {# Put calendar output here #}
+                
+              {% set row = 0 %}
+              {% set column = 0 %}
+              {% for i in 0..5 %}
+                {% for j in 0..6 %}
+                  {% set top = 25 + (row * 77) %}
+                  {% set left = column * 109 %}
+                  {% if arrayCalendar[i][j][0] != 0 %}
+                    {#<a href="{{ file_url("ad_desk_scheduler") }}?timestamp={{ arrayCalendar[i][j][1] }}&serverID={{serverIDNumber}}">#}
+                    <a onclick="weekChosen({{ arrayCalendar[i][j][1] }})">
+                      <div class="date" style="left:{{ left }}px;top:{{ top }}px;">
+                        {{ arrayCalendar[i][j][0] }}
+                      </div>
+                    </a>
+                  {% else %}
+                    <div class="date" style="left:{{ left }}px;top:{{ top }}px;"></div>
+                  {% endif %}
+                {% endfor %}
+              {% endfor %}{##}
+            </div>
+          </div>
+        </div>
+      </div>
+        
+        
+      <script>
+        
+        {#var topDivText = document.getElementById("theServer").innerHTML;#}
+          
+        {#alert(topDivText);#}
+          
+        {#var topDivTextSplit = topDivText.split(" ");#}
+          
+        {#alert(topDivTextSplit[3]);#}
+		
+		var carouselAllowed = {{ carouselAllowed }};
+		
+		document.getElementById("serverType").innerHTML = carouselAllowed ? "Carouseling Server" : "Singleton Server";
+		
+          
+        function swapperroo() {
+          var futuro = document.getElementById("monthy").value;
+          window.alert(futuro);
+        }
+        
+        
+        function setMonth() {
+          
+          var futuro = document.getElementById("monthy").value;
+            
+          var serverID = {{serverIDNumber}};
+            
+          if (futuro) {
+            var formy = document.createElement("form");
+              
+            {#formy.setAttribute("action", "{{ file_url("ad_desk_calendar") }}?serverID={{serverIDNumber}}");#}
+              
+            formy.setAttribute("action", "{{ file_url("ad_desk_calendar") }}");
+            formy.setAttribute("method", "post");
+              
+            var worth = document.createElement("input");
+            worth.setAttribute("type", "hidden");
+            worth.setAttribute("name", "monthValue");
+            worth.setAttribute("value", futuro);
+            formy.appendChild(worth);
+              
+            var otherWorth = document.createElement("input");
+            otherWorth.setAttribute("type", "hidden");
+            otherWorth.setAttribute("name", "serverID");
+            otherWorth.setAttribute("value", serverID);
+            formy.appendChild(otherWorth);
+            
+            document.body.appendChild(formy);
+            formy.submit();
+          }
+            
+        }
+          
+          
+        function weekChosen(timeStamp) {
+          
+          var serverID = {{serverIDNumber}};
+          
+          var formy = document.createElement("form");
+            
+          formy.setAttribute("action", "{{ file_url("ad_desk_scheduler") }}");
+          formy.setAttribute("method", "post");
+            
+          var worth = document.createElement("input");
+          worth.setAttribute("type", "hidden");
+          worth.setAttribute("name", "timestamp");
+          worth.setAttribute("value", timeStamp);
+          formy.appendChild(worth);
+          
+          
+          var otherWorth = document.createElement("input");
+          otherWorth.setAttribute("type", "hidden");
+          otherWorth.setAttribute("name", "serverID");
+          otherWorth.setAttribute("value", serverID);
+          formy.appendChild(otherWorth);
+            
+          document.body.appendChild(formy);
+          formy.submit();
+          
+        }
+      </script>
+      <br>
+    </div>
+  </div>
+</article>	

@@ -1,0 +1,7 @@
+sundial_outside_page:
+  path: '/outside-list'
+  defaults:
+    _controller: 'Drupal\sundial_outside_page_module\Controller\OutsidePageController::outsideList'
+    _title: 'Outdoor Content'
+  requirements:
+    _permission: 'access content'

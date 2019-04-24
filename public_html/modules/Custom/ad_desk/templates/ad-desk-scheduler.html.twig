@@ -1,0 +1,1582 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+{{ attach_library('classy/view') }}
+<article{{ attributes.addClass(classes) }}>{##}
+  <div style="position:absolute;top:80px;width:100%;">
+    <div class="container">
+      <div class="date-bar clearfix">
+        <span class="float-left">Real News For North Carolina</span>
+        <span class="float-right">
+          {{ "now"|date("D, F j Y") }}
+        </span>
+      </div>
+      
+      <div style="border-bottom: solid 1px #dedede">
+        <img src="/themes/custom/sundialtheme/images/Sundial_logo_banner.png" style="width: 100%;height: auto;margin-bottom: 1rem;">
+      </div>
+      <div class="ad-manager-title">
+        Advertising Scheduler
+      </div>
+      
+      <div>
+
+        <a id="goMake" href=""></a>
+        
+        <div style="font-family: roboto slab;color: #212529;font-size: 20px;margin: 0 5px;">Scheduling ads for {{serverTitle}}</div>
+		
+        <div style="font-family: roboto slab;color: #212529;font-size: 18px;margin: 0 5px;" id="serverType"></div>
+		
+        
+        <div style="border-radius: 20px;border: solid 11px #212529;background: #212529;margin: 0 5px;">
+          <div style="border-radius: 10px;border: solid 4px #fec42e;">
+            <div style="display:block;border-radius: 5px;border: solid 4px #212529;background: #ffffff;overflow: hidden;height:175px">
+              <p id="testo" >Box content will appear here.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+		
+		<div style="border-top: solid 5px; border-bottom: solid 5px;">
+      <div id="Container" style="width:1200px;height:500px;position:relative;margin: -20px 74.500px -130px 74.500px;z-index: 1;">
+        {# Here we are initializing JS variables for the current row and column #}
+        <script>
+          var currentRow = 0;
+          var currentColumn = 0;
+        </script>
+        {# We are going to take each element in hourBoxArray and use it #}
+        {% set numberOfHoursIndex = numberOfHours - 1 %}
+        {% for i in 0..numberOfHoursIndex %}
+        {# Here we are initializing JS variables for time, date, weekDay, and set ourWeekDay to start on Monday instead of the JS standard of Sunday #}
+        <script>
+          var jsTime = {{ hourBoxArray[i]['hour_start'] }} * 1000;
+          var date = new Date(jsTime);
+          var theDate = date.getDate();
+          var weekDay = date.getDay();
+          var theTime = date.toLocaleTimeString();
+          var ourWeekDay = weekDay - 1;
+          if (ourWeekDay == -1) {
+            ourWeekDay = 6;
+          }
+          var theHour = date.getHours()
+        </script>
+        {# Here we set our style for Day and gave it a unique id #}
+        {# holding this for now onclick="peck(this)" #}
+        <div id="Day-{{ hourBoxArray[i]['hour_start'] }}" class="dayBox" onmousedown="startDragSelect(this)" onmouseup="endDragSelect(this)" onmouseover="dispo(this)"
+              style="position:absolute;display:none;border-width:1px;border-style:solid;width:50px;height:50px;">
+            {{ hourBoxArray[i]['hour_start']|date("F j, Y g:i A I", "America/New_York") }} 
+        </div>
+        {# Here we set that if each of our days were greater that the current row, i.e. reaching the final hour; being 24; of said day, #}
+          {# to start a new day in a subsequent row on hour 1 #}
+        <script>
+          if (ourWeekDay > currentRow) {
+             currentRow++;
+            currentColumn = 0;
+          }
+          {# Here we placed each column and rows horizontal and vertical positioning #}
+          var xPos = 20 + (50*currentColumn);
+          var yPos = 20 + (50*currentRow);
+          var theDiv = document.getElementById("Day-{{ hourBoxArray[i]['hour_start'] }}");
+          theDiv.style.left = xPos + "px";
+          theDiv.style.top = yPos + "px";
+          theDiv.innerHTML = theHour + " " + theDate;
+          theDiv.style.display = "block";
+          currentColumn++;
+        </script>
+        {% endfor %}{##}
+        
+      </div>
+    </div>
+    
+    <div class="container" style="position: absolute;z-index: 2;margin: 0 104.500px;">
+      <span>
+        <select id="clients" style="margin:0 5px;">
+          {% set clientTitlesCount = clientTitles|length - 1 %}
+          {% for i in 0..clientTitlesCount %}
+            <option value='{{ clientTitles[i] }}'>{{ clientTitles[i] }}</option>
+          {% endfor %}
+        </select>
+        <select id='adSelector' style="margin: 0 5px;">
+          {% set adTitlesCount = adTitles|length - 1 %}
+          {% set adIDsCount = adIDs|length - 1 %}
+          {% for i in 0..adTitlesCount %}
+            <option value ='{{ adIDs[i] }}'>{{ adTitles[i] }}</option>
+          {% endfor %}{##}
+        </select>
+      </span>
+      <br>
+      <br>
+        
+      <span>
+        <img src="/themes/custom/sundialtheme/images/Return.png" class="social-links" onclick="returno()" title="Return To Calendar" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Hunt_and_Peck.png" class="social-links" onclick="huntAndPeck()" title="Switch to Hunt '&' Peck Mode" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Drag_Mode.png" class="social-links" onclick="dragMode()" title="Switch to Drag Mode" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Clear_Black.png" class="social-links" onclick="clearSelections()" title="Clear Selections" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Submit_Selection.png" class="social-links" onclick="submitSelections()" title="Submit Selections" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Delete_Selection.png" class="social-links" onclick="deleteSelections()" title="Delete Selecions" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Confirm_Selection.png" class="social-links" onclick="confirmSelections()" title="Confirm Selections" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Unconfirm_Selections.png" class="social-links" onclick="unconfirmSelections()" title="Unconfirm Selections" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Block_Selections.png" class="social-links" onclick="blockSelections()" title="Block Selections" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Unblock_Selections.png" class="social-links" onclick="unblockSelections()" title="Unblock Selections" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Make_Carousel.png" class="social-links" onclick="makeCarousel()" title="Make Carousel" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Update_Carousel.png" class="social-links" onclick="updateCarousel()" title="Update Carousel" style="float: left;">
+        <img src="/themes/custom/sundialtheme/images/Quick_Add.png" class="social-links" onclick="quickAdd()" title="Quick Add" style="float: left;">
+        <select id="quickDuration">
+          <option value="4">4 seconds</option>
+          <option value="8">8 seconds</option>
+          <option value="12">12 seconds</option>
+          <option value="16">16 seconds</option>
+          <option value="20">20 seconds</option>
+          <option value="24">24 seconds</option>
+        </select>
+      </span>
+      <br>
+      <br>
+      <br>
+    </div>
+  </div>
+</article>
+
+
+<script>
+	  
+		var carouselAllowed = {{ carouselAllowed }};
+		
+		document.getElementById("serverType").innerHTML = carouselAllowed ? "Carouseling Server" : "Singleton Server";
+	  
+        function dispo(box) {
+          document.getElementById("testo").innerHTML = box.innerHTML;
+        }
+            
+        /*
+          var clickCount = 0;
+          function clickCounter() {
+            clickCount++:
+            document.getElementById("testo").innerHTML = "Number of clicks = " + clickCount;
+          }
+          document.body.addEventListener("click", clickCounter);
+          alert('yay');
+        */
+            
+        {# This gathers all of our day boxes together. #}
+        var divvies = document.getElementsByClassName("dayBox");
+            
+        {# We first establish these globals. #}
+        var provvies = [];
+        var provviesIndex = 0; 
+            
+        var loadies = [];
+        var loadiesIndex = 0;
+		
+		var blockies = [];
+		var blockiesIndex = 0;
+		
+		var texties = [];
+		var textiesIndex = 0;
+            
+        {# Now we go through all our hour box data and if we find provisional loader IDs, #}
+        {# we get their sequencer's start time stamp so we can match it against #}
+        {# the timestamp present in a div's ID. If there's a match, we change the div's class. #}
+            
+        {% for i in 0..numberOfHours - 1 %}
+          {% if hourBoxArray[i]['prov_loader_id'] != 0 %}
+            provvies[provviesIndex] = {{ hourBoxArray[i]['start_time_stamp'] }};
+          provviesIndex++;
+          {% endif %}      
+        {% endfor %}
+            
+        for (var i = 0; i < divvies.length; i++) {
+          for (var j = 0; j < provvies.length; j++) {
+            var iddy = divvies[i].id;
+            var iddySplit = iddy.split("-");
+            if (iddySplit[1] == provvies[j]) {
+              divvies[i].className = "dayBox provFilled";
+            }
+          }
+        }
+            
+        {% for i in 0..numberOfHours - 1 %}
+          {% if hourBoxArray[i]['loader_id'] != 0 %}
+            loadies[loadiesIndex] = {{ hourBoxArray[i]['start_time_stamp'] }};
+          loadiesIndex++;
+          {% endif %}      
+        {% endfor %}
+            
+        for (var i = 0; i < divvies.length; i++) {
+          for (var j = 0; j < loadies.length; j++) {
+            var iddy = divvies[i].id;
+            var iddySplit = iddy.split("-");
+            if (iddySplit[1] == loadies[j]) {
+              divvies[i].className = "dayBox confirmed";
+            }
+          }
+        }
+		
+		{% for i in 0..numberOfHours - 1 %}
+		  {% if hourBoxArray[i]['block_id'] != 0 %}
+		  blockies[blockiesIndex] = {{ hourBoxArray[i]['hour_start'] }};
+		  blockiesIndex++;
+		  {% endif %}
+		{% endfor%}
+
+		for (i = 0; i < divvies.length; i++) {
+			for (j = 0; j < blockies.length; j++) {
+			
+			var iddy = divvies[i].id;
+			
+            var iddySplit = iddy.split("-");
+			
+			 if (iddySplit[1] == blockies[j]) {
+			 
+              divvies[i].className = "dayBox blocked";
+			  
+				}
+			
+			}
+		}
+		
+		
+		{% for i in 0..numberOfHours - 1 %}
+		  {% if hourBoxArray[i]['words'] != '' %}
+		    texties[textiesIndex] = "{{ hourBoxArray[i]['words'] }}" + "%%%" + {{ hourBoxArray[i]['hour_start'] }};
+		    textiesIndex++;
+		  {% endif %}
+		{% endfor %}
+		
+		
+		/*
+		for (i = 0; i < divvies.length; i++) {
+			for (j = 0; j < texties.length; j++) {
+			
+				var iddy = divvies[i].id;
+			
+				var iddySplit = iddy.split("-");
+			
+				var textiesSplit = texties[j].split("^");
+			
+				if (iddySplit[1] == textiesSplit[textiesSplit.length - 1])  {
+			
+					//divvies[i].innerHTML += "<br>" + textiesSplit[0];
+					
+					//divvies[i].innerHTML += " --- ";
+					
+					for (k = 0; k < textiesSplit.length - 1; k++) {
+					
+						divvies[i].innerHTML += "<br>" + textiesSplit[k];
+					
+					}
+					
+					
+			
+				}
+			}
+		}
+		*/
+		
+		for (i = 0; i < divvies.length; i++) {
+		
+			for (j = 0; j < texties.length; j++) {
+			
+				var iddy = divvies[i].id;
+				
+				var iddySplit = iddy.split("-");
+				
+				var textiesSplitOne = texties[j].split("%%%")
+				
+				var textiesSplitTwo = textiesSplitOne[0].split("^^^");
+				
+				if (iddySplit[1] == textiesSplitOne[1]) {
+				
+					//divvies[i].innerHTML += " --- ";
+				
+					for (k = 0; k < textiesSplitTwo.length - 1; k++) {
+					
+						divvies[i].innerHTML += "<br>" + textiesSplitTwo[k];
+						
+						if (textiesSplitTwo[0] == textiesSplitTwo[k + 1]) {
+						
+							break;
+						
+						}
+					
+					}//k-loop
+				
+				}//if
+			
+			
+			
+			}//j-loop
+		
+		
+		}//i-loop
+		
+		
+		
+		//CHRIS HERE 10-8
+            
+        {# This global allows the dragger to co-exist with hunting and pecking. #}
+        var dragString = "";
+            
+        {# This global turns off functions once selections are made, locking them. #}
+        var locky = 0;
+            
+        function startDragSelect(hourBox) {
+          if (!locky) {
+              
+            if (hourBox.className == "dayBox" || hourBox.className == "dayBox selected") {
+              hourBox.className = "dayBox selected";
+            } else if (hourBox.className == "dayBox provFilled" || hourBox.className == "dayBox provSelected") {
+              hourBox.className = "dayBox provSelected";
+                  
+            } else if (hourBox.className == "dayBox blocked" || hourBox.className == "dayBox blockedSelected") {
+                
+              hourBox.className = "dayBox blockedSelected";
+                
+            } else {
+                
+              hourBox.className = "dayBox confirmedSelected";
+                
+            }
+                
+            for (var i = 0; i < divvies.length; i++) {
+              divvies[i].onmouseover = divvies[i].onmousedown;
+            }
+          }	
+              
+              
+          var IDSplit = hourBox.id.split("-");
+              
+          dragString += IDSplit[1] + "-";
+              
+              
+        } {# Function close. #}
+              
+        function endDragSelect(hourBox)	{
+          if (!locky) {
+              for (var i = 0; i < divvies.length; i++) {
+                //divvies[i].onmouseover = null;
+				
+				divvies[i].setAttribute("onmouseover", "dispo(this)");
+				
+				
+              }
+                  
+              var dragStringArray = dragString.split("-");
+                  
+              var firstID = dragStringArray[0];
+                  
+              var lastID = dragStringArray[dragStringArray.length - 2];
+                  
+                  
+              for (var i = 0; i < divvies.length; i++) {
+                  
+                var divID = divvies[i].id;
+                    
+                var IDSplit = divID.split("-");
+                    
+                if (IDSplit[1] > firstID && IDSplit[1] < lastID) {
+                    
+                  if (divvies[i].className == "dayBox confirmedSelected") {
+                      
+                    divvies[i].className = "dayBox confirmedSelected";
+                      
+                  } else if (divvies[i].className == "dayBox confirmed") {
+                      
+                    divvies[i].className = "dayBox confirmedSelected";
+                      
+                  } else if (divvies[i].className == "dayBox provSelected") {
+                      
+                    divvies[i].className = "dayBox provSelected";
+                      
+                  } else if (divvies[i].className == "dayBox provFilled") {
+                      
+                    divvies[i].className = "dayBox provSelected";
+                        
+                  } else if (divvies[i].className == "dayBox blocked") {
+                      
+                    divvies[i].className = "dayBox blockedSelected";
+                        
+                  } else if (divvies[i].className == 	"dayBox blockedSelected") {
+                      
+                    divvies[i].className = "dayBox blockedSelected";
+                      
+                  } else {
+                      
+                    divvies[i].className = "dayBox selected";
+                      
+                  }
+                    
+                    
+                }//if-close
+                    
+                    
+                    
+              } //i-loop 
+                  
+                
+                
+                
+                
+              /*
+              document.getElementById("cleary").style.display = "block";
+                  
+              document.getElementById("subby").style.display = "block";
+                  
+              document.getElementById("delly").style.display = "block";
+                  
+              document.getElementById("confy").style.display = "block";
+                  
+              document.getElementById("unconfy").style.display = "block";
+                  
+              document.getElementById("blocky").style.display = "block";
+                  
+              document.getElementById("unblocky").style.display = "block";
+              */
+              //locky = 1;
+                  
+              dragString = "";
+                  
+            }
+                
+                
+        } {# Function close. #}
+            
+      {# ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}			
+        function clearSelections() {
+            
+          for (var i = 0; i < divvies.length; i++) {
+                
+            if (divvies[i].className == "dayBox provSelected") {
+                
+              divvies[i].className = "dayBox provFilled"; 
+                
+            } else if (divvies[i].className == "dayBox provFilled") {
+                
+              divvies[i].className = "dayBox provFilled";
+                  
+            } else if (divvies[i].className == "dayBox confirmedSelected") {
+                  
+              divvies[i].className = "dayBox confirmed";
+                  
+            } else if (divvies[i].className == "dayBox confirmed") {
+                
+              divvies[i].className = "dayBox confirmed";
+                  
+            } else if (divvies[i].className == "dayBox blockedSelected") {
+                
+              divvies[i].className = "dayBox blocked";
+                  
+            } else if (divvies[i].className == "dayBox blocked") {
+                
+              divvies[i].className = "dayBox blocked";
+                
+            } else {
+                
+              divvies[i].className = "dayBox"; 
+            }
+          }
+          /*
+          document.getElementById("cleary").style.display = "none";
+              
+          document.getElementById("subby").style.display = "none";
+              
+          document.getElementById("delly").style.display = "none";
+              
+          document.getElementById("confy").style.display = "none";
+              
+          document.getElementById("unconfy").style.display = "none";
+              
+          document.getElementById("blocky").style.display = "none";
+              
+          document.getElementById("unblocky").style.display = "none";
+              
+          document.getElementById("hunty").style.display = "block";
+              
+          document.getElementById("draggy").style.display = "none";
+          */
+          locky = 0;
+              
+          for (var i = 0; i < divvies.length; i++) {
+              
+            divvies[i].setAttribute("onmousedown", "startDragSelect(this)");
+                
+            divvies[i].setAttribute("onmouseup", "endDragSelect(this)");
+                
+            divvies[i].onclick = null;
+			
+			divvies[i].setAttribute("onmouseover", "dispo(this)");
+              
+          }
+              
+              
+              
+            
+        } {# Function close. #}
+            
+          {# //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+            
+            function huntAndPeck() {
+            
+              //document.getElementById("hunty").style.display = "none";
+              
+              //document.getElementById("draggy").style.display = "block";
+              
+              for (var i = 0; i < divvies.length; i++) {
+              
+                divvies[i].onmousedown = null;
+                
+                divvies[i].onmouseup = null;
+                
+                divvies[i].setAttribute("onclick", "peck(this)"); 
+				
+				divvies[i].setAttribute("onmouseover", "dispo(this)");
+              
+              }
+            
+                
+            
+            } {# Function close. #}
+            
+            
+            
+            function dragMode() {
+              
+              //document.getElementById("draggy").style.display = "none";
+              
+              //document.getElementById("hunty").style.display = "block";
+              
+              for (var i = 0; i < divvies.length; i++) {
+              
+                divvies[i].setAttribute("onmousedown", "startDragSelect(this)");
+                
+                divvies[i].setAttribute("onmouseup", "endDragSelect(this)");
+                
+                divvies[i].onclick = null;
+				
+				divvies[i].setAttribute("onmouseover", "dispo(this)");
+              
+              }
+              
+              var selectos = [];
+              var selectosIndex = 0;
+                  
+              for (var i = 0; i < divvies.length; i++) {
+                if (divvies[i].className == "dayBox selected" || divvies[i].className == "dayBox provSelected") {
+                  selectos[selectosIndex] = divvies[i];
+                  selectosIndex++;
+                  }		
+                }
+              
+              if(!selectos[0]) {
+              
+                locky = 0;
+              
+              }
+              
+                      
+            } {# Function close. #} 
+            
+            
+          {# ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+            function peck(hourBox) {
+              
+              /*  
+              if (hourBox.className == "dayBox selected") {
+                
+                hourBox.className = "dayBox";
+                
+              } else if (hourBox.className == "dayBox provSelected") {
+              
+                hourBox.className = "dayBox provFilled";
+                
+              } else if (hourBox.className == "dayBox confirmedSelected") {
+              
+                hourBox.className = "dayBox confirmed";
+                
+              } else if (hourBox.className == "dayBox blockedSelected") {
+              
+                hourBox.className = "dayBox blocked";
+              
+              } else {
+              
+                if (hourBox.className == "dayBox provFilled") {
+                
+                  hourBox.className = "dayBox provSelected";
+                
+                } else if (hourBox.className == "dayBox confirmed") {
+                
+                  hourBox.className = "dayBox confirmedSelected"
+                  
+                } else if (divvies[i].className == "dayBox blocked") {
+                
+                  divvies[i].className = "dayBox blockedSelected";
+                
+                } else {
+                
+                  hourBox.className = "dayBox selected";
+                }	
+                
+              }
+			  */
+			  
+			 if (hourBox.className == "dayBox selected") {
+                
+               hourBox.className = "dayBox";
+                
+             } else if (hourBox.className == "dayBox provSelected") {
+              
+                hourBox.className = "dayBox provFilled";
+                
+             } else if (hourBox.className == "dayBox confirmedSelected") {
+              
+                hourBox.className = "dayBox confirmed";
+                
+             } else if (hourBox.className == "dayBox blockedSelected") {
+              
+                hourBox.className = "dayBox blocked";
+				
+			 } else if (hourBox.className == "dayBox provFilled") {
+			 
+				hourBox.className = "dayBox provSelected";
+			 
+			 } else if (hourBox.className == "dayBox confirmed") {
+			 
+				hourBox.className = "dayBox confirmedSelected"
+			 
+			 } else if (hourBox.className == "dayBox blocked") {
+			 
+				hourBox.className = "dayBox blockedSelected";
+			 
+			 } else {
+                
+                  hourBox.className = "dayBox selected";
+             }	
+			  
+			  
+              
+              
+              var selectas = [];
+              var selectasIndex = 0;
+                  //Chris, there's something here.
+              for (var i = 0; i < divvies.length; i++) {
+                if (divvies[i].className == "dayBox selected" || divvies[i].className == "dayBox provSelected" || divvies[i].className == "dayBox confirmedSelected" || divvies[i].className == "dayBox blockedSelected") {
+                  selectas[selectasIndex] = divvies[i];
+                  selectasIndex++;
+                  }		
+                }
+                
+              
+              
+              
+              
+              if (selectas[0]) {
+                /*
+                document.getElementById("cleary").style.display = "block";
+                
+                document.getElementById("subby").style.display = "block";
+                
+                document.getElementById("delly").style.display = "block";
+                
+                document.getElementById("confy").style.display = "block";
+                
+                document.getElementById("unconfy").style.display = "block";
+                
+                document.getElementById("blocky").style.display = "block";
+                
+                document.getElementById("unblocky").style.display = "block";
+                */
+              } else {
+                /*
+                document.getElementById("cleary").style.display = "none";
+                
+                document.getElementById("subby").style.display = "none";
+                
+                document.getElementById("delly").style.display = "none";
+                
+                document.getElementById("confy").style.display = "none";
+                
+                document.getElementById("unconfy").style.display = "none";
+                
+                document.getElementById("blocky").style.display = "none";
+                
+                document.getElementById("unblocky").style.display = "none";
+                */
+              }
+              
+              
+              
+            } {# Function close. #}
+            
+              {# //////////////////////////////////////////////////////////////////////////////// #}
+                {# Insertion Code #}
+            
+            function submitSelections() {
+            
+              var selectus = "";
+              
+              if (!carouselAllowed) {
+                
+				  for (var i = 0; i < divvies.length; i++) {
+					if (divvies[i].className == "dayBox selected") {
+					  
+					  var IDSplit = divvies[i].id.split("-");
+					  
+					  selectus += IDSplit[1] + "-"; 
+					  
+					  
+					}		
+				  } 
+              
+			  } else {
+			  
+				alert("This is a carouseliing server.");
+			  
+			  }
+             
+              
+              
+              if (selectus == "") {
+              
+                clearSelections();
+                
+              
+              } else {
+              
+                var serverIDNumber = {{serverIDNumber}};
+                
+                var adSelection = document.getElementById('adSelector').value;
+                
+                loadAjax("{{ file_url("ad_desk_scheduler_handler") }}", remarkDivs, selectus, serverIDNumber, adSelection);
+                
+                
+              }	
+              
+              
+              
+            } 
+            
+            
+            function loadAjax(url, callback, selectus, serverIDNumber, adSelection) {
+            
+              var xhttp;
+              
+              if (window.XMLHttpRequest) {
+              
+                xhttp = new XMLHttpRequest();
+                
+              } else {
+              
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                
+              }
+              
+              xhttp.onreadystatechange = function() {
+              
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                
+                  var texto = xhttp.responseText;
+                  
+                  callback(texto);
+                }
+              };
+              
+              
+              xhttp.open("POST", url, true);
+              
+              xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              
+              xhttp.send("selectus=" + selectus + "&serverIDNumber=" + serverIDNumber + "&adSelection=" + adSelection);
+              
+              
+            }
+            
+            
+            
+            
+            
+            
+            function remarkDivs(texto){
+            
+              {#document.getElementById("testo").innerHTML = texto;#}
+              
+              
+              var textoSplit = texto.split("-");
+              
+              for (var i = 0; i < textoSplit.length - 1; i++) {
+              
+                document.getElementById("Day-" + textoSplit[i]).className = "dayBox provFilled";
+				
+				var adText = document.getElementById("adSelector").options[document.getElementById("adSelector").selectedIndex].text;
+				
+				document.getElementById("Day-" + textoSplit[i]).innerHTML += "<br>" + adText;
+              
+              }
+              
+                  
+              clearSelections();
+              
+            }
+            
+            {# ////////////////////////////////////////////////////////////////////////////////////////////// #}
+              {# Deletion Code #}
+              
+          function deleteSelections() {
+          
+            
+            var selectis = "";
+            
+            
+            for (var i = 0; i < divvies.length; i++) {
+              if (divvies[i].className == "dayBox provSelected") {
+                
+                var IDSplit = divvies[i].id.split("-");
+                
+                selectis += IDSplit[1] + "-";
+                
+                
+                
+              }
+            }
+            
+            if (selectis == "") {
+            
+              clearSelections();
+            
+            } else {
+            
+              var serverIDNumber = {{serverIDNumber}};
+            
+              deleteAjax("{{ file_url("ad_desk_scheduler_deleter") }}", unmarkDivs, selectis, serverIDNumber);
+            
+            }
+            
+          }	
+          
+          
+          function deleteAjax(url, callback, selectis, serverIDNumber) {
+          
+            var xhttp;
+              
+              if (window.XMLHttpRequest) {
+              
+                xhttp = new XMLHttpRequest();
+                
+              } else {
+              
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                
+              }
+              
+              xhttp.onreadystatechange = function() {
+              
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                
+                  var texti = xhttp.responseText;
+                  
+                  callback(texti);
+                }
+              };
+              
+              
+              xhttp.open("POST", url, true);
+              
+              xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              
+              xhttp.send("selectis=" + selectis + "&serverIDNumber=" + serverIDNumber);
+          
+          }
+          
+          function unmarkDivs(texti) {
+          
+            {#alert(texti);#}
+            
+            
+            var textiSplit = texti.split("-");
+              
+            for (var i = 0; i < textiSplit.length - 1; i++) {
+              
+              document.getElementById("Day-" + textiSplit[i]).className = "dayBox";
+			  
+			  var newText = document.getElementById("Day-" + textiSplit[i]).innerHTML.split("<br>");
+			   
+			  document.getElementById("Day-" + textiSplit[i]).innerHTML = newText[0];
+              
+            }
+            
+              
+              
+            clearSelections();
+          
+          }
+          
+          
+          /////////////////////////////////////////////////////////////////////////////////////////////////////////
+          {# The confirmer! #}
+          
+          function confirmSelections() {
+          
+            var selectoi = "";
+            
+            for (var i = 0; i < divvies.length; i++) {
+              if (divvies[i].className == "dayBox provSelected") {
+                
+                var IDSplit = divvies[i].id.split("-");
+                
+                selectoi += IDSplit[1] + "-";
+                
+                
+                
+              }
+            }
+            
+            if (selectoi == "") {
+            
+              clearSelections();
+            
+            } else {
+            
+              var serverIDNumber = {{serverIDNumber}};
+            
+              confirmAjax("{{ file_url("ad_desk_scheduler_confirmer") }}", confirmConfirmations, selectoi, serverIDNumber);
+            
+            }
+          }
+          
+          function confirmAjax(url, callback, selectoi, serverIDNumber) {
+          
+            var xhttp;
+              
+              if (window.XMLHttpRequest) {
+              
+                xhttp = new XMLHttpRequest();
+                
+              } else {
+              
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                
+              }
+              
+              xhttp.onreadystatechange = function() {
+              
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                
+                  var textoi = xhttp.responseText;
+                  
+                  callback(textoi);
+                }
+              };
+              
+              
+              xhttp.open("POST", url, true);
+              
+              xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              
+              xhttp.send("selectoi=" + selectoi + "&serverIDNumber=" + serverIDNumber);
+          
+          }
+          
+          
+          function confirmConfirmations(textoi) {
+          
+            //alert(textoi);
+            
+            var textoiSplit = textoi.split("-");
+            
+            for (var i = 0; i < textoiSplit.length - 1; i++) {
+              
+              document.getElementById("Day-" + textoiSplit[i]).className = "dayBox confirmed";
+              
+            }
+            
+            clearSelections();
+            
+          }
+          
+          ////////////////////////////////////////////////////////////////////////////////////////////////////////
+          
+          //And the last thing before carouseling, deleting loaders.
+          
+          function unconfirmSelections() {
+          
+            var selectui = "";
+            
+            for (var i = 0; i < divvies.length; i++) {
+              if (divvies[i].className == "dayBox confirmedSelected") {
+                
+                var IDSplit = divvies[i].id.split("-");
+                
+                selectui += IDSplit[1] + "-";
+                
+                
+                
+              }
+            }
+            
+            if (selectui == "") {
+            
+              clearSelections();
+            
+            } else {
+            
+              //alert(selectui);
+            
+              var serverIDNumber = {{serverIDNumber}};
+            
+              unconfirmAjax("{{ file_url("ad_desk_scheduler_unconfirmer") }}", unconfirmThem, selectui, serverIDNumber);
+            
+            }
+          
+          }//end function
+          
+          
+          function unconfirmAjax(url, callback, selectui, serverIDNumber) {
+          
+            var xhttp;
+              
+              if (window.XMLHttpRequest) {
+              
+                xhttp = new XMLHttpRequest();
+                
+              } else {
+              
+                xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                
+              }
+              
+              xhttp.onreadystatechange = function() {
+              
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                
+                  var textui = xhttp.responseText;
+                  
+                  callback(textui);
+                }
+              };
+              
+              
+              xhttp.open("POST", url, true);
+              
+              xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+              
+              xhttp.send("selectui=" + selectui + "&serverIDNumber=" + serverIDNumber);
+          
+          }
+          
+          function unconfirmThem(textui) {
+          
+            //alert(textui);
+            
+            
+            var textuiSplit = textui.split("-");
+            
+            for (var i = 0; i < textuiSplit.length - 1; i++) {
+			
+				document.getElementById("Day-" + textuiSplit[i]).className = "dayBox provFilled";
+              
+              //document.getElementById("Day-" + textuiSplit[i]).className = "dayBox";
+			  
+			  //var newText = document.getElementById("Day-" + textuiSplit[i]).innerHTML.split("<br>");
+			  
+			  //document.getElementById("Day-" + textuiSplit[i]).innerHTML = newText[0];
+              
+            }
+            
+          
+            clearSelections();
+          
+          }
+		  
+		  ///////////////////////////////////////////////////////////////////////////////////////
+          
+        function makeCarousel() {
+        
+          var selecten = "";
+              
+          if(carouselAllowed) {
+                
+			  for (var i = 0; i < divvies.length; i++) {
+				if (divvies[i].className == "dayBox selected") {
+					  
+				  var IDSplit = divvies[i].id.split("-");
+					  
+				  selecten += IDSplit[1] + "-"; 
+					  
+					  
+				}		
+			  }
+			  
+			} else {
+			
+				alert("This is a singleton server.");
+			
+			}
+      
+          if(selecten) {
+          
+            //alert(selecten);
+            
+            var serverIDNumber = {{serverIDNumber}};
+			
+			var IDSplit = divvies[0].id.split("-");
+			
+			var timestamp = IDSplit[1];
+            
+            //document.getElementById("goMake").innerHTML = "Click To Go Create Carousel";
+            
+           //document.getElementById("goMake").href = "{{file_url("ad_desk_make_carousel")}}?selecten=" + selecten + "&serverIDNumber=" + serverIDNumber + "&timestamp=" + timestamp;
+            
+			var formy = document.createElement("form");
+            
+			formy.setAttribute("action", "{{ file_url("ad_desk_make_carousel") }}");
+			formy.setAttribute("method", "post");
+			
+			var worth = document.createElement("input");
+			worth.setAttribute("type", "hidden");
+			worth.setAttribute("name", "timestamp");
+			worth.setAttribute("value", timestamp);
+			formy.appendChild(worth);
+          
+          
+			var otherWorth = document.createElement("input");
+			otherWorth.setAttribute("type", "hidden");
+			otherWorth.setAttribute("name", "serverIDNumber");
+			otherWorth.setAttribute("value", serverIDNumber);
+			formy.appendChild(otherWorth);
+			
+			var yetAnotherWorth = document.createElement("input");
+			yetAnotherWorth.setAttribute("type", "hidden");
+			yetAnotherWorth.setAttribute("name", "selecten");
+			yetAnotherWorth.setAttribute("value", selecten);
+			formy.appendChild(yetAnotherWorth);
+			
+			document.body.appendChild(formy);
+			formy.submit();
+			
+			
+          } else {
+          
+            clearSelections();
+          
+          } 	
+              
+        }//end function	
+          
+        
+          function blockSelections() {
+          
+            var selecteros = "";
+              
+              
+                
+            for (var i = 0; i < divvies.length; i++) {
+              if (divvies[i].className == "dayBox selected") {
+                  
+                var IDSplit = divvies[i].id.split("-");
+                
+                selecteros += IDSplit[1] + "-"; 
+                  
+                  
+              }		
+            } 
+              
+             
+              
+              
+              if (selecteros == "") {
+              
+                clearSelections();
+                
+              
+              } else {
+              
+                //alert(selecteros); 
+                
+                var clientName = document.getElementById("clients").value;
+                
+                blockAJAX("{{ file_url("ad_desk_blocking_handler") }}", blockThem, selecteros, clientName);
+              
+                
+                
+              }
+          
+          } //end function
+          
+          
+          function blockAJAX(url, callback, selecteros, clientName) {
+          
+          
+            var xhttp;
+                
+                if (window.XMLHttpRequest) {
+                
+                  xhttp = new XMLHttpRequest();
+                  
+                } else {
+                
+                  xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                  
+                }
+                
+                xhttp.onreadystatechange = function() {
+                
+                  if (xhttp.readyState == 4 && xhttp.status == 200) {
+                  
+                    var textoid = xhttp.responseText;
+                    
+                    callback(textoid);
+                  }
+                };
+                
+                
+                xhttp.open("POST", url, true);
+                
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                
+                xhttp.send("selecteros=" + selecteros + "&clientName=" + clientName);
+            
+          } //end function
+          
+          
+          function blockThem(textoid) {
+          
+            //alert(textoid);
+            
+            var textoidSplit = textoid.split("&");
+            
+            var secondSplit = textoidSplit[0].split("-");
+            
+			
+            for (var i = 0; i < secondSplit.length - 1; i++) {
+            
+              document.getElementById("Day-" + secondSplit[i]).className = "dayBox blocked";
+              
+              document.getElementById("Day-" + secondSplit[i]).innerHTML += "<br>" + textoidSplit[1];
+            
+            }
+			
+            
+            //var textoidSplit = textoid.split("-");
+            
+            //for (var i = 0; i < textoidSplit.length - 1; i++) {
+              
+              //document.getElementById("Day-" + textoidSplit[i]).className = "dayBox blocked";
+              
+            //} 
+            
+          
+            clearSelections();
+          
+          } //end function
+          
+          
+          
+          //Above is the code for blocking out hours, below the code for unblocking. 
+          
+          
+        function unblockSelections() {
+          
+            //alert('yay');
+            
+            
+            var selectioBros = "";
+              
+              
+                
+			for (var i = 0; i < divvies.length; i++) {
+				if (divvies[i].className == "dayBox blockedSelected") {
+                  
+				var IDSplit = divvies[i].id.split("-");
+                
+				selectioBros += IDSplit[1] + "-"; 
+                  
+                  
+				}			
+			} 
+              
+            if (selectioBros == "") {
+			
+              clearSelections();
+			  
+             } else {
+			 
+               unblockAJAX("{{ file_url("ad_desk_unblocking_handler") }}", unblockThem, selectioBros);
+			   
+			   
+             }
+            
+          
+          
+        } //end function
+		
+		function unblockAJAX(url, callback, selectioBros) {
+		
+			 var xhttp;
+                
+                if (window.XMLHttpRequest) {
+                
+                  xhttp = new XMLHttpRequest();
+                  
+                } else {
+                
+                  xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                  
+                }
+                
+                xhttp.onreadystatechange = function() {
+                
+                  if (xhttp.readyState == 4 && xhttp.status == 200) {
+                  
+                    var textola = xhttp.responseText;
+                    
+                    callback(textola);
+                  }
+                };
+                
+                
+                xhttp.open("POST", url, true);
+                
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                
+                xhttp.send("selectioBros=" + selectioBros);
+		
+		
+		
+		
+		
+		} //end function 
+		
+		function unblockThem(textola) {
+		
+			var textolaSplit = textola.split("-");
+			
+			for (i = 0; i < textolaSplit.length - 1; i++) {
+			
+				 document.getElementById("Day-" + textolaSplit[i]).className = "dayBox";
+				 
+				 var newText = document.getElementById("Day-" + textolaSplit[i]).innerHTML.split("<br>");
+				 
+				 document.getElementById("Day-" + textolaSplit[i]).innerHTML = newText[0];
+			
+			
+			}
+			
+			clearSelections();
+		
+		} //end function 
+		
+		function returno() {
+		
+			var serverID = {{serverIDNumber}};
+		
+			var formy = document.createElement("form");
+            
+			formy.setAttribute("action", "{{ file_url("ad_desk_calendar") }}");
+			formy.setAttribute("method", "post");
+            
+			var otherWorth = document.createElement("input");
+			otherWorth.setAttribute("type", "hidden");
+			otherWorth.setAttribute("name", "serverID");
+			otherWorth.setAttribute("value", serverID);
+			formy.appendChild(otherWorth);
+							
+			document.body.appendChild(formy);
+			formy.submit();
+		
+		
+		
+		}//end function
+		
+		function updateCarousel() {
+		
+			var selecten = "";
+			
+			//var pattern = "";
+              
+          if(carouselAllowed) {
+		  
+			//var patternSource = document.getElementsByClassName("dayBox provSelected");
+			
+			//var patternSourceSplit = patternSource[0].innerHTML.split(" --- ");
+			
+			//pattern = patternSourceSplit[1];
+		  
+               /* 
+			  for (var i = 0; i < divvies.length; i++) {
+				if (divvies[i].className == "dayBox provSelected") {
+				
+					divviesInternal = divvies[i].innerHTML;
+					
+					divviesInternalSplit = divviesInternal.split(" --- ");
+					
+					if (divviesInternalSplit[1] == pattern) {
+					  
+						  var IDSplit = divvies[i].id.split("-");
+							  
+						  selecten += IDSplit[1] + "-"; 
+						  
+					} else {
+					
+						break;
+					
+					}//else
+					  
+				}//first if		
+			  }//i-loop
+			  */
+			  
+			    for (var i = 0; i < divvies.length; i++) {
+				if (divvies[i].className == "dayBox provSelected") {
+					  
+				  var IDSplit = divvies[i].id.split("-");
+					  
+				  selecten += IDSplit[1] + "-"; 
+					  
+					  
+				}		
+			  }
+			  
+			  
+			} else {
+			
+				alert("This is a singleton server.");
+			
+			}
+      
+          if(selecten) {
+          
+            //alert(selecten);
+            
+            var serverIDNumber = {{serverIDNumber}};
+			
+			var IDSplit = divvies[0].id.split("-");
+			
+			var timestamp = IDSplit[1];
+            
+         
+            
+			var formy = document.createElement("form");
+            
+			formy.setAttribute("action", "{{ file_url("ad_desk_update_carousel") }}");
+			formy.setAttribute("method", "post");
+			
+			var worth = document.createElement("input");
+			worth.setAttribute("type", "hidden");
+			worth.setAttribute("name", "timestamp");
+			worth.setAttribute("value", timestamp);
+			formy.appendChild(worth);
+          
+          
+			var otherWorth = document.createElement("input");
+			otherWorth.setAttribute("type", "hidden");
+			otherWorth.setAttribute("name", "serverIDNumber");
+			otherWorth.setAttribute("value", serverIDNumber);
+			formy.appendChild(otherWorth);
+			
+			var yetAnotherWorth = document.createElement("input");
+			yetAnotherWorth.setAttribute("type", "hidden");
+			yetAnotherWorth.setAttribute("name", "selecten");
+			yetAnotherWorth.setAttribute("value", selecten);
+			formy.appendChild(yetAnotherWorth);
+			
+			document.body.appendChild(formy);
+			formy.submit();
+			
+			
+          } else {
+          
+            clearSelections();
+          
+          } 	
+		
+		
+		}//end function
+		
+        
+		function quickAdd() {
+		
+			if (carouselAllowed) {
+		
+				var theAd = document.getElementById("adSelector").value;
+				
+				var theDuration = document.getElementById("quickDuration").value;
+				
+				var theSelected = "";
+				
+				 for (var i = 0; i < divvies.length; i++) {
+					if (divvies[i].className == "dayBox provSelected") {
+					  
+						var IDSplit = divvies[i].id.split("-");
+					  
+						theSelected += IDSplit[1] + "-"; 
+					  
+					  
+					}		
+				}
+				
+				if (theSelected) {
+				
+					quickAJAX("{{ file_url("ad_desk_quick_add") }}", quickDone, theAd, theDuration, theSelected);
+				
+				} else {
+				
+					clearSelections();
+				
+				}
+				
+			} else {
+			
+				alert("This is a singleton server.");
+			
+			}
+		
+		} //end function
+		
+		function quickAJAX(url, callback, theAd, theDuration, theSelected) {
+		
+		
+			 var xhttp;
+                
+                if (window.XMLHttpRequest) {
+                
+                  xhttp = new XMLHttpRequest();
+                  
+                } else {
+                
+                  xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+                  
+                }
+                
+                xhttp.onreadystatechange = function() {
+                
+                  if (xhttp.readyState == 4 && xhttp.status == 200) {
+                  
+                    var text = xhttp.responseText;
+                    
+                    callback(text);
+                  }
+                };
+                
+                
+                xhttp.open("POST", url, true);
+                
+                xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+                
+                xhttp.send("theAd=" + theAd + "&theDuration=" + theDuration + "&theSelected=" + theSelected);
+		
+		
+		}
+		
+		function quickDone(text) {
+		
+			alert(text);
+			
+			location.reload();
+		
+		}
+		
+		
+            
+</script> 

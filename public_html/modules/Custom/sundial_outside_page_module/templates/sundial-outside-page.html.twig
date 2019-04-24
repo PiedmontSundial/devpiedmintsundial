@@ -1,0 +1,90 @@
+{% for node in nodes %}
+  {% if node.bundle() == 'events' %}
+    <script>
+      function clickEventDiv(div) {
+        div.style.backgroundColor = "#dedede";
+      }
+    </script>
+    <a class="events-temlpate-link" href="/node/{{ node.id }}"" rel="bookmark">
+      <div class="event-listing" onclick="clickEventDiv(this)">
+        <div class="event-listing-date-box-container">
+          <div class="event-listing-date-box">
+            <div class="event-listing-date">
+              {{ node.field_date_of_event.0.value|date("d") }}<br>
+              {{ node.field_date_of_event.0.value|date("M") }}
+              {#}
+              {{ node.field_event_date.value|date("d") }}<br>
+              {{ node.field_event_date.value|date("M") }}
+              #}
+            </div>
+          </div>
+        </div>
+        <div class="event-listing-basic float-left">
+          <div class="event-listing-title">
+            {{ node.title.value }}
+          </div>
+        </div>
+        <div class="event-listing-info float-right">
+          {{ node.field_venue.entity.title.value }}<br><br>
+          {{ node.field_venue.entity.field_city.entity.name.value }}
+        </div><br>
+      </div>
+    </a>
+  {% elseif node.bundle == 'sundial_article' %}
+    <div class="article-listing">
+      <div class="">
+        <div id="Title-wrapper" class="row">
+          {#<div class="article-side-mark-container event-title-box">
+            <div class="article-yellow-side-mark event-title-side-mark">
+            </div>
+          </div>#}
+          <div class="article-listing-title">
+            <a id="Event-title-box" class="article-title-box title-box" href="/node/{{ node.id }}" rel="bookmark">
+              {{ node.title.value }}
+            </a>
+          </div>
+        </div>
+        <script>
+        var subBoxes = document.getElementsByClassName("event-title-box");
+        var subSideBoxes = document.getElementsByClassName("event-title-side-mark");
+        for(var i = 0; i < subBoxes.length; i++) {
+          var height = subBoxes[i].offsetHeight;
+          subSideBoxes[i].style.height = height + "px";
+        }
+          window.addEventListener("resize", function() {
+            var subBoxes = document.getElementsByClassName("event-title-box");
+            var subSideBoxes = document.getElementsByClassName("event-title-side-mark");
+            for(var i = 0; i < subBoxes.length; i++) {
+            var height = subBoxes[i].offsetHeight;
+            subSideBoxes[i].style.height = height + "px";
+            }
+          });
+        </script>
+        <div>
+          {% set text = node.body.value|striptags %}
+          {{ text|length >= 200 ? text|slice(0, 260) ~ '...' : text }}
+        </div>
+        by <span class="article-listing-author">
+          {{ node.field_author.entity.title.value }} 
+        </span>
+        <span class="article-date float-right">
+          {{ node.field_filed_on.0.value|date("F j, Y g:i a") }}
+          {#{{ node.field_date_filed.value|date("F j, Y g:i a") }}#}
+        </span>
+      </div>
+    </div>
+  {% endif %}
+{% endfor %}
+
+<script>
+  var i;
+  var basicBoxes = document.getElementsByClassName("event-listing-basic");
+  var parentBoxes = new Array();
+  for (i=0; i<basicBoxes.length; i++) {
+    parentBoxes[i] = basicBoxes[i].parentElement;
+  }
+  for (i=0; i<basicBoxes.length; i++) {
+    var divHeight = parentBoxes[i].offsetHeight;
+    basicBoxes[i].style.height = divHeight + "px";
+  }
+</script>

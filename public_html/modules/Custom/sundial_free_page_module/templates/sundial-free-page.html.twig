@@ -1,0 +1,45 @@
+{% for node in nodes %}
+  <script>
+      function clickEventDiv(div) {
+        div.style.backgroundColor = "#dedede";
+      }
+  </script>
+  <a class="events-temlpate-link" href="/node/{{ node.id }}"" rel="bookmark">
+    <div class="event-listing" onclick="clickEventDiv(this)">
+      <div class="event-listing-date-box-container">
+        <div class="event-listing-date-box">
+          <div class="event-listing-date">
+            {{ node.field_date_of_event.0.value|date("d") }}<br>
+            {{ node.field_date_of_event.0.value|date("M") }}
+            {#}
+            {{ node.field_event_date.value|date("d") }}<br>
+            {{ node.field_event_date.value|date("M") }}
+            #}
+          </div>
+        </div>
+      </div>
+      <div class="event-listing-basic float-left">
+        <div class="event-listing-title">
+          {{ node.title.value }}
+        </div>
+      </div>
+      <div class="event-listing-info float-right">
+        {{ node.field_venue.entity.title.value }}<br><br>
+        {{ node.field_venue.entity.field_city.entity.name.value }}
+      </div><br>
+    </div>
+  </a>
+{% endfor %}
+
+<script>
+  var i;
+  var basicBoxes = document.getElementsByClassName("event-listing-basic");
+  var parentBoxes = new Array();
+  for (i=0; i<basicBoxes.length; i++) {
+    parentBoxes[i] = basicBoxes[i].parentElement;
+  }
+  for (i=0; i<basicBoxes.length; i++) {
+    var divHeight = parentBoxes[i].offsetHeight;
+    basicBoxes[i].style.height = divHeight + "px";
+  }
+</script>

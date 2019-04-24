@@ -1,0 +1,57 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+{{ attach_library('classy/view') }}
+<article{{ attributes.addClass(classes) }}>
+	<div>
+	
+	
+	<p>Chose which ad location to manage.</p>
+	
+	<div style="height:100px;width:1000px;border-style:solid" id="1" onclick="passToCalendar(this.id)">Server 1</div><br>
+	<div style="height:500px;width:100px;border-style:solid" id="2" onclick="passToCalendar(this.id)">Server 2</div>
+	<div style="height:100px;width:800px;border-style:solid;float:right" id="3" onclick="passToCalendar(this.id)">Server 3</div>
+	
+	
+	<script>
+	
+	{# The sole purpose of this function is to pass the server ID to the calendar page. #}
+	
+	function passToCalendar(serverID) {
+	
+		{#alert(serverID);#}
+		
+		
+		
+		if (serverID) {
+		
+			var formy = document.createElement("form");
+			formy.setAttribute("action", "{{ file_url("ad_desk_calendar") }}");
+			formy.setAttribute("method", "post");
+		
+			var worth = document.createElement("input");
+			worth.setAttribute("type", "hidden");
+			worth.setAttribute("name", "serverID");
+			worth.setAttribute("value", serverID);
+			formy.appendChild(worth);
+			
+			document.body.appendChild(formy);
+			formy.submit();
+			
+			
+		}
+		
+		
+	
+		{#window.location.href = "{{ file_url("ad_desk_calendar") }}?serverID=" + serverID;#}
+	
+	}
+	
+	</script>
+	
+	
+	
+	</div>
+</article>

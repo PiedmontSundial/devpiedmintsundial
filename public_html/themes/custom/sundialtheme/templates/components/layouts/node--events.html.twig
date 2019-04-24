@@ -1,0 +1,27 @@
+<a class="events-temlpate-link" href="{{ url }}" rel="bookmark">
+  <div class="event-listing" onclick="clickEventDiv(this)">
+    <div class="event-listing-date-box-container">
+      <div class="event-listing-date-box">
+        <div class="event-listing-date">
+          {{ node.field_event_date.value|date("d") }}<br>
+          {{ node.field_event_date.value|date("M") }}
+        </div>
+      </div>
+    </div>
+    <div class="event-listing-basic float-left">
+      <div class="event-listing-title">
+        {{ node.title.value }}
+      </div>
+    </div>
+    <div class="event-listing-info float-right">
+      {{ node.field_venue.entity.title.value }}<br><br>
+      {{ node.field_venue.entity.field_city.entity.name.value }}
+    </div><br>
+  </div>
+</a>
+
+<script>
+  function clickEventDiv(div) {
+    div.style.backgroundColor = "#dedede";
+  }
+</script>

@@ -1,0 +1,25 @@
+<h1>Enter new performer details:</h1>
+
+{% if node %}
+  <form id="Performer-form" action="/edit_event" method="post">
+    Performer Name: <input type="text" name="newPerformerName" value="{{ name }}" required><br>
+    Performer Description:<br>
+    <textarea id="Performer-blurb-imput" name="blurb" form="Performer-form" rows="6" cols="100"
+      placeholder="Enter or paste performer description here"></textarea><br>
+    <input type="hidden" name="nodeId" value="{{ node }}">
+    <input type="hidden" name="databaseEventId" value="{{ dbEntryId }}">
+    <input type="hidden" name="isCreatingPerformer" value="1">
+    <input type="submit" value="create performer">
+  </form>
+{% else %}
+  <form id="Performer-form" action="/create_event" method="post">
+    Performer Name: <input type="text" name="newPerformerName" value="{{ name }}" required><br>
+    Performer Description:<br>
+    <textarea id="Performer-blurb-imput" name="blurb" form="Performer-form" rows="6" cols="100"
+      placeholder="Enter or paste performer description here"></textarea><br>
+    <input type="hidden" name="nodeId" value="{{ node }}">
+    <input type="hidden" name="isCreatingPerformer" value="1">
+    <input type="hidden" name="venueId" value="{{ venueId }}">
+    <input type="submit" value="create performer">
+  </form>
+{% endif %}

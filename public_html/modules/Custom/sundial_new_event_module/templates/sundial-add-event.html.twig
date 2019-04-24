@@ -1,0 +1,271 @@
+<script>
+  var venues = [];
+  var venueId;
+  var venueName;
+  var performers = [];
+  var performerId;
+  var performerName;
+  var buttonOutput;
+  var eventTypes = [];
+  
+  {% for venue in venues %}
+    venues.push(["{{ venue.title.value }}", {{ venue.id }}, "{{ venue.title.value|lower }}"]);
+  {% endfor %}
+  
+  {% for performer in performers %}
+    performers.push(["{{ performer.title.value }}", {{ performer.id }}, "{{ performer.title.value|lower }}"]);
+  {% endfor %}
+  
+  {% for type in event_types %}
+    eventTypes.push(["{{ type.name.value }}", {{ type.id }}]);
+  {% endfor %}
+  
+  function showVenueHint(rawStr) {
+    var str = rawStr.toLowerCase();
+    var trimStr = rawStr.trim();
+    buttonOutput = "";
+    for (var i = 0; i < venues.length; i++) {
+      if (venues[i][2].indexOf(str) != -1) {
+        buttonOutput += " <button onclick='addVenue(" + venues[i][1] + ", \"" + venues[i][0] + "\")'>" + venues[i][0] + "</button> ";
+      }
+    }
+    if (buttonOutput == "") {
+      buttonOutput += "<button onclick=\"addVenue(0, 'none')\">Create event with no set venue for now</button>";
+    } else {
+      buttonOutput += "<br><br><button onclick=\"addVenue(0, 'none')\">Create event with no set venue for now</button>";
+    }
+    if (trimStr != "") {
+      buttonOutput += "<br><br><button onclick='newVenue()'>Create new venue with this name</button>";
+    }
+    document.getElementById("VenueButtonArea").innerHTML = buttonOutput;
+  }
+  
+  function addVenue(pickedId, pickedName) {
+    venueId = pickedId;
+    venueName = pickedName;
+    document.getElementById("Venue-pick").innerHTML = "<h1>Venue is " + pickedName + "</h1>";
+    document.getElementById("Performer-pick").style.display = "block";
+  }
+  
+  function showPerformerHint(rawStr) {
+    var str = rawStr.toLowerCase();
+    var trimStr = rawStr.trim();
+    buttonOutput = "";
+    for (var i = 0; i < performers.length; i++) {
+      if (performers[i][2].indexOf(str) != -1) {
+        buttonOutput += " <button onclick='addPerformer(" + performers[i][1] + ", \""
+          + performers[i][0] + "\")'>" + performers[i][0] + "</button> ";
+      }
+    }
+    if (buttonOutput == "") {
+      buttonOutput += "<button onclick=\"addPerformer(0, 'none')\">Create event with no performer</button>";
+    } else {
+      buttonOutput += "<br><br><button onclick=\"addPerformer(0, 'none')\">Create event with no performer</button>";
+    }
+    if (trimStr != "") {
+      buttonOutput += "<br><br><button onclick='newPerformer()'>Create new performer with this name</button>";
+    }
+    document.getElementById("PerformerButtonArea").innerHTML = buttonOutput;
+  }
+  
+  function addPerformer(pickedId, pickedName) {
+    performerId = pickedId;
+    performerName = pickedName;
+    document.getElementById("Performer-pick").innerHTML = "<h1>Lead performer is " + pickedName + "</h1>";
+    document.getElementById("Basic-info-inputs").style.display = "block";
+    document.getElementById("Venue-id-input").value = venueId;
+    document.getElementById("Performer-id-input").value = performerId;
+    fillName();
+  }
+  
+  function fillName() {
+    if (performerId && venueId) {
+       var defaultName = performerName;
+    	document.getElementById("Event-name-imput").value = defaultName;
+    }
+  }
+  
+  function showCostInput() {
+		document.getElementById("Cost-inputs").style.display = "block";
+	}
+	
+	function hideCostInput() {
+		document.getElementById("Cost-inputs").style.display = "none";
+	}
+  
+  function showSingleCostInput() {
+    document.getElementById("Range-cost-inputs").style.display = "none";
+    document.getElementById("Single-cost-inputs").style.display = "block";
+	}
+	
+	function showRangeCostInput() {
+		document.getElementById("Single-cost-inputs").style.display = "none";
+		document.getElementById("Range-cost-inputs").style.display = "block";
+	}
+  
+  function newVenue() {
+    var nameVal = document.getElementById("VenueNameInput").value;
+    
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/quick_add_new_venue");
+		
+		var nodeIdInput = document.createElement("input");
+		nodeIdInput.setAttribute("type", "hidden");
+		nodeIdInput.setAttribute("name", "nodeId");
+		nodeIdInput.setAttribute("value", 0);
+		form.appendChild(nodeIdInput);
+		
+		var venueNameInput = document.createElement("input");
+		venueNameInput.setAttribute("type", "hidden");
+		venueNameInput.setAttribute("name", "venueName");
+		venueNameInput.setAttribute("value", nameVal);
+		form.appendChild(venueNameInput);
+    
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function newPerformer() {
+    var nameVal = document.getElementById("PerformerNameInput").value;
+    
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/quick_add_new_performer");
+		
+		var nodeIdInput = document.createElement("input");
+		nodeIdInput.setAttribute("type", "hidden");
+		nodeIdInput.setAttribute("name", "nodeId");
+		nodeIdInput.setAttribute("value", 0);
+		form.appendChild(nodeIdInput);
+		
+		var performerNameInput = document.createElement("input");
+		performerNameInput.setAttribute("type", "hidden");
+		performerNameInput.setAttribute("name", "performerName");
+		performerNameInput.setAttribute("value", nameVal);
+		form.appendChild(performerNameInput);
+    
+    var venueIdInput = document.createElement("input");
+		venueIdInput.setAttribute("type", "hidden");
+		venueIdInput.setAttribute("name", "venueId");
+		venueIdInput.setAttribute("value", venueId);
+		form.appendChild(venueIdInput);
+    
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+</script>
+
+{% if newVenueId %}
+  <div id="Venue-pick"></div>
+  <script>
+    venueId = {{ newVenueId }};
+    for (var i = 0; i < venues.length; i++) {
+      if (venues[i][1] == {{ newVenueId }}) {
+        venueName = venues[i][0];
+      }
+    }
+    document.getElementById("Venue-pick").innerHTML = "<h1>Venue is " + venueName + "</h1>";
+  </script>
+{% elseif newPerformerId %}
+  <div id="Venue-pick"></div>
+  <script>
+    venueId = {{ venueId }};
+    for (var i = 0; i < venues.length; i++) {
+      if (venues[i][1] == {{ venueId }}) {
+        venueName = venues[i][0];
+      }
+    }
+    if (venueId) {
+      document.getElementById("Venue-pick").innerHTML = "<h1>Venue is " + venueName + "</h1>";
+    } else {
+      document.getElementById("Venue-pick").innerHTML = "<h1>Venue blank for now</h1>";
+    }
+  </script>
+{% else %}
+  <div id="Venue-pick">
+    <h1>Please pick a venue for the event</h1>
+    
+    <input id="VenueNameInput" type="text" name="venueName" onkeyup="showVenueHint(this.value)">
+    <br><br>
+    <p id="VenueButtonArea"><button onclick="addVenue(0, 'none')">Create event with no set venue for now</button></p>
+  </div>
+{% endif %}
+
+{% if newPerformerId %}
+  <div id="Performer-pick"></div>
+  <script>
+    performerId = {{ newPerformerId }};
+    for (var i = 0; i < performers.length; i++) {
+      if (performers[i][1] == {{ newPerformerId }}) {
+        performerName = performers[i][0];
+      }
+    }
+    document.getElementById("Performer-pick").innerHTML = "<h1>Performer is " + performerName + "</h1>";
+  </script>
+{% else %}
+<div id="Performer-pick" style="display:{% if newVenueId %}block{% else %}none{% endif %};">
+  <h1>Please pick the lead performer for the event or click "no Performer"</h1>
+  
+  <input id="PerformerNameInput" type="text" name="performerName" onkeyup="showPerformerHint(this.value)"><br><br>
+  <p id="PerformerButtonArea"><button onclick="addPerformer(0, 'none')">Create event with no performer</button></p>
+</div>
+{% endif %}
+
+<div id="Basic-info-inputs" style="display:{% if newPerformerId %}block{% else %}none{% endif %};">
+  <form id="Event-info-form" action="/edit_event" method="post">
+    <input type="hidden" name="isCreatingNewEvent" value="1">
+    <input id="Venue-id-input" type="hidden" name="venueId" value="0">
+    <input id="Performer-id-input" type="hidden" name="performerId" value="0">
+    <textarea id="Event-name-imput" form="Event-info-form" name="name"
+      rows="2" cols="100">New Event</textarea><br>
+    <span>Select the Primary Event Type:</span><br>
+		<select name="eventType">
+      {% for type in event_types %}
+        <option value="{{ type.id }}">{{ type.name.value }}</option>
+      {% endfor %}
+		</select><br><br>
+    <span>Select up to two secondary Event Types:</span><br>
+		1: <select name="eventSecondaryTypeOne">
+      <option value="0">none</option>
+      {% for type in event_types %}
+        <option value="{{ type.id }}">{{ type.name.value }}</option>
+      {% endfor %}
+		</select><br><br>
+		2: <select name="eventSecondaryTypeTwo">
+      <option value="0">none</option>
+      {% for type in event_types %}
+        <option value="{{ type.id }}">{{ type.name.value }}</option>
+      {% endfor %}
+		</select><br><br>
+    <textarea id="Event-blurb-imput" name="blurb" form="Event-info-form" rows="6" cols="100"
+      placeholder="Enter or paste event blurb here"></textarea><br>
+  	<span>Enter the date of the event: </span><input type="date" name="date" min="{{ "now"|date("Y-m-d", "America/New_York") }}" required><br>
+  	<span>Enter start time: </span><input type="number" name="startHour" min="1" max="12" style="width:40px;" required> : 
+  	<input type="number" name="startMinute" value="00" min="0" max="59" style="width:40px;">
+  	<input type="radio" name="startAmPm" value="PM" checked> PM
+  	<input type="radio" name="startAmPm" value="AM"> AM
+  	<br>
+    <span>Is there a cost for this event?</span>
+		<input type="radio" name="hasCost" value="1" checked onclick="hideCostInput()"> No
+		<input type="radio" name="hasCost" value="0" onclick="showCostInput()"> Yes<br>
+		<div id="Cost-inputs" style="display:none;">
+			<span>Are you setting a single cost or a range?</span>
+			<input type="radio" name="hasCostRange" value="0" checked onclick="showSingleCostInput()"> Single Cost
+			<input type="radio" name="hasCostRange" value="1" onclick="showRangeCostInput()"> Cost Range<br>
+			<div id="Single-cost-inputs" style="display:block;">
+				<span>Enter cost: </span>$<input type="number" name="costDollars"  style="width:60px;">. 
+				<input type="number" name="costCents" value="00" min="0" max="99" style="width:40px;">
+			</div>
+			<div id="Range-cost-inputs" style="display:none;">
+				<span>Enter cost: </span>$<input type="number" name="costDollarsForRange"  style="width:60px;">. 
+				<input type="number" name="costCentsForRange" value="00" min="0" max="99" style="width:40px;">
+				<span> - </span>$<input type="number" name="rangeCostDollars"  style="width:60px;">. 
+				<input type="number" name="rangeCostCents" value="00" min="0" max="99" style="width:40px;"><br>
+			</div>	
+		</div>
+    <input type="submit" value="create event">
+  </form>
+</div>
+

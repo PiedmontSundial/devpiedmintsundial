@@ -1,0 +1,42 @@
+<?php
+
+
+
+function ad_desk_theme($existing, $type, $theme, $path) {
+
+	return [
+	
+		'ad_desk_main'=>[],
+		
+		'ad_desk_ad_placement'=>[],
+		
+		'ad_desk_calendar' => [
+			'variables' => ['arrayCalendar' => NULL, 'displayMonth' => NULL, 'displayYear' => NULL, 'futures' => NULL, 'serverIDNumber' => NULL, 'serverTitle' => NULL, 'carouselAllowed' => NULL],
+			
+		],
+		
+		'ad_desk_scheduler' => [
+			'variables' => ['numberOfHours' => NULL, 'hourBoxArray' => NULL, 'serverIDNumber' => NULL, 'adIDs' => NULL, 'adTitles' => NULL, 'clientIDs' => NULL, 'clientTitles' => NULL, 'serverTitle' => NULL, 'carouselAllowed' => NULL],
+		
+		],
+		
+		'ad_desk_make_carousel' => [
+			'variables' => ['selecten' => NULL, 'serverIDNumber' => NULL, 'adIDs' => NULL, 'adTitles' => NULL, 'timestamp' => NULL],
+		
+		],
+		
+		'ad_desk_update_carousel' => [
+			'variables' => ['selecten' => NULL, 'serverIDNumber' => NULL, 'adIDs' => NULL, 'adTitles' => NULL, 'timestamp' => NULL, 'carouselAdIDs' => NULL, 'carouselAdDurations' => NULL, 'firstFixed' => NULL, 'secondFixed' => NULL, 'adList' => NULL],
+		
+		],
+		
+		//'node__ad_server' => ['render element' => 'content', 'base hook' => 'node', 'template' => 'node--ad-server', 'path' => drupal_get_path('module', 'ad_desk') . '/templates'],
+		
+		//'node__ad_server__full' => ['render element' => 'content', 'base hook' => 'node', 'template' => 'node--ad-server--full', 'path' => drupal_get_path('module', 'ad_desk') . '/templates'],
+	
+	];
+
+
+}
+
+?>

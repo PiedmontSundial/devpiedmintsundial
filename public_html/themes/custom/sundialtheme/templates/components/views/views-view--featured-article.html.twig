@@ -1,0 +1,89 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+  <div class="block bbd-5">
+  <div class="block">
+    {% set realRows = rows[0]["#rows"] %}
+    {% set myEntity = 0 %}
+    {% for rowKey, row in realRows %}
+      {% set anEntity = row["#row"]._entity %}
+	  {% if anEntity.field_section.value == 'general' %}
+	    {% set myEntity = anEntity %}
+	  {% endif %}
+    {% endfor %}
+    {% set article = myEntity.field_article.entity %}
+    <div class="field-content shadow img-thumbnail" style="margin-bottom: 1rem!important;">
+      <img src="{{ file_url(article.field_featured_image.entity.field_image.entity.uri.value) }}"
+           alt="{{ article.field_featured_image.entity.field_image.entity.alt.value }}" class="img-fluid">
+    </div>
+    <div class="featured-article-title-container">
+      <div class="article-side-mark-container featured-article-side-mark-container">
+        <div class="article-yellow-side-mark article-title-side-mark">
+        </div>
+      </div>
+      <div class="featured-article-title-box">
+        <h3 class="featured-article-featuredHeadline-3">
+          <a href="/node/{{ article.id }}" hreflang="en">
+            {{ article.title.value }}
+          </a>
+        </h3>
+      </div>
+    </div>
+    <script>
+      var subBoxes = document.getElementsByClassName("featured-article-featuredHeadline-3");
+	    var subSideBoxes = document.getElementsByClassName("article-title-side-mark");
+	    for(var i = 0; i < subBoxes.length; i++) {
+	      var height = subBoxes[i].offsetHeight;
+	      subSideBoxes[i].style.height = height + "px";
+	    }
+      window.addEventListener("resize", function() {
+        var subBoxes = document.getElementsByClassName("featured-article-featuredHeadline-3");
+        var subSideBoxes = document.getElementsByClassName("article-title-side-mark");
+        for(var i = 0; i < subBoxes.length; i++) {
+	        var height = subBoxes[i].offsetHeight;
+	        subSideBoxes[i].style.height = height + "px";
+        }
+      });
+    </script>
+    {% set currentTimeStamp = date().timestamp %}
+    {% set timeDifference = currentTimeStamp - article.created.value %}
+    {% if timeDifference >= 31570560 %}
+      {% set yearsAgo = timeDifference // 31570560 %}
+	  {% set timeMssg = yearsAgo ~ ' years ago' %}
+    {% elseif timeDifference >= 2630880 %}
+      {% set monthsAgo = timeDifference // 2630880 %}
+	  {% set timeMssg = monthsAgo ~ ' months ago' %}
+    {% elseif timeDifference >= 604800 %}
+      {% set weeksAgo = timeDifference // 604800 %}
+	  {% set timeMssg = weeksAgo ~ ' weeks ago' %}
+    {% elseif timeDifference >= 86400 %}
+      {% set daysAgo = timeDifference // 86400 %}
+	  {% set timeMssg = daysAgo ~ ' days ago' %}
+    {% elseif timeDifference >= 3600 %}
+      {% set hoursAgo = timeDifference // 3600 %}
+	  {% set timeMssg = hoursAgo ~ ' hours ago' %}
+    {% elseif timeDifference >= 60 %}
+      {% set minutesAgo = timeDifference // 60 %}
+	  {% set timeMssg = minutesAgo ~ ' minutes ago' %}
+    {% else %}
+	  {% set timeMssg = timeDifference ~ ' seconds ago' %}
+    {% endif %}
+    <div class="byline">
+      by <span class="author">{{ article.field_author.entity.title.value }}</span>,
+      <span class="date">{{ article.field_date_filed.0.value|date('D, d M Y', "America/New_York") }}</span>
+    </div>
+    <div class="summary">
+      {% set summaryLength = 6300 %}
+      {% if article.field_featured_image.entity.field_image.entity.uri.value != '' %}
+	    {% set summaryLength = 200 %}
+	  {% endif %}
+      {% set text = article.body.value|render|striptags %}
+	  {{ text|length >= summaryLength ? text|slice(0, summaryLength) ~ '...' : text }}
+      <a href="/node/{{ article.id }}" class="views-more-link">Read Full Story</a>
+    </div>
+  </div>
+  </div>
+</article>

@@ -1,0 +1,6 @@
+name: form_test
+description: 'A module to see if I am allowed to post'
+package: Custom
+
+type: module
+core: 8.x

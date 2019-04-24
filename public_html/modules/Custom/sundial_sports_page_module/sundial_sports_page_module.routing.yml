@@ -1,0 +1,7 @@
+sundial_sports_page:
+  path: '/sports-list'
+  defaults:
+    _controller: 'Drupal\sundial_sports_page_module\Controller\SportsPageController::sportsList'
+    _title: 'Sports Content'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,48 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+  <div id="Mobile-latest-news-title-div" class="block-title-mobile border-bottom mobile-news-and-events" onclick="toggleMobileLatestNews()">
+    LATEST NEWS <img src="/themes/custom/sundialtheme/images/arrow_left.png" id="Mobile-latest-news-left-arrow" class="mobile-left-arrow">
+    <img src="/themes/custom/sundialtheme/images/arrow_down.png" id="Mobile-latest-news-down-arrow" class="mobile-down-arrow"
+      style="display:none;">
+  </div>
+  {% set realRows = rows[0]["#rows"] %}
+  {% set totalArticleNumber = 0 %}
+  {% set articleArray = [] %}
+  {% set myFeatured = 0 %}
+  {% for rowKey, row in realRows %}
+    {% set anEntity = row["#row"]._entity %}
+    {% set rowNumber = rowNumber + 1 %}
+	{% if anEntity.bundle() == 'featured_article_container' %}
+	  {% if anEntity.field_section.value == 'general' %}
+	    {% set myFeatured = anEntity %}
+	  {% endif %}
+	{% elseif anEntity.bundle() == 'sundial_article' %}
+	  {% set articleArray = articleArray|merge([anEntity]) %}
+	  {% set totalArticleNumber = totalArticleNumber + 1 %}
+	{% endif %}
+  {% endfor %}
+  {% set currentTopArticleIndex = 1 %}
+  {% set displayArticleArray = [] %}
+  {% for article in articleArray %}
+    {% if article.id != myFeatured.field_article.entity.id %}
+      {% set displayArticleArray = displayArticleArray|merge([article]) %}
+	{% endif %}
+  {% endfor %}
+  <div id="Mobile-latest-news-body" class="mobile-latest-news-body">
+    {% for i in 0..5 %}
+    <div class="border-bottom">
+      <div class="heading-style-mobile">
+        <a href="/node/{{ displayArticleArray[i].id }}" hreflang="en">{{ displayArticleArray[i].title.value }}</a>
+      </div>
+      <div class="mobile-byline">
+        <div style="float: left;">by <span class="author">{{ displayArticleArray[i].field_author.entity.title.value }}</span></div>
+        <div class="date" style="float: right;">{{ displayArticleArray[i].field_filed_on.0.value|date('M. j') }}</div>
+      </div><br>
+    </div>
+    {% endfor %}
+  </div>
+</article>

@@ -1,0 +1,55 @@
+read_venue:
+  path: '/read_venue'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::readVenue'
+    _title: 'Read Venue'
+  requirements:
+    _permission: 'access content'
+
+read_performer:
+  path: '/read_performer'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::readPerformer'
+    _title: 'Read Performer'
+  requirements:
+    _permission: 'access content'
+
+read_article:
+  path: '/read_article'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::readArticle'
+    _title: 'Read Article'
+  requirements:
+    _permission: 'access content'
+
+read_old_event:
+  path: '/read_old_event'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::readOldEvent'
+    _title: 'Read Old Event'
+  requirements:
+    _permission: 'access content'
+
+kill_event:
+  path: '/kill_event'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::killEvent'
+    _title: 'Kill Events'
+  requirements:
+    _permission: 'access content'
+  
+make_events_live:
+  path: '/make_events_live'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::makeFutureEventsLive'
+    _title: 'Make Events Live'
+  requirements:
+    _permission: 'access content'
+  
+read_new_event:
+  path: '/read_new_event'
+  defaults:
+    _controller: 'Drupal\venue_read_module\Controller\VenueReadController::readNewEvent'
+    _title: 'Read New Event'
+  requirements:
+    _permission: 'access content'

@@ -1,0 +1,37 @@
+<?php
+
+/**
+* Implements hook_schema().
+*
+* Defines the database tables used by this module.
+*
+*/
+
+function form_test_schema() {
+	$schema['form_hold'] = array(
+		'fields' => array (
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'its' => array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+			
+			'notits'=>array(
+				'type' => 'text',
+				'not null' => TRUE,
+			),
+		
+		),
+	
+		'primary key' => array('id'),
+	);
+	
+  return $schema;
+
+}
+
+?>

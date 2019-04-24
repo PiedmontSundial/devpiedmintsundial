@@ -1,0 +1,187 @@
+<div id="Mobile-layout">
+	<div id="Mobile-nav-top-container" class="nav-top-container">
+		{% if page.navbar_top %}{{ page.navbar_top }}{% endif %}
+	</div>
+	<script>
+	  var topNavBrands = document.getElementsByClassName("navbar-brand");
+	  var topNavBrandOne = topNavBrands[0];
+	  //topNavBrandOne.style.visibility = "hidden";
+	</script>
+	<div class="page-setup">
+		<div id="mobile-container">
+			<div class="date-bar clearfix">
+				<span class="float-left">Real News For North Carolina</span>
+				<span class="float-right">
+					{{ "now"|date("M. j", "America/New_York") }}
+				</span>
+			</div>
+			{#{% if page.mobile_above_content %}{{ page.mobile_above_content }}{% endif %}#}
+			<div class="credits-intro">
+				Here at the Piedmont Sundial we proudly utilize Public Domain content and content licensed with Creative Commons.
+				We stand with the Commons as a rich resource for innovation for the public.
+				You can find attribution to the media we utilize below. Learn more here: <a href="https://creativecommons.org" target="_blank" style="color: #007bff;"> creativecommons.org </a>
+			</div><br>
+			<div class="credit-pages">
+				All Pages
+			</div>
+			<div class="credit-sections">
+				Things To Do
+			</div>
+			<div class="credits" style="margin-left: 25px;">
+				<a href="/themes/custom/sundialtheme/images/temp/art.jpg" target="-blank" style="color: #007bff;">Art</a>
+					- Pixabay (No credit required)<br>
+					<div style="font-size: 14px; margin-left: 25px;">
+						Pixabay licensing agreement:
+						<a href="https://pixabay.com/en/service/license/" target="-blank" style="text-decoration: underline;">
+							https://pixabay.com/en/service/license/
+						</a><br>
+						Original image:
+						<a href="https://pixabay.com/en/still-life-apple-autumn-fruit-712923/" target="-blank" style="text-decoration: underline;">
+							https://pixabay.com/en/still-life-apple-autumn-fruit-712923/
+						</a>
+					</div>
+				<br>
+				<a href="/themes/custom/sundialtheme/images/temp/food.jpg" target="-blank" style="color: #007bff;">Food</a>
+					- "Kurama" by Piedmont Sundial employee Ray Baldwin
+					<div style="font-size: 14px; margin-left: 25px;"></div>
+				<br>
+				<a href="/themes/custom/sundialtheme/images/temp/music.jpg" target="-blank" style="color: #007bff;">Music</a>
+					- "Henbrain 1.0" by Piedmont Sundial employee Jesse Barnes
+					<div style="font-size: 14px; margin-left: 25px;"></div>
+				<br>
+				<a href="/themes/custom/sundialtheme/images/temp/outdoors.jpg" target="-blank" style="color: #007bff;">Outdoors</a>
+					- Pixabay (No credit required)<br>
+					<div style="font-size: 14px; margin-left: 25px;">
+						Pixabay licensing agreement:
+						<a href="https://pixabay.com/en/service/license/" target="-blank" style="text-decoration: underline;">
+							https://pixabay.com/en/service/license/
+						</a><br>
+						Original image:
+						<a href="https://pixabay.com/en/woods-forest-path-1849451/" target="-blank" style="text-decoration: underline;">
+							https://pixabay.com/en/woods-forest-path-1849451/
+						</a>
+					</div>
+				<br>
+			</div>
+			<br>
+			{% if page.mobile_events_and_articles %}{{ page.mobile_events_and_articles }}{% endif %}
+			{% if page.mobile_below_content %}{{ page.mobile_below_content }}{% endif %}
+		</div>
+	</div>
+</div>
+
+<div id="Desktop-layout">
+	<div id="Desk-nav-top-container" class="nav-top-container">
+		{% if page.navbar_top %}{{ page.navbar_top }}{% endif %}
+	</div>
+	<script>
+	  var topNavBrandTwo = topNavBrands[1];
+	  topNavBrandTwo.style.visibility = "hidden";
+	</script>
+	<div class="page-setup">
+		<div class="container">
+			<div class="date-bar clearfix">
+				<span class="float-left">Real News For North Carolina</span>
+				<span class="float-right">
+					{{ "now"|date("D, F j Y", "America/New_York") }}
+				</span>
+			</div>
+			{% if page.main_menu %}{{ page.main_menu }}{% endif %}
+			<section{{ attributes }} class="main-section">
+				<div class="col-12 mb-5 p-0">
+					<div class="row">
+						<div class="col-2 border-right">
+							{% if page.main_column_one %}{{ page.main_column_one }}{% endif %}
+						</div>
+						<div class="col-7">
+							<div class="credits-intro">
+								Here at the Piedmont Sundial we proudly utilize Public Domain content and content licensed with Creative Commons.
+								We stand with the Commons as a rich resource for innovation for the public.
+								You can find attribution to the media we utilize below. Learn more here: <a href="https://creativecommons.org" target="_blank" style="color: #007bff;"> creativecommons.org </a>
+							</div><br>
+							<div class="credit-pages">
+								All Pages
+							</div>
+							<div class="credit-sections">
+								Things To Do
+							</div>
+							<div class="credits">
+								<a href="/themes/custom/sundialtheme/images/temp/arts.jpg" target="-blank" style="color: #007bff;">Art 1</a>
+									- Pixabay (No credit required)<br>
+									<div style="font-size: 14px; margin-left: 25px;">
+										Pixabay licensing agreement:
+										<a href="https://pixabay.com/en/service/license/" target="-blank" style="text-decoration: underline;">
+											https://pixabay.com/en/service/license/
+										</a><br>
+										Original image:
+										<a href="https://pixabay.com/en/still-life-apple-autumn-fruit-712923/" target="-blank" style="text-decoration: underline;">
+											https://pixabay.com/en/still-life-apple-autumn-fruit-712923/
+										</a>
+									</div>
+								<br>
+								<a href="/themes/custom/sundialtheme/images/temp/food.jpg" target="-blank" style="color: #007bff;">Food 1</a>
+									- "Kurama" by Piedmont Sundial employee Ray Baldwin
+									<div style="font-size: 14px; margin-left: 25px;"></div>
+								<br>
+								<a href="/themes/custom/sundialtheme/images/temp/music.jpg" target="-blank" style="color: #007bff;">Music 1</a>
+									- "Henbrain 1.0" by Piedmont Sundial employee Jesse Barnes
+									<div style="font-size: 14px; margin-left: 25px;"></div>
+								<br>
+								<a href="/themes/custom/sundialtheme/images/temp/outdoors.jpg" target="-blank" style="color: #007bff;">Outdoor 1</a>
+									- Pixabay (No credit required)<br>
+									<div style="font-size: 14px; margin-left: 25px;">
+										Pixabay licensing agreement:
+										<a href="https://pixabay.com/en/service/license/" target="-blank" style="text-decoration: underline;">
+											https://pixabay.com/en/service/license/
+										</a><br>
+										Original image:
+										<a href="https://pixabay.com/en/woods-forest-path-1849451/" target="-blank" style="text-decoration: underline;">
+											https://pixabay.com/en/woods-forest-path-1849451/
+										</a>
+									</div>
+								<br>
+							</div>
+						</div>
+						<div class="col-3 border-left">
+							{% if page.main_column_four %}{{ page.main_column_four }}{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						{% if page.mid_left %}{{ page.mid_left }}{% endif %}
+					</div>
+					<div class="col-6">
+						{% if page.mid_right %}{{ page.mid_right }}{% endif %}
+					</div>
+				</div>
+			</section>
+			<section>
+				<div class="row">
+					<div class="col-6">
+						{% if page.footer_menu %}{{ page.footer_menu }}{% endif %}
+					</div>
+					<div class="col-6">
+						{% if page.footer_about_us %}{{ page.footer_about_us }}{% endif %}
+					</div>
+				</div>
+			</section><br><br>
+		</div>
+	</div>
+</div>
+<script>
+	var navContainerMob = document.getElementById("Mobile-nav-top-container");
+	var scrollAwayMob = document.getElementById("block-mobilesitelogo");
+	var navContainer = document.getElementById("Desk-nav-top-container");
+	var scrollAway = document.getElementById("block-sitelogohorizontal");
+	window.onscroll = function (e) {
+		var rect = scrollAway.getBoundingClientRect();
+		var rectTwo = navContainer.getBoundingClientRect();
+		var diff = rect.bottom - rectTwo.bottom;
+		if(diff <= 0) {
+			topNavBrandTwo.style.visibility = "visible";
+		} else {
+			topNavBrandTwo.style.visibility = "hidden";
+		}
+	}
+</script>

@@ -1,0 +1,147 @@
+ad_desk:
+    path: /ad_desk
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::adDesk
+        _title: 'Ad Desk'
+    requirements:
+        _permission: 'access content'
+ 
+ad_desk_choose_client:
+    path: /ad_desk_choose_client
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::chooseClient
+        _title: 'Choose Client'
+    requirements:
+        _permission: 'access content'
+        
+        
+ad_desk_ad_placement:
+    path: /ad_desk_ad_placement
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::adPlacement
+        _title: 'Ad Placement'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_calendar:
+    path: /ad_desk_calendar
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::calendar
+        _title: 'Ad Calendar'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_scheduler:
+    path: /ad_desk_scheduler
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::scheduler
+        _title: 'Ad Scheduler'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_scheduler_handler:
+    path: /ad_desk_scheduler_handler
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::handler
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_scheduler_deleter:
+    path: /ad_desk_scheduler_deleter
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::deleter
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'        
+        
+
+ad_desk_ad_initializer:
+    path: /ad_desk_ad_initializer
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::adInitializer
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+        
+ad_desk_ad_updater:
+    path: /ad_desk_ad_updater
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::adUpdater
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_scheduler_confirmer:
+    path: /ad_desk_scheduler_confirmer
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::confirmer
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_scheduler_unconfirmer:
+    path: /ad_desk_scheduler_unconfirmer
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::unconfirmer
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_make_carousel:
+    path: /ad_desk_make_carousel
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::makeCarousel
+        _title: 'Make Carousel'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_carousel_handler:
+    path: /ad_desk_carousel_handler
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::carouselHandler
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_blocking_handler:
+    path: /ad_desk_blocking_handler
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::blockingHandler
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_unblocking_handler:
+    path: /ad_desk_unblocking_handler
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::unblockingHandler
+        _title: 'This will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_update_carousel:
+    path: /ad_desk_update_carousel
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::updateCarousel
+        _title: 'Update Carousel'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_update_carousel_handler:
+    path: /ad_desk_update_carousel_handler
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::updateCarouselHandler
+        _title: 'this will never be seen by man'
+    requirements:
+        _permission: 'access content'
+        
+ad_desk_reporting:
+    path: /ad_desk_reporting
+    defaults:
+        _controller: Drupal\ad_desk\Controller\AdDeskController::reporting
+        _title: 'Ad Reporting'
+    requirements:
+        _permission: 'access content'
+        

@@ -1,0 +1,105 @@
+<div id="Mobile-layout">
+	<div id="Mobile-nav-top-container" class="nav-top-container">
+		{% if page.navbar_top %}{{ page.navbar_top }}{% endif %}
+	</div>
+	<script>
+	  var topNavBrands = document.getElementsByClassName("navbar-brand");
+	  var topNavBrandOne = topNavBrands[0];
+	  //topNavBrandOne.style.visibility = "hidden";
+	</script>
+	<div class="page-setup">
+		<div id="mobile-container">
+			<div class="date-bar clearfix">
+				<span class="float-left">Real News For North Carolina</span>
+				<span class="float-right">
+					{{ "now"|date("M. j", "America/New_York") }}
+				</span>
+			</div>
+			{#{% if page.mobile_above_content %}{{ page.mobile_above_content }}{% endif %}#}
+			<div class="error-message">
+                404 Error - Page Not Found
+            </div>
+            <div style="font-family roboto slab; font-size: 16; text-align: center;">
+                The page you are looking for could not be found. Please try again 
+            </div>
+			<br>
+			{% if page.mobile_events_and_articles %}{{ page.mobile_events_and_articles }}{% endif %}
+			{% if page.mobile_below_content %}{{ page.mobile_below_content }}{% endif %}
+		</div>
+	</div>
+</div>
+
+<div id="Desktop-layout">
+	<div id="Desk-nav-top-container" class="nav-top-container">
+		{% if page.navbar_top %}{{ page.navbar_top }}{% endif %}
+	</div>
+	<script>
+	  var topNavBrandTwo = topNavBrands[1];
+	  topNavBrandTwo.style.visibility = "hidden";
+	</script>
+	<div class="page-setup">
+		<div class="container">
+			<div class="date-bar clearfix">
+				<span class="float-left">Real News For North Carolina</span>
+				<span class="float-right">
+					{{ "now"|date("D, F j Y", "America/New_York") }}
+				</span>
+			</div>
+			{% if page.main_menu %}{{ page.main_menu }}{% endif %}
+			<section{{ attributes }} class="main-section">
+				<div class="col-12 mb-5 p-0">
+					<div class="row">
+						<div class="col-2 border-right">
+							{% if page.main_column_one %}{{ page.main_column_one }}{% endif %}
+						</div>
+						<div class="col-7">
+							<div class="error-message">
+                                404 Error - Page Not Found
+                            </div>
+                            <div style="font-family roboto slab; font-size: 20px; text-align: center;">
+                                The page you are looking for could not be found. Please try again 
+                            </div>
+						</div>
+						<div class="col-3 border-left">
+							{% if page.main_column_four %}{{ page.main_column_four }}{% endif %}
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-6">
+						{% if page.mid_left %}{{ page.mid_left }}{% endif %}
+					</div>
+					<div class="col-6">
+						{% if page.mid_right %}{{ page.mid_right }}{% endif %}
+					</div>
+				</div>
+			</section>
+			<section>
+				<div class="row">
+					<div class="col-6">
+						{% if page.footer_menu %}{{ page.footer_menu }}{% endif %}
+					</div>
+					<div class="col-6">
+						{% if page.footer_about_us %}{{ page.footer_about_us }}{% endif %}
+					</div>
+				</div>
+			</section><br><br>
+		</div>
+	</div>
+</div>
+<script>
+	var navContainerMob = document.getElementById("Mobile-nav-top-container");
+	var scrollAwayMob = document.getElementById("block-mobilesitelogo");
+	var navContainer = document.getElementById("Desk-nav-top-container");
+	var scrollAway = document.getElementById("block-sitelogohorizontal");
+	window.onscroll = function (e) {
+		var rect = scrollAway.getBoundingClientRect();
+		var rectTwo = navContainer.getBoundingClientRect();
+		var diff = rect.bottom - rectTwo.bottom;
+		if(diff <= 0) {
+			topNavBrandTwo.style.visibility = "visible";
+		} else {
+			topNavBrandTwo.style.visibility = "hidden";
+		}
+	}
+</script>

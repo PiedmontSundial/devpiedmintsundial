@@ -1,0 +1,43 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }}>
+  <div id="Mobile-local-events-title=div" class="block-title-mobile mb-2 border-bottom mobile-news-and-events" onclick="toggleMobileLocalEvents()">
+    UPCOMING EVENTS <img src="/themes/custom/sundialtheme/images/arrow_left.png" id="Mobile-local-events-left-arrow"
+      class="mobile-left-arrow">
+    <img src="/themes/custom/sundialtheme/images/arrow_down.png" id="Mobile-local-events-down-arrow" class="mobile-down-arrow"
+      style="display:none;">
+  </div>
+  {% set realRows = rows[0]["#rows"] %}
+  {% set totalArticleNumber = 0 %}
+  {% set articleArray = [] %}
+  {% set myFeatured = 0 %}
+  <div id="Mobile-local-events-body" class="mobile-local-events-body">
+    {% for rowKey, row in realRows %}
+	  {% set anEntity = row["#row"]._entity %}
+      <a class="events-temlpate-link" href="/node/{{ anEntity.id }}" rel="bookmark">
+        <div class="event-listing" onclick="clickEventDiv(this)">
+          <div class="event-listing-date-box-container">
+            <div class="event-listing-date-box">
+              <div class="event-listing-date">
+                {{ anEntity.field_date_of_event.0.value|date("d") }}<br>
+                {{ anEntity.field_date_of_event.0.value|date("M") }}
+              </div>
+            </div>
+          </div>
+          <div class="event-listing-basic float-left">
+            <div class="event-listing-title">
+              {{ anEntity.title.value }}
+            </div>
+          </div>
+          <div class="event-listing-info float-right">
+            {{ anEntity.field_venue.entity.title.value }}<br><br>
+            {{ anEntity.field_venue.entity.field_city.entity.name.value }}
+          </div>
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</article>

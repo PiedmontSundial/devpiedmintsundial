@@ -1,0 +1,39 @@
+<h1>Enter new venue details:</h1>
+
+{% if node %}
+  <form id="Venue-form" action="/edit_event" method="post">
+    Venue Name: <input type="text" name="newVenueName" value="{{ name }}" required><br>
+    Venue Description:<br>
+    <textarea id="Venue-blurb-imput" name="blurb" form="Venue-form" rows="6" cols="100"
+      placeholder="Enter or paste venue description here"></textarea><br>
+    <input type="hidden" name="state" value="NC">
+    Address: <input type="text" name="address" required><br>
+    Select City: <select name="cityId">
+      {% for city in cities %}
+        <option value="{{ city.id }}">{{ city.name.value }}</option>
+      {% endfor %}
+    </select><br>
+    Enter Zip Code: <input type="number" name="zip" required><br>
+    <input type="hidden" name="eventId" value="{{ node }}">
+    <input type="hidden" name="databaseEventId" value="{{ dbEntryId }}">
+    <input type="hidden" name="isCreatingVenue" value="1">
+    <input type="submit" value="create venue">
+  </form>
+{% else %}
+  <form id="Venue-form" action="/create_event" method="post">
+    Venue Name: <input type="text" name="newVenueName" value="{{ name }}" required><br>
+    Venue Description:<br>
+    <textarea id="Venue-blurb-imput" name="blurb" form="Venue-form" rows="6" cols="100"
+      placeholder="Enter or paste venue description here"></textarea><br>
+    <input type="hidden" name="state" value="NC">
+    Address: <input type="text" name="address" required><br>
+    Select City: <select name="cityId">
+      {% for city in cities %}
+        <option value="{{ city.id }}">{{ city.name.value }}</option>
+      {% endfor %}
+    </select><br>
+    Enter Zip Code: <input type="number" name="zip" required><br>
+    <input type="hidden" name="isCreatingVenue" value="1">
+    <input type="submit" value="create venue">
+  </form>
+{% endif %}

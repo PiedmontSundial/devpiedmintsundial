@@ -1,0 +1,7 @@
+sundial_family_page:
+  path: '/family-list'
+  defaults:
+    _controller: 'Drupal\sundial_family_page_module\Controller\FamilyPageController::familyList'
+    _title: 'Family Content'
+  requirements:
+    _permission: 'access content'

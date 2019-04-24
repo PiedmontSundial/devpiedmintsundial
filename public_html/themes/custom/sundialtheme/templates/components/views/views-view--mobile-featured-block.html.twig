@@ -1,0 +1,350 @@
+{%
+  set classes = [
+    'clearfix',
+  ]
+%}
+<article{{ attributes.addClass(classes) }} id="Mobile-featured-area-article-div" style="border: solid 3px;">
+  <div class="mobile-featured-title">Featured</div>
+  {% set realRows = rows[0]["#rows"] %}
+  {% set performerArray = [] %}
+  {% set venueArray = [] %}
+  {% set eventArray = [] %}
+  {% set hasPerformer = 0 %}
+  {% set hasVenue = 0 %}
+  {% for rowKey, row in realRows %}
+    {% set aNode = row["#node"] %}
+	  {% if aNode.bundle() == 'featured_performer' %}
+	    {% if aNode.field_featured_carousel_performe.entity.id != aNode.id %}
+	      {% set performerArray = performerArray|merge([aNode]) %}
+		    {% set hasPerformer = 1 %}
+	    {% endif %}
+	  {% elseif aNode.bundle() == 'featured_venue' %}
+	    {% if aNode.field_featured_carousel_venue.entity.id != aNode.id %}
+	      {% set venueArray = venueArray|merge([aNode]) %}
+		    {% set hasVenue = 1 %}
+      {% endif %}
+    {% elseif aNode.bundle() == 'featured_event' %}
+	    {% set eventArray = eventArray|merge([aNode]) %}
+	  {% endif %}
+  {% endfor %}
+  {% set masterArray = [] %}
+  {% set nonEventCount = 0 %}
+  {% if hasPerformer %}
+    {% set masterArray = masterArray|merge([performerArray.0]) %}
+	  {% set nonEventCount = nonEventCount + 1 %}
+  {% endif %}
+  {% if hasVenue %}
+    {% set masterArray = masterArray|merge([venueArray.0]) %}
+	  {% set nonEventCount = nonEventCount + 1 %}
+  {% endif %}
+  {% set slotsToFill = 5 - nonEventCount %}
+  {% if slotsToFill <= eventArray|length %}
+    {% set remainderIndex = slotsToFill - 1 %}
+  {% else %}
+    {% set remainderIndex = eventArray|length - 1 %}
+  {% endif %}
+  {% for i in 0..remainderIndex %}
+    {% set masterArray = masterArray|merge([eventArray[i]]) %}
+  {% endfor %}
+  {% set masterIndex = masterArray|length - 1 %}
+  {% for i in 0..masterIndex %}
+    {% if masterArray[i].bundle() == 'featured_performer' %}
+	    {% set elementImage = masterArray[i].field_featured_carousel_performe.entity.field_performer_photo.entity.field_image.entity %}
+	    {% set elementTitle = masterArray[i].field_featured_carousel_performe.entity.title.value %}
+      {% set nodeId = masterArray[i].field_featured_carousel_performe.entity.id %}
+	  {% elseif masterArray[i].bundle() == 'featured_venue' %}
+	    {% set elementImage = masterArray[i].field_featured_carousel_venue.entity.field_venue_cover_photo.entity.field_image.entity %}
+	    {% set elementTitle = masterArray[i].field_featured_carousel_venue.entity.title.value %}
+      {% set nodeId = masterArray[i].field_featured_carousel_venue.entity.id %}
+	  {% elseif masterArray[i].bundle() == 'featured_event' %}
+	    {% set elementImage = masterArray[i].	field_featured_carousel_event.entity.field_event_image.entity.field_image.entity %}
+	    {% set elementTitle = masterArray[i].	field_featured_carousel_event.entity.title.value %}
+      {% set nodeId = masterArray[i].field_featured_carousel_event.entity.id %}
+	  {% endif %}
+    <div class="mobile-featured-element">
+      <div class="featured-element-mobile">
+        <div>
+          <div class="mx-auto">
+            <figure class="mx-auto">
+              <a href="/node/{{ nodeId }}">
+                <div class="mobile-featured-image-container">
+                  <img class="right_mobile_featured_element_image" src="{{ file_url(elementImage.uri.value) }}" style="position: absolute; z-index: 1;"
+                    alt="{{ elementImage.uri.value }}">
+                </div>
+              </a>
+              <div style="width:100%;height:30px;">
+                <img id="Left-mobile-carousel-arrow" class="left-carousel-arrow"
+                     src="/themes/custom/sundialtheme/images/CarouselArrowLeft_small01.png" onclick="moveSlidesLeft()">
+                <img id="Right-mobile-carousel-arrow" class="right-carousel-arrow"
+                     src="/themes/custom/sundialtheme/images/CarouselArrowRight_small01.png" onclick="moveSlidesRight()">
+              </div>
+              <a href="/node/{{ nodeId }}">
+                <figcaption class="right-mobile-featured-element-title">{{ elementTitle }}</figcaption>
+              </a>
+            </figure>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% set tempFigcaptionPositiom = 10000 + (i * 1000) %}
+    <fakeFigcaption class="caption-height-grab" style="font-family: roboto slab;font-size: 22px;text-decoration: none;height: 66px;
+    position:absolute;top:{{ tempFigcaptionPositiom }}px;width:100%;">{{ elementTitle }}</fakeFigcaption>
+  {% endfor %}
+  
+  <script>
+    var myMobileBoxes = document.getElementsByClassName("mobile-featured-image-container");
+    var myMobileBoxWidth = myMobileBoxes[0].offsetWidth;
+    for(var i = 0; i < myMobileBoxes.length; i++) {
+      myMobileBoxes[i].style.height = myMobileBoxWidth + "px";
+    }
+    
+    var mobileContainers = document.getElementsByClassName("mobile-featured-element");
+    for(var i = 0; i < mobileContainers.length; i++) {
+      mobileContainers[i].style.display = "none";
+      mobileContainers[i].style.visibility = "visible";
+    }
+    mobileContainers[0].style.display = "block";
+    
+    window.addEventListener("resize", function() {
+      for(var i = 0; i < mobileContainers.length; i++) {
+        if (mobileContainers[i].style.display == "block") {
+          var currentIndex = i;
+        }
+        mobileContainers[i].style.visibility = "hidden";
+        mobileContainers[i].style.display = "block";
+      }
+      
+      var myMobileBoxes = document.getElementsByClassName("mobile-featured-image-container");
+      var myMobileBoxWidth = 0;
+      for(var i = 0; i < myMobileBoxes.length; i++) {
+        if(myMobileBoxes[i].offsetWidth > myMobileBoxWidth) {
+          myMobileBoxWidth = myMobileBoxes[i].offsetWidth;
+        }
+      }
+      for(var i = 0; i < myMobileBoxes.length; i++) {
+        myMobileBoxes[i].style.height = myMobileBoxWidth + "px";
+      }
+      
+      for(var i = 0; i < mobileContainers.length; i++) {
+        mobileContainers[i].style.display = "none";
+        mobileContainers[i].style.visibility = "visible";
+      }
+      
+      mobileContainers[currentIndex].style.display = "block";
+      
+    });
+    
+    var mobileSlideIndex = 1;
+    showMobileDivs(mobileSlideIndex);
+    
+    function plusMobileDivs() {
+      showMobileDivs(mobileSlideIndex += 1);
+    }
+    
+    function showMobileDivs(n) {
+      var i;
+      var x = document.getElementsByClassName("mobile-featured-element");
+      if (n > x.length) {mobileSlideIndex = 1}    
+      if (n < 1) {mobileSlideIndex = x.length}
+      for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+      }
+      x[mobileSlideIndex-1].style.display = "block";
+    }
+    
+    var myMobileDivsVar;
+    
+    function restartMobileDivSlides() {
+      myMobileDivsVar = setInterval(plusMobileDivs, 3000);
+    }
+    
+    restartMobileDivSlides();
+    
+    function moveSlidesRight() {
+      clearInterval(myMobileDivsVar);
+      mobileSlideIndex++;
+      showMobileDivs(mobileSlideIndex);
+      restartMobileDivSlides();
+    }
+    
+    function moveSlidesLeft() {
+      clearInterval(myMobileDivsVar);
+      mobileSlideIndex --;
+      showMobileDivs(mobileSlideIndex);
+      restartMobileDivSlides();
+    }
+    
+    var figCaptionsForHeight = document.getElementsByClassName("caption-height-grab");
+    
+    /*
+    for (var i = 0; i < figCaptionsForHeight.length; i++) {
+      figCaptionsForHeight[i].style.display = "block";
+    }
+    
+    var maxFigcaptionsHeight = 0;
+    for (var i = 0; i < figCaptionsForHeight.length; i++) {
+      var tempHeight = figCaptionsForHeight[i].offsetHeight;
+      if (tempHeight > maxFigcaptionsHeight) {
+        maxFigcaptionsHeight = tempHeight;
+      }
+    }
+    
+    maxFigcaptionsHeight = maxFigcaptionsHeight + 20;
+    
+    //window.alert(maxFigcaptionsHeight);
+    
+    for (var i = 0; i < figCaptionsForHeight.length; i++) {
+      figCaptionsForHeight[i].style.display = "none";
+    }
+    */
+    
+    var screenWidth = window.innerWidth
+    || document.documentElement.clientWidth
+    || document.body.clientWidth;
+    screenWidth = screenWidth - 10;
+    
+    var mobileElements = document.getElementsByClassName("mobile-featured-element");
+    var mobileImageContainers = document.getElementsByClassName("mobile-featured-image-container");
+    var mobileFeaturedImages = document.getElementsByClassName("right_mobile_featured_element_image");
+    
+    if (screenWidth > 500) {
+      for (var i = 0; i < mobileElements.length; i++) {
+        mobileElements[i].style.width = "478px";
+        var mobileElementsHeight = 478 + maxFigcaptionsHeight;
+        mobileElements[i].style.height = mobileElementsHeight + "px";
+        mobileImageContainers[i].style.width = "478px";
+        mobileImageContainers[i].style.height = "478px";
+        mobileFeaturedImages[i].style.width = "478px";
+        mobileFeaturedImages[i].style.height = "auto";
+        mobileFeaturedImages[i].style.maxWidth = "100%";
+        mobileFeaturedImages[i].style.maxHeight = "100%";
+        mobileFeaturedImages[i].style.position = "relative";
+        var imageNaturalWidth = mobileFeaturedImages[i].width;
+        //window.alert("image N width = " + imageNaturalWidth);
+        var imageNaturalHeight = mobileFeaturedImages[i].height;
+        //window.alert("image N height = " + imageNaturalHeight);
+        var imageWidthPercentage = 478 / imageNaturalWidth;
+        //window.alert("image width P = " + imageWidthPercentage);
+        var imageNewHeight = imageNaturalHeight * imageWidthPercentage;
+        //window.alert("image new H = " + imageNewHeight);
+        var imagePosition = (478 - imageNewHeight) / 2;
+        //window.alert(imagePosition);
+        if (imagePosition <= 0) {
+          imagePosition = 0;
+        }
+        mobileFeaturedImages[i].style.top = imagePosition + "px";
+      }
+    } else {
+      var mobileArticleDiv = document.getElementById("Mobile-featured-area-article-div");
+      var articleWidth = mobileArticleDiv.offsetWidth - 6;
+      for (var i = 0; i < mobileElements.length; i++) {
+        mobileElements[i].style.width = articleWidth + "px";
+        var mobElHeight = screenWidth + maxFigcaptionsHeight;
+        mobileElements[i].style.height = mobElHeight + "px";
+        mobileImageContainers[i].style.width = articleWidth + "px";
+        mobileImageContainers[i].style.height = articleWidth + "px";
+        mobileFeaturedImages[i].style.width = articleWidth + "px";
+        mobileFeaturedImages[i].style.height = "auto";
+        mobileFeaturedImages[i].style.maxWidth = "100%";
+        mobileFeaturedImages[i].style.maxHeight = "100%";
+        mobileFeaturedImages[i].style.position = "relative";
+        var imageNaturalWidth = mobileFeaturedImages[i].width;
+        var imageNaturalHeight = mobileFeaturedImages[i].height;
+        var imageWidthPercentage = articleWidth / imageNaturalWidth;
+        var imageNewHeight = imageNaturalHeight * imageWidthPercentage;
+        var imagePosition = (articleWidth - imageNewHeight) / 2;
+        if (imagePosition <= 0) {
+          imagePosition = 0;
+        }
+        mobileFeaturedImages[i].style.top = imagePosition + "px";
+      }
+    }
+    
+    function redoMobileFeatured() {
+      //window.alert(maxFigcaptionsHeight);
+      var screenWidth = window.innerWidth
+      || document.documentElement.clientWidth
+      || document.body.clientWidth;
+      screenWidth = screenWidth - 10;
+      
+      var mobileElements = document.getElementsByClassName("mobile-featured-element");
+      var mobileImageContainers = document.getElementsByClassName("mobile-featured-image-container");
+      var mobileFeaturedImages = document.getElementsByClassName("right_mobile_featured_element_image");
+      
+      if (screenWidth > 500) {
+        for (var i = 0; i < mobileElements.length; i++) {
+          mobileElements[i].style.width = "478px";
+          var mobileElementsHeight = 478 + maxFigcaptionsHeight;
+          mobileElements[i].style.height = mobileElementsHeight + "px";
+          mobileImageContainers[i].style.width = "478px";
+          mobileImageContainers[i].style.height = "478px";
+          mobileFeaturedImages[i].style.width = "478px";
+          mobileFeaturedImages[i].style.height = "auto";
+          mobileFeaturedImages[i].style.maxWidth = "100%";
+          mobileFeaturedImages[i].style.maxHeight = "100%";
+          mobileFeaturedImages[i].style.position = "relative";
+          var imageNaturalWidth = mobileFeaturedImages[i].width;
+          //window.alert("image N width = " + imageNaturalWidth);
+          var imageNaturalHeight = mobileFeaturedImages[i].height;
+          //window.alert("image N height = " + imageNaturalHeight);
+          var imageWidthPercentage = 478 / imageNaturalWidth;
+          //window.alert("image width P = " + imageWidthPercentage);
+          var imageNewHeight = imageNaturalHeight * imageWidthPercentage;
+          //window.alert("image new H = " + imageNewHeight);
+          var imagePosition = (478 - imageNewHeight) / 2;
+          //window.alert(imagePosition);
+          if (imagePosition <= 0) {
+            imagePosition = 0;
+          }
+          mobileFeaturedImages[i].style.top = imagePosition + "px";
+        }
+      } else {
+        var mobileArticleDiv = document.getElementById("Mobile-featured-area-article-div");
+        var articleWidth = mobileArticleDiv.offsetWidth - 6;
+        for (var i = 0; i < mobileElements.length; i++) {
+          mobileElements[i].style.width = articleWidth + "px";
+          var mobElHeight = screenWidth + maxFigcaptionsHeight;
+          mobileElements[i].style.height = mobElHeight + "px";
+          mobileImageContainers[i].style.width = articleWidth + "px";
+          mobileImageContainers[i].style.height = articleWidth + "px";
+          mobileFeaturedImages[i].style.width = articleWidth + "px";
+          mobileFeaturedImages[i].style.height = "auto";
+          mobileFeaturedImages[i].style.maxWidth = "100%";
+          mobileFeaturedImages[i].style.maxHeight = "100%";
+          mobileFeaturedImages[i].style.position = "relative";
+          var imageNaturalWidth = mobileFeaturedImages[i].width;
+          var imageNaturalHeight = mobileFeaturedImages[i].height;
+          var imageWidthPercentage = articleWidth / imageNaturalWidth;
+          var imageNewHeight = imageNaturalHeight * imageWidthPercentage;
+          var imagePosition = (articleWidth - imageNewHeight) / 2;
+          if (imagePosition <= 0) {
+            imagePosition = 0;
+          }
+          mobileFeaturedImages[i].style.top = imagePosition + "px";
+        }
+      }
+    }
+    
+    var figCaptionsForHeight = document.getElementsByClassName("caption-height-grab");
+    var maxFigcaptionsHeight = 0;
+    for (var i = 0; i < figCaptionsForHeight.length; i++) {
+      var tempHeight = figCaptionsForHeight[i].offsetHeight;
+      if (tempHeight > maxFigcaptionsHeight) {
+        maxFigcaptionsHeight = tempHeight;
+      }
+    }
+    
+    maxFigcaptionsHeight = maxFigcaptionsHeight + 20;
+    
+    for (var i = 0; i < figCaptionsForHeight.length; i++) {
+      figCaptionsForHeight[i].style.display = "none";
+    }
+    
+    var realFigcaptions = document.getElementsByClassName("right-mobile-featured-element-title");
+    for (var i = 0; i < realFigcaptions.length; i++) {
+      realFigcaptions[i].style.height = maxFigcaptionsHeight + "px";
+    }
+    
+    window.addEventListener('resize', redoMobileFeatured);
+  </script>
+</article>

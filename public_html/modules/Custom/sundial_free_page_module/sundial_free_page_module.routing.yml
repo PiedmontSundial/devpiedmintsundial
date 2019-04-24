@@ -1,0 +1,7 @@
+sundial_free_page:
+  path: '/free-list'
+  defaults:
+    _controller: 'Drupal\sundial_free_page_module\Controller\FreePageController::listFree'
+    _title: 'Free Events'
+  requirements:
+    _permission: 'access content'

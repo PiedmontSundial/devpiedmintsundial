@@ -1,0 +1,333 @@
+<?php
+
+function ad_desk_schema() {
+	$schema['ad_desk_servers'] = array(
+		'fields' => array (
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'id_of_node_server' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'name'=>array(
+				'type' => 'text',
+				'length' => 40,
+				'not null' => TRUE,
+			),
+		
+		),
+	
+		'primary key' => array('id'),
+	);
+	
+	$schema['ad_desk_sequencers'] = array(
+		'fields' => array (
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'server_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'start_time_stamp' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'end_time_stamp' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+		),
+	
+		'primary key' => array('id'),
+	
+	);
+	
+	
+	$schema['ad_desk_loaders'] = array(
+		'fields' => array (
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'ad_sequencer_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'track' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'type_of_ad' => array(
+				'type' => 'text',
+				'length' => 255,
+				'not null' => TRUE,
+			),
+			
+			'ad_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'ordinal'  => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'duration' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'next_loader_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'firstFixed' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'secondFixed' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+		),
+		
+		
+		'primary key' => array('id'),
+	
+	);
+	
+	$schema['ad_desk_provisional_loaders'] = array(
+		'fields' => array (
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'ad_sequencer_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'track' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'type_of_ad' => array(
+				'type' => 'text',
+				'length' => 255,
+				'not null' => TRUE,
+			),
+			
+			'ad_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'ordinal'  => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'duration' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'next_loader_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'firstFixed' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'secondFixed' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+		),
+		
+		
+		'primary key' => array('id'),
+	
+	);
+	
+	$schema['ad_server_log'] = array(
+		'fields' => array (
+		
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			
+			'server_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			
+			'duration' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+		
+		
+		),
+	
+	
+	
+		'primary key' => array('id'),
+	
+	);
+	
+	$schema['ad_loader_log'] = array(
+		'fields' => array (
+		
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'loader_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			
+			'ad_server_log_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			
+			'duration' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+		
+		
+		),
+	
+	
+	
+		'primary key' => array('id'),
+	
+	);
+	
+	$schema['carousel'] = array(
+		'fields' => array(
+		
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'sequencer_id' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'firstFixed' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			'secondFixed' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+			
+			
+		
+		),
+	
+	
+		'primary key' => array('id'),
+	
+	);
+	
+	
+	$schema['ad_desk_blocking'] = array (
+		'fields' => array(
+		
+			'id' => array(
+				'type' => 'serial',
+				'not null' => TRUE,
+			),
+			
+			'start_time_stamp' => array(
+				'type' => 'int',
+				'length' => 50,
+				'not null' => TRUE,
+			),
+		
+			'client_name' => array(
+				'type' => 'text',
+				'length' => 255,
+				'not null' => TRUE,
+			),
+		
+		
+		
+		),
+	
+		'primary key' => array('id'),
+	
+	);
+	
+	
+	
+	
+  return $schema;
+
+}

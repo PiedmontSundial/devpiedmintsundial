@@ -1,0 +1,13 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - ad_desk
+name: 'Ad Server'
+type: ad_server
+description: 'Content type that can be used to provide additional information on <em>Car Brands</em>'
+help: ''
+new_revision: false
+preview_mode: 1
+display_submitted: true

@@ -1,0 +1,7 @@
+sundial_art_page:
+  path: '/art-list'
+  defaults:
+    _controller: 'Drupal\sundial_art_page_module\Controller\ArtPageController::artList'
+    _title: 'Arts Content'
+  requirements:
+    _permission: 'access content'

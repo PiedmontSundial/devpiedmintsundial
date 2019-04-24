@@ -1,0 +1,20 @@
+<?php
+
+
+
+function sundial_food_page_module_theme($existing, $type, $theme, $path) {
+
+	return [
+	
+		'sundial_food_page'=>[
+			'variables' => ['nodes' => NULL],
+			'template' => 'sundial-food-page',
+			
+		],
+		
+	];
+
+
+}
+
+?>

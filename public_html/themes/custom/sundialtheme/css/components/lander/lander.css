@@ -1,0 +1,1689 @@
+p {
+    margin-top: 0;
+    padding-bottom: 1rem;
+    margin-bottom: 0;
+}
+
+section {
+    border-bottom: solid;
+    padding: 2rem 0px;
+}
+
+.about-us {
+     /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-family: 'roboto slab';
+    font-size: 11px;   
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .about-us {
+        font-family: 'roboto slab';
+        font-size: 11px;   
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .about-us {
+        font-family: 'roboto slab';
+        font-size: 14px;
+    }
+}
+
+.address {
+    font-size: 25px;
+    font-family: roboto slab;
+    border-bottom: none;
+}
+
+.address-info {
+    font-family: roboto slab;
+    font-size: 18px;
+}
+
+.align-left {
+    float: left;
+    margin-right: 1rem;
+}
+
+.align-right {
+    float: right;
+    margin-right: 1rem;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.article-body {
+    font-family: roboto slab;
+    font-size: 16px;
+}
+
+.article-body img {
+    max-width: 100%;
+    height: auto;
+}
+
+.article-date {
+    font-weight: bold;
+}
+
+.article-first-image {
+    text-align: center;
+}
+
+.article-listing {
+    float: left;
+    width: 100%;
+    border-bottom: solid 1px #dedede;
+    padding: 10px 0;
+}
+
+.article-listing-author {
+    font-family: Roboto;
+    font-size: 16px;
+    color: inherit;
+}
+
+.article-listing-title {
+    font-family: Anton;
+    font-size: 25pt;
+    padding-top: .5rem;
+    text-transform: none;
+    line-height: 1;
+    padding-right:5px;
+    width:95%;
+    
+}
+
+.article-side-mark-container {
+    padding-right: 1%;
+    width: 4%;
+}
+
+.featured-article-side-mark-container {
+    display: inline-block;
+}
+
+.article-title-box {
+    padding-right:1%;
+    width:93%;
+    color: inherit;
+}
+
+.article-title {
+    color:inherit;
+}
+
+.article-yellow-side-mark {
+    width: 100%;
+    background-color: #fec42e;
+}
+
+.author {
+    font-family: roboto;
+}
+
+.featuredHeadline-3 {
+     /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+	font-weight: 900;
+    font-size: 20px;
+    line-height: 1.125;
+    padding-top: 1rem;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .featuredHeadline-3 {
+        font-weight: 900;
+        font-size: 30px;
+        line-height: 1.125;
+        padding-top: .5rem;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .featuredHeadline-3 {
+        font-weight: 900;
+        font-size: 36px;
+        line-height: 1.125;
+    }
+}
+
+.featured-article-title-container {
+    display: flex;
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+}
+
+.featured-article-title-box {
+    display:inline-block;
+}
+
+@media only screen and (min-width: 775px) {
+    .featured-article-title-box {
+        width: 246px;
+    }
+}
+
+@media only screen and (min-width: 994px) {
+    .featured-article-title-box {
+        width: 346px;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .featured-article-title-box {
+        width: 421px;
+    }
+}
+
+.featured-article-featuredHeadline-3 {
+     /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+	font-weight: 900;
+    font-size: 20px;
+    line-height: 1.125;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .featured-article-featuredHeadline-3 {
+        font-weight: 900;
+        font-size: 30px;
+        line-height: 1.125;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .featured-article-featuredHeadline-3 {
+        font-weight: 900;
+        font-size: 36px;
+        line-height: 1.125;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+    }
+}
+
+.bill-performing-style {
+    font-family: roboto slab;
+    font-size: 14px;
+}
+
+.bill-with-style {
+    font-size: 14px;
+    font-family: roboto slab;
+}
+
+.block-header {
+	background: none;
+	padding: 0;
+	margin: 0 0 .5rem;
+	border: 0;
+}
+
+.block-sm .block-header {
+	background: none;
+	padding: 0;
+	margin: 0 0 .5rem;
+	border: 0;
+}
+
+.block-sm .block-title {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-weight: 900;
+    border-bottom: solid 1px #dedede;
+    padding: 0 0 .14rem;
+    font-size: .68rem;
+    font-family: inherit;
+    text-transform: none;
+    line-height: 1;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .block-sm .block-title {
+        font-weight: 900;
+        border-bottom: solid 1px #dedede;
+        padding: 0 0 .20rem;
+        font-size: 1.02rem;
+        font-family: inherit;
+        text-transform: none;
+        line-height: 1;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .block-sm .block-title {
+        font-weight: 900;
+        border-bottom: solid 1px #dedede;
+        padding: 0 0 .25rem;
+        font-size: 1.25rem;
+        font-family: inherit;
+        text-transform: none;
+        line-height: 1;
+    }
+}
+
+.block-title-mobile {
+    text-align:center;
+    font-weight: 900;
+    border-bottom: solid 1px #dedede;
+    padding: 0 0 .14rem;
+    font-size: 1.5rem;
+    font-family: inherit;
+    text-transform: none;
+    line-height: 1;
+}
+
+.block-mobile {
+	margin-bottom: 1rem;
+}
+
+.block-title {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-weight: 900;
+    border-bottom: solid 1px #dedede;
+    padding: 0 0 .14rem;
+    font-size: .68rem;
+    font-family: inherit;
+    text-transform: none;
+    line-height: 1;
+    margin-bottom: .5rem;
+}
+
+.block-title-sundial-article {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-weight: 900;
+    border-bottom: solid 1px #dedede;
+    padding-top: .07rem;
+    padding-bottom: .07rem;
+    padding-left: 0;
+    padding-right: 0;
+    font-size: .68rem;
+    font-family: inherit;
+    text-transform: none;
+    line-height: 1;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .block-title {
+        font-weight: 900;
+        border-bottom: solid 1px #dedede;
+        padding: 0 0 .20rem;
+        font-size: 1.02rem;
+        font-family: inherit;
+        text-transform: none;
+        line-height: 1;
+        margin-bottom: .5rem;
+    }
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .block-title-sundial-article {
+        font-weight: 900;
+        border-bottom: solid 1px #dedede;
+        padding: 0 0 .20rem;
+        font-size: 1.02rem;
+        font-family: inherit;
+        text-transform: none;
+        line-height: 1;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .block-title {
+        font-weight: 900;
+        border-bottom: solid 1px #dedede;
+        padding: 0 0 .25rem;
+        font-size: 1.25rem;
+        font-family: inherit;
+        text-transform: none;
+        line-height: 1;
+        margin-bottom: .5rem;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .block-title-sundial-article {
+        font-weight: 900;
+        border-bottom: solid 1px #dedede;
+        padding: 0 0 .25rem;
+        font-size: 1.25rem;
+        font-family: inherit;
+        text-transform: none;
+        line-height: 1;
+    }
+}
+
+.business-cover-photo {
+    text-align: center;
+}
+
+.b-w-label {
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-size: 1.5rem;
+    margin: .5rem 0;
+    font-style: italic;
+    border-bottom: solid;
+    padding-bottom: .5rem;
+}
+
+.byline {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    margin-bottom: .8125rem;
+    font-size: 9px;
+    margin-top: .8125rem;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .byline {
+        margin-bottom: .8125rem;
+        font-size: 9px;
+        margin-top: .8125rem;
+    }
+}
+@media only screen and (min-width: 1205px) {
+    .byline {
+        margin-bottom: 1rem;
+        font-size: 11px;
+        margin-top: 1rem;
+    }
+}
+
+.byline a {
+	font-weight: 500;
+}
+
+.byline .author {
+    color: #dc3545!important;
+}
+
+.byline .author:hover {
+    color: #0d1216;
+}
+
+.contact-body {
+    font-family: roboto slab;
+    font-size: 16px;
+    text-align: center;
+}
+
+.contact-footer {
+    font-family: roboto slab;
+    font-size: 28px;
+    font-weight: 700;
+    text-align:  center;
+}
+
+.contact-info {
+    font-size: 22px;
+    font-family: roboto slab;
+    border-bottom: none;
+}
+
+.contact-header {
+    font-family: roboto slab;
+    font-size: 28px;
+    font-weight: 700;
+    text-align: center;
+    border-bottom: solid 1px #dedede;
+}
+
+.contact-lead {
+    font-family: roboto slab;
+    font-size: 18px;
+    text-align: center;
+}
+
+.date-input-start {
+    float: right;
+    margin: 5px 5px 5px 0;
+    width: 45%;
+}
+
+@media only screen and (min-width: 994px) {
+    .date-input-start {
+        float: right;
+        margin: 5px 5px 5px 0;
+        width: 55%;
+    }
+}
+
+.mobile-banner {
+    padding-bottom: .5rem;
+}
+
+.mobile-byline {
+    margin-bottom: .20rem;
+    font-size: 12px;
+}
+
+.mobile-byline .author {
+    color: #dc3545!important;
+}
+
+
+.mobile-date-input {
+    margin: 5px;
+    width: 90%;
+}
+
+.date-input-end {
+    float: right;
+    margin: 5px 5px 5px 0;
+    width: 45%;
+}
+
+@media only screen and (min-width: 994px) {
+    .date-input-end {
+        float: right;
+        margin: 5px 5px 5px 0;
+        width: 55%;
+    }
+}
+
+.date-line {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-size: 7px;
+    font-family: roboto slab;
+    font-weight: 500;
+    color: #1a1a1a;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .date-line {
+        font-size: 10px;
+        font-family: roboto slab;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .date-line {
+        font-size: 12px;
+        font-family: roboto slab;
+        font-weight: 500;
+        color: #1a1a1a;
+    }
+}
+
+
+.date-range-start {
+    width: 42%;
+    float: left;
+    background: lightgrey;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.mobile-date-range-start {
+    width: 33.3%;
+    text-align: center;
+    float: left;
+    background: lightgrey;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+}
+
+.date-range-end {
+    width: 70%;
+    float: left;
+    background: darkgrey;
+}
+
+.mobile-date-range-end {
+    width: 33.3%;
+    text-align: center;
+    float: left;
+    background: darkgrey;
+}
+
+@media only screen and (min-width: 994px) {
+    .date-range-end {
+        width: 77%;
+        float: left;
+        background: darkgrey;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .date-range-end {
+        width: 80%;
+        float: left;
+        background: darkgrey;
+    }
+}
+
+.mobile-date-range-submit {
+    width: 33.3%;
+    text-align: center;
+    float: right;
+    background: grey;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+    padding: 18.5px 0;
+}
+
+.date-range-submit {
+    width: 30%;
+    float: right;
+    background: grey;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+@media only screen and (min-width: 994px) {
+    .date-range-submit {
+        width: 23%;
+        float: right;
+        background: grey;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .date-range-submit {
+        width: 20%;
+        float: right;
+        background: grey;
+        border-top-right-radius: 10px;
+        border-bottom-right-radius: 10px;
+    }
+}
+
+.description {
+    font-family: roboto slab;
+    font-size: 16px;
+}
+
+.editors-picks {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-size: 10px;
+    font-family: roboto slab;
+    font-weight: 400;
+    margin: 0;
+    padding: .14rem;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .editors-picks {
+        font-size: 15px;
+        font-family: roboto slab;
+        font-weight: 400;
+        margin: 0;
+        padding: .20rem;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .editors-picks {
+        font-size: 18px;
+        font-family: roboto slab;
+        font-weight: 400;
+        margin: 0;
+        padding: .25rem;
+    }
+}
+
+.end-and-submit {
+    float: right;
+    width: 58%;
+}
+
+.event-blurb {
+    font-family: roboto slab;
+}
+
+.event-list-calendar-button {
+    float: left;
+    margin: 5px 0 5px 5px;
+}
+
+.mobile-event-list-calendar-button {
+    margin: 5px;
+}
+
+.error-message {
+    font-weight: 900;
+    padding: 0 0 .25rem;
+    font-size: 30px;
+    font-family: inherit;
+    text-transform: none;
+    line-height: 1;
+    margin-bottom: .5rem;
+    text-align: center;
+}
+
+.event-category {
+    font-family: roboto slab;
+}
+
+.event-cover-image {
+    text-align: center;
+}
+
+.event-list-calendar-submit {
+    margin: 5px;
+}
+
+.event-listing-basic {
+    display: inline-block;
+    width: 40%;
+    padding: 0 .5rem;
+    border-left: 1px solid #dedede;
+    border-right: 1px solid #dedede;
+}
+
+@media only screen and (min-width: 994px) {
+    .event-listing-basic {
+        display: inline-block;
+        width: 50%;
+        padding: 1rem .5rem;
+        border-left: 1px solid #dedede;
+        border-right: 1px solid #dedede;
+    }
+}
+
+.event-listing {
+    float: left;
+    width: 100%;
+    border-bottom: solid 1px #dedede;
+    padding: 5px 0;
+}
+
+.event-listing-date {
+    font-family: Anton;
+    font-size: 25px;
+    color: #ffffff;
+    text-align: center;
+}
+
+@media only screen and (min-width: 400px) {
+    .event-listing-date {
+        font-family: Anton;
+        font-size: 35px;
+        color: #ffffff;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 400px) {
+    .event-listing-date-box {
+        width: 100px;
+        height:100px;
+        background: #fec42e;
+    }
+}
+
+.event-listing-date-box {
+    width: 96%;
+    height:100px;
+    background: #fec42e; 
+}
+
+.event-listing-date-box-container {
+    width: 27%;
+    float: left;
+}
+
+@media only screen and (min-width: 994px) {
+    .event-listing-date-box-container {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .event-listing-date-box-container {
+        width: 18%;
+        float: left;
+    }
+}
+
+.event-listing-info {
+        color: #212529;
+        font-family: Roboto;
+        font-size: 12pt;
+        font-weight: 700;
+        display:inline-block;
+        width: 31%;
+        text-align: center;
+    }
+
+@media only screen and (min-width: 994px) {
+    .event-listing-info {
+        color: #212529;
+        font-family: Roboto;
+        font-size: 12pt;
+        font-weight: 700;
+        display:inline-block;
+        width: 30%;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .event-listing-info {
+        color: #212529;
+        font-family: Roboto;
+        font-size: 12pt;
+        font-weight: 700;
+        display:inline-block;
+        width: 30%;
+        text-align: center;
+    }
+}
+
+
+.event-listing-title {
+    font-family: Roboto Slab;
+    padding-top: .5rem;
+    text-transform: none;
+    line-height: 1;
+    color: #232529;
+    font-size: calc(10px + (20 - 10) * ((100vw - 250) / (774 - 250)));
+}
+
+@media only screen and (min-width: 994px) {
+    .event-listing-title {
+        font-family: Roboto Slab;
+        font-size: 25px;
+        padding-top: .5rem;
+        text-transform: none;
+        line-height: 1;
+        color: #232529;
+    }
+}
+
+.event-listing-venue {
+    font-family: Roboto;
+    font-size: 16pt;
+    font-weight: 500;
+    color: inherit;
+}
+
+.event-social-links {
+    float: right;
+}
+
+.event-ticket-info {
+    font-family: roboto slab;
+}
+
+.footer-field {
+    font-family: roboto slab;
+}
+
+.footer-menu {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+    text-align: center;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .footer-menu {
+        font-size: .56rem;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        text-align: center;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .footer-menu {
+        font-size: .6875rem;
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        text-align: center;
+    }
+    
+}
+
+.footer-sitemap {
+    margin-bottom:15px;
+    border-bottom: solid;
+    border-top: solid;
+}
+
+.footer-social-section {
+    font-family: roboto slab;
+    position: relative;
+    bottom: -170px;
+}
+
+.heading-style-mobile {
+	font-size: 16px;
+	font-family: roboto slab;
+	font-weight: 500;
+	/* font-style: italic; */
+	/* text-align: center; */
+	/* margin: 0 0 .75rem; */
+	line-height: 1.2rem;
+	margin: .20rem 0;
+}
+
+.heading-style-1 {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+	font-size: 10px;
+	font-family: roboto slab;
+	font-weight: 500;
+	/* font-style: italic; */
+	/* text-align: center; */
+	/* margin: 0 0 .75rem; */
+	line-height: .74rem;
+	margin-bottom: .14rem;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+	.heading-style-1 {
+		font-size: 14px;
+		font-family: roboto slab;
+		font-weight: 500;
+		/* font-style: italic; */
+		/* text-align: center; */
+		/* margin: 0 0 .75rem; */
+		line-height: 1.09rem;
+		margin-bottom: .20rem;
+	}
+}
+
+@media only screen and (min-width: 1205px) {
+	.heading-style-1 {
+		font-size: 18px;
+		font-family: roboto slab;
+		font-weight: 500;
+		/* font-style: italic; */
+		/* text-align: center; */
+		/* margin: 0 0 .75rem; */
+		line-height: 1.35rem;
+		margin-bottom: .25rem;
+	}
+}
+
+.img-caption {
+    float: left;
+    font-size: 12px;
+    font-style: italic;
+    font-family: roboto slab;
+}
+
+.img-container {
+    position: relative;
+    z-index: 1;
+}
+
+.img-credit {
+    position: absolute;
+    bottom: -60px;
+    right: 1px;
+    color: wheat;
+    z-index: 2;
+    padding: 10px 10px 0px 10px;
+}
+
+.img-source {
+    float: right;
+    font-size: 12px;
+    font-family: roboto slab;
+}
+
+.img-credit:hover {
+    color: #999;
+    text-decoration: underline;
+}
+
+.img-thumbnail {
+	border-radius: 0;
+    
+}
+
+.lead-performer-display {
+    border-bottom: none;
+    font-size: 25px;
+}
+
+.list-group-item {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    position: relative;
+    display: block;
+    padding: .19rem 0;
+    margin-bottom: -.54375px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+    /* border-right: 0; */
+    /* border-left: 0; */
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: .28rem 0;
+        margin-bottom: -.8125px;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,.125);
+        /* border-right: 0; */
+        /* border-left: 0; */
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .list-group-item {
+        position: relative;
+        display: block;
+        padding: .35rem 0;
+        margin-bottom: -1px;
+        background-color: #fff;
+        border: 1px solid rgba(0,0,0,.125);
+        /* border-right: 0; */
+        /* border-left: 0; */
+    }
+}
+
+.logo-banner {
+    margin-bottom: 0rem
+}
+
+.main-section {
+    border-top: solid;
+}
+
+.main-column-four {
+    position:-webkit-sticky;
+    position:sticky;
+    top:60px;
+}
+
+.map-border-1 {
+    border-radius: 20px;
+    border: solid 11px #212529;
+    background: #212529;
+}
+
+.map-border-2 {
+    border-radius: 10px;
+    border: solid 4px #fec42e;
+}
+
+.map-box {
+    display:block;
+    border-radius: 5px;
+}
+
+.map-container {
+    padding: 13px 0;
+}
+
+.map-itself {
+    width: 100%
+}
+
+.media {
+    /* background: #fff; */
+    border-bottom: solid 1px #ddd;
+    padding: 1rem 0;
+}
+
+.media-body * {
+	margin-top: .25rem;
+    
+}
+
+.menu--topics-menu {
+	padding: 0 !important;
+	margin: 0 !important;
+}
+
+.mobile-contact-body {
+    font-family: roboto slab;
+    font-size: 14px;
+    text-align: center;
+}
+
+.mobile-contact-footer {
+    font-family: roboto;
+    font-size: 21px;
+    font-weight: 700;
+    text-align:  center;
+}
+
+.mobile-contact-header {
+    font-family: roboto slab;
+    font-size: 21px;
+    font-weight: 700;
+    text-align: center;
+    border-bottom: solid 1px #dedede;
+}
+
+.mobile-contact-lead {
+    font-family: roboto slab;
+    font-size: 18px;
+    text-align: center;
+}
+
+.mobile-contact-us {
+    text-align: center;
+}
+
+.mobile-featured-element {
+    display:block;
+    visibility:hidden;
+    width:100%;
+    text-align:center;
+}
+
+.mobile-featured-element a {
+	text-decoration:none;
+	color:inherit;
+}
+
+.mobile-featured-element a:hover {
+	text-decoration:none;
+	color:inherit;
+}
+
+.mobile-latest-news-body {
+    display: none;
+}
+
+.mobile-local-events-body {
+    display: none;
+}
+
+.mobile-front-page-latest-news-body {
+    display: none;
+}
+
+.mobile-front-page-local-events-body {
+    display: block;
+}
+
+.mobile-news-and-events {
+    padding: 8px 0;
+}
+
+.mobile-down-arrow {
+    float: right;
+    display: none;
+    width: 30px;
+    height: auto;
+}
+
+.mobile-left-arrow {
+    float: right;
+    display: block;
+    width: 30px;
+    height: auto;
+}
+
+.mobile-logo {
+    border-bottom: solid 1px #dedede;
+    padding-bottom: 1rem;
+}
+
+.mobile-menu {
+	font-size:16px;
+	text-align:center;
+}
+
+.mobile-social-links {
+    width: 25px;
+    height: 25px;
+    margin: 0 5px;
+}
+
+.mobile-social-section {
+    font-family: roboto slab;
+}
+
+@media only screen and (min-width: 775px) {
+    .navbar-expand-lg .navbar-collapse {
+        display: flex!important;
+        flex-basis: auto;
+    }
+}
+
+@media (min-width: 775px) {
+    .navbar-expand-lg .navbar-nav .nav-link {
+        padding-right: .5rem;
+        padding-left: .5rem;
+    }
+}
+
+
+@media (min-width: 775px) {
+    .navbar-expand-lg .navbar-nav {
+        flex-direction: row;
+    }
+}
+
+.nav-link:hover {
+    color: #999;
+    text-decoration: underline;
+}
+
+.nav-top-container {
+    position:fixed;
+    top:0px;
+    left:0px;
+    width:100%;
+    z-index:100;
+    border-bottom: solid 1px #dedede;
+}
+
+#page-header {
+    border-top: solid 1px #fff;
+    border-bottom: solid 1px #fff;
+    padding-top: 1.5rem;
+    padding-bottom: .5rem;
+}
+
+.page-setup {
+    position:absolute;
+    top:80px;
+    width:100%;
+}
+
+.parent {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 25px;
+    height: 0;
+}
+
+
+.parent iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.performer-bill-display {
+    margin: .5rem 15px;
+}
+
+.performer-cover-image {
+    text-align: center;
+}
+
+.performer-info {
+    font-size: 16px;
+    font-family: roboto slab;
+}
+
+.price {
+    font-weight: bold;
+}
+
+.right-main-featured-element {
+    display: block;
+    visibility: hidden;
+    width: 100%;
+    text-align: center;
+    border-top: solid;
+    border-bottom: solid;
+}
+
+.right-main-featured-element a {
+	text-decoration:none;
+	color:inherit;
+}
+
+.right-main-featured-element a:hover {
+	text-decoration:none;
+	color:inherit;
+}
+
+.right-main-featured-element-image {
+    max-width:100%;
+    max-height:100%;
+    position:relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.right-main-featured-element-title {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-family: roboto slab;
+    font-size: 10px;
+    font-weight: 500;
+    line-height: .74rem;
+    text-decoration: none;
+    height: 60px;
+    overflow: hidden;
+    text-overflow: clip; 
+}
+
+.featured-element-image-container {
+    position:relative;
+    background: black;
+}
+
+@media only screen and (min-width: 775px) {
+    /* .58125 (or 93/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .right-main-featured-element-title {
+        font-family: roboto slab;
+        font-size: 11px;
+        font-weight: 500;
+        line-height: .79rem;
+        text-decoration: none;
+        height:75px;
+    }
+    
+    .featured-element-image-container {
+        width:150px;
+        height:150px;
+        background: black;
+    }
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .right-main-featured-element-title {
+        font-family: roboto slab;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.09rem;
+        text-decoration: none;
+        height:105px;
+    }
+    
+    .featured-element-image-container {
+        width:210px;
+        height:210px;
+        background: black;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .right-main-featured-element-title {
+        font-family: roboto slab;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.35rem;
+        text-decoration: none;
+        height:128px;
+    }
+    
+    .featured-element-image-container {
+        width:255px;
+        height:255px;
+        background: black;
+    }
+}
+
+.mobile-featured-image-container {
+    background: black;
+    margin-bottom: 8px;
+}
+
+.mobile-featured-image-background {
+    background: black;
+}
+
+
+.main-featured-area-label {
+    /* .54375 */
+    text-align: left;
+    font-weight: 900;
+    border-bottom: 1px solid #dedede;
+    margin-bottom: 8.2px;
+    font-size: .68rem;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 */
+    .main-featured-area-label {
+        text-align: left;
+        font-weight: 900;
+        border-bottom: 1px solid #dedede;
+        margin-bottom: 12.2px;
+        font-size: 1.02rem;
+    }
+}
+
+
+@media only screen and (min-width: 1205px) {
+    .main-featured-area-label {
+        text-align: left;
+        font-weight: 900;
+        border-bottom: 1px solid #dedede;
+        margin-bottom: 15px;
+        font-size: 1.25rem;
+    }
+}
+
+.right-mobile-featured-element-title {
+        font-family: roboto slab;
+        font-size: 22px;
+        text-decoration: none;
+        height: 66px;
+        
+}
+
+.right-mobile-featured-element-image {
+    max-width:100%;
+}
+
+.social-links {
+    width: 50px;
+    height: 50px;
+    margin: 0 5px;
+}
+
+.social-section {
+    margin-top: 10px;
+    font-family: roboto slab;
+    text-align: center;
+}
+
+.subhead-1 {
+    font-size: 25px;
+    border-bottom: none;
+    font-family: Roboto slab;
+    margin-left: 24px;
+}
+
+.subhead-2 {
+    font-size: 20px;
+    border-bottom: none;
+    font-family: Roboto slab;
+    margin-left: 24px;
+}
+
+.summary {
+    /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-size: 10px;
+    font-family: 'Roboto Slab';
+    padding-bottom: .27rem;
+	color: #575757;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .summary {
+        font-size: 10px;
+        font-family: 'Roboto Slab';
+        padding-bottom: .41rem;
+        color: #575757;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .summary {
+        font-size: 12px;
+        font-family: 'Roboto Slab';
+        padding-bottom: .5rem;
+        color: #575757;
+    }
+}
+
+.supporting-performer-display {
+    border-bottom: none;
+    font-size: 20px;
+}
+
+.text-muted {
+    color: #999!important;
+}
+
+.title-box {
+    font-size: 30px;
+    border-bottom: none;
+}
+
+#Title-wrapper {
+    width: 100%;
+    margin: .5rem 0;
+}
+
+#Title-wrapper-subhead-1 {
+    width: 100%;
+    margin: .5rem 0;
+}
+
+#Title-wrapper-subhead-2 {
+    width: 100%;
+    margin: .5rem 0;
+}
+
+#Venue-wrapper {
+    width: 100%;
+    margin: .5rem 0;
+}
+
+.venue-and-time {
+    margin: .5rem 0;
+    font-size: 22px;
+    font-family: roboto slab;
+}
+
+.venue-cover-image {
+    text-align: center;
+}
+
+.venue-line {
+     /* .54375 (or 87/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    font-size: 8px;
+    font-family: roboto slab;
+    font-weight: 500;
+    margin-bottom: 0;
+    padding-bottom: .27rem;
+    color: #dc3545;
+}
+
+@media only screen and (min-width: 994px) {
+    /* .8125 (or 130/160) of the max font-size, line-height (if not just a number; i.e. no rem, px, or other suffix to the number), margins, and padding */
+    .venue-line {
+        font-size: 11px;
+        font-family: roboto slab;
+        font-weight: 500;
+        margin-bottom: 0;
+        padding-bottom: .41rem;
+        color: #dc3545;
+    }
+}
+
+@media only screen and (min-width: 1205px) {
+    .venue-line {
+        font-size: 14px;
+        font-family: roboto slab;
+        font-weight: 500;
+        margin-bottom: 0;
+        padding-bottom: .5rem;
+        color: #dc3545;
+    }
+}
+
+.yellow-side-mark {
+    width: 15px;
+    background-color: #fec42e;
+    margin: auto;
+}
+
+.ad-manager-title {
+	text-align: center;
+	font-weight: 900;
+	font-family: roboto;
+	font-size: 25px;
+	margin: .5rem 0;
+	border-bottom: solid 5px;
+	text-transform: uppercase;
+	font-style: italic;
+}
+
+.mobile-summary {
+    font-size: 14px;
+    font-family: 'Roboto Slab';
+    padding-bottom: .27rem;
+	color: #575757;
+}
+
+.mobile-featured-headline {
+    font-weight: 900;
+    font-size: 28px;
+    line-height: 1.125;
+    padding-top: 0;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+
+.mobile-featured-title {
+    font-weight: 900;
+    border-bottom: solid 1px #dedede;
+    padding: .25rem;
+    font-size: 1.25rem;
+    font-family: inherit;
+    text-transform: none;
+    line-height: 1;
+    margin-bottom: .25rem;
+}
+
+.blockedSelected {
+    background-color: #7070ff;
+}
+          
+.blocked {
+    background-color: #707070;
+}
+ 
+ .booking-info {
+    font-size: 16px;
+    font-family: roboto slab;
+ }
+          
+.confirmedSelected {
+    background-color:#b4e023;
+}
+          
+.confirmed {
+    background-color:#f7f302;
+}
+
+.credits {
+    font-family: roboto slab;
+    font-size: 16px;
+    font-weight: 100;
+    line-height: 1.2;
+    color: inherit;
+    margin-bottom: .5rem;
+    margin-left: 50px;
+}
+
+.credits-intro {
+    font-family: roboto slab;
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: .5rem;
+}
+
+.credit-pages {
+    font-size: 24px;
+    margin-bottom: .5rem;
+    font-family: roboto slab;
+    font-weight: 900;
+    line-height: 1.2;
+    color: inherit;
+}
+
+.credit-sections {
+    font-size: 20px;
+    text-indent: 25px;
+    margin-bottom: .5rem;
+    font-family: roboto slab;
+    font-weight: 900;
+    line-height: 1.2;
+    color: inherit;
+}
+
+.provSelected {
+	background-color:#33cccc;
+}
+          
+.provFilled {
+    background-color:#003399;
+}
+          
+.selected {
+    background-color:#00FFFF;
+}
+
+.search-results {
+    font-family: roboto slab;
+    font-size: 20px;
+}
+            
+.dayBox {
+    overflow: hidden;
+    -webkit-touch-callout: none; 
+    -webkit-user-select: none; 
+    -khtml-user-select: none; 
+	-moz-user-select: none; 
+    -ms-user-select: none; 
+	user-select: none;
+}
+
+.mobile-front-page-event-article-tabs {
+    width:47%;
+    height:auto;
+}
+
+.left-carousel-arrow {
+    float:left;
+    margin-left:10px;
+}
+
+.right-carousel-arrow {
+    float:right;
+    margin-right:10px;
+}
+
+#Top-search-bar {
+    width:60px;
+    background-image:none;
+}
+
+@media only screen and (min-width: 350px) {
+    #Top-search-bar {
+       width:75px;
+       background:url(/themes/custom/sundialtheme/images/search_icon_small_01.png) no-repeat right;
+    }
+}
+
+@media only screen and (min-width: 410px) {
+    #Top-search-bar {
+       width:150px;
+       background:url(/themes/custom/sundialtheme/images/search_icon_small_01.png) no-repeat right;
+    }
+}

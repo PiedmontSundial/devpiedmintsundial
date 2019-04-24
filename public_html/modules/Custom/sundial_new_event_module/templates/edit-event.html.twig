@@ -1,0 +1,558 @@
+<script>
+  var performers = [];
+  var venues = [];
+  var tags = [];
+  
+  {% for performer in performers %}
+    performers.push(["{{ performer.title.value }}", {{ performer.id }}, "{{ performer.title.value|lower }}"]);
+  {% endfor %}
+  
+  {% for venue in venues %}
+    venues.push(["{{ venue.title.value }}", {{ venue.id }}, "{{ venue.title.value|lower }}"]);
+  {% endfor %}
+  
+  {% for tag in tags %}
+    tags.push(["{{ tag[0] }}", {{ tag[1] }}]);
+  {% endfor %}
+  
+  var dbPerformerIdsString = "{{ editable.performer_ids }}";
+  //window.alert(dbPerformerIdsString);
+  var dbPerformerIdsArray = dbPerformerIdsString.split(",");
+  /*
+  for (var i = 0; i < dbPerformerIdsArray.length; i++) {
+    window.alert(dbPerformerIdsArray[i]);
+  }
+  */
+  var dbPerformers = [];
+  for (var i = 0; i < dbPerformerIdsArray.length; i++) {
+    for (var j = 0; j < performers.length; j++) {
+      if (performers[j][1] == dbPerformerIdsArray[i]) {
+        var perf = performers[j];
+        dbPerformers.push(perf);
+      }
+    }
+  }
+  
+  function showPerformerHint(rawStr) {
+    var str = rawStr.toLowerCase();
+    var trimStr = rawStr.trim();
+    buttonOutput = "";
+    for (var i = 0; i < performers.length; i++) {
+      if (performers[i][2].indexOf(str) != -1) {
+        buttonOutput += " <button onclick='addPerformer(" + performers[i][1] + ")'>" + performers[i][0] + "</button> ";
+      }
+    }
+    if (buttonOutput == "") {
+      buttonOutput += "no results found";
+    }
+    if (trimStr != "") {
+      buttonOutput += "<br><br><button onclick='newPerformer()'>Create new performer with this name</button>";
+    }
+    document.getElementById("PerformerButtonArea").innerHTML = buttonOutput;
+  }
+  
+  function addPerformer(pickedId) {
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/edit_event");
+		
+		var isAddingPerformerInput = document.createElement("input");
+		isAddingPerformerInput.setAttribute("type", "hidden");
+		isAddingPerformerInput.setAttribute("name", "isAddingPerformer");
+		isAddingPerformerInput.setAttribute("value", 1);
+		form.appendChild(isAddingPerformerInput);
+		
+		var dbEventIdInput = document.createElement("input");
+		dbEventIdInput.setAttribute("type", "hidden");
+		dbEventIdInput.setAttribute("name", "databaseEventId");
+		dbEventIdInput.setAttribute("value", {{ editable.id }});
+		form.appendChild(dbEventIdInput);
+     
+    var newPerformerIdInput = document.createElement("input");
+		newPerformerIdInput.setAttribute("type", "hidden");
+		newPerformerIdInput.setAttribute("name", "newPerformerId");
+		newPerformerIdInput.setAttribute("value", pickedId);
+		form.appendChild(newPerformerIdInput);
+		
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function movePerformerUp(listPosition) {
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/edit_event");
+		
+		var isMovingPerformerUpInput = document.createElement("input");
+		isMovingPerformerUpInput.setAttribute("type", "hidden");
+		isMovingPerformerUpInput.setAttribute("name", "isMovingPerformerUp");
+		isMovingPerformerUpInput.setAttribute("value", 1);
+		form.appendChild(isMovingPerformerUpInput);
+    
+		var dbEventIdInput = document.createElement("input");
+		dbEventIdInput.setAttribute("type", "hidden");
+		dbEventIdInput.setAttribute("name", "databaseEventId");
+		dbEventIdInput.setAttribute("value", {{ editable.id }});
+		form.appendChild(dbEventIdInput);
+    
+    var listPositionInput = document.createElement("input");
+		listPositionInput.setAttribute("type", "hidden");
+		listPositionInput.setAttribute("name", "listPosition");
+		listPositionInput.setAttribute("value", listPosition);
+		form.appendChild(listPositionInput);
+		
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function movePerformerDown(listPosition) {
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/edit_event");
+		
+		var isMovingPerformerDownInput = document.createElement("input");
+		isMovingPerformerDownInput.setAttribute("type", "hidden");
+		isMovingPerformerDownInput.setAttribute("name", "isMovingPerformerDown");
+		isMovingPerformerDownInput.setAttribute("value", 1);
+		form.appendChild(isMovingPerformerDownInput);
+    
+		var dbEventIdInput = document.createElement("input");
+		dbEventIdInput.setAttribute("type", "hidden");
+		dbEventIdInput.setAttribute("name", "databaseEventId");
+		dbEventIdInput.setAttribute("value", {{ editable.id }});
+		form.appendChild(dbEventIdInput);
+    
+    var listPositionInput = document.createElement("input");
+		listPositionInput.setAttribute("type", "hidden");
+		listPositionInput.setAttribute("name", "listPosition");
+		listPositionInput.setAttribute("value", listPosition);
+		form.appendChild(listPositionInput);
+		
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function removePerformer(listPosition) {
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/edit_event");
+		
+		var isRemovingPerformerInput = document.createElement("input");
+		isRemovingPerformerInput.setAttribute("type", "hidden");
+		isRemovingPerformerInput.setAttribute("name", "isRemovingPerformer");
+		isRemovingPerformerInput.setAttribute("value", 1);
+		form.appendChild(isRemovingPerformerInput);
+    
+		var dbEventIdInput = document.createElement("input");
+		dbEventIdInput.setAttribute("type", "hidden");
+		dbEventIdInput.setAttribute("name", "databaseEventId");
+		dbEventIdInput.setAttribute("value", {{ editable.id }});
+		form.appendChild(dbEventIdInput);
+    
+    var listPositionInput = document.createElement("input");
+		listPositionInput.setAttribute("type", "hidden");
+		listPositionInput.setAttribute("name", "listPosition");
+		listPositionInput.setAttribute("value", listPosition);
+		form.appendChild(listPositionInput);
+		
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function showVenueHint(rawStr) {
+    var str = rawStr.toLowerCase();
+    var trimStr = rawStr.trim();
+    buttonOutput = "";
+    for (var i = 0; i < venues.length; i++) {
+      if (venues[i][2].indexOf(str) != -1) {
+        buttonOutput += " <button onclick='addVenue(" + venues[i][1] + ")'>" + venues[i][0] + "</button> ";
+      }
+    }
+    if (buttonOutput == "") {
+      buttonOutput += "no results found";
+    }
+    if (trimStr != "") {
+      buttonOutput += "<br><br><button onclick='newVenue()'>Create new venue with this name</button>";
+    }
+    document.getElementById("VenueButtonArea").innerHTML = buttonOutput;
+  }
+  
+  function addVenue(pickedId) {
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/edit_event");
+		
+		var isChangingVenueInput = document.createElement("input");
+		isChangingVenueInput.setAttribute("type", "hidden");
+		isChangingVenueInput.setAttribute("name", "isChangingVenue");
+		isChangingVenueInput.setAttribute("value", 1);
+		form.appendChild(isChangingVenueInput);
+		
+		var dbEventIdInput = document.createElement("input");
+		dbEventIdInput.setAttribute("type", "hidden");
+		dbEventIdInput.setAttribute("name", "databaseEventId");
+		dbEventIdInput.setAttribute("value", {{ editable.id }});
+		form.appendChild(dbEventIdInput);
+     
+    var newVenueIdInput = document.createElement("input");
+		newVenueIdInput.setAttribute("type", "hidden");
+		newVenueIdInput.setAttribute("name", "newVenueId");
+		newVenueIdInput.setAttribute("value", pickedId);
+		form.appendChild(newVenueIdInput);
+		
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function showCostInput() {
+		document.getElementById("Cost-inputs").style.display = "block";
+	}
+	
+	function hideCostInput() {
+		document.getElementById("Cost-inputs").style.display = "none";
+	}
+  
+  function showSingleCostInput() {
+    document.getElementById("Range-cost-inputs").style.display = "none";
+    document.getElementById("Single-cost-inputs").style.display = "block";
+	}
+	
+	function showRangeCostInput() {
+		document.getElementById("Single-cost-inputs").style.display = "none";
+		document.getElementById("Range-cost-inputs").style.display = "block";
+	}
+  
+  function newVenue() {
+    var nameVal = document.getElementById("VenueNameInput").value;
+    
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/quick_add_new_venue");
+		
+		var nodeIdInput = document.createElement("input");
+		nodeIdInput.setAttribute("type", "hidden");
+		nodeIdInput.setAttribute("name", "nodeId");
+		nodeIdInput.setAttribute("value", {{ node.id }});
+		form.appendChild(nodeIdInput);
+		
+		var venueNameInput = document.createElement("input");
+		venueNameInput.setAttribute("type", "hidden");
+		venueNameInput.setAttribute("name", "venueName");
+		venueNameInput.setAttribute("value", nameVal);
+		form.appendChild(venueNameInput);
+    
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+  function newPerformer() {
+    var nameVal = document.getElementById("PerformerNameInput").value;
+    
+    var form = document.createElement("form");
+		form.setAttribute("method", "post");
+		form.setAttribute("action", "/quick_add_new_performer");
+		
+		var nodeIdInput = document.createElement("input");
+		nodeIdInput.setAttribute("type", "hidden");
+		nodeIdInput.setAttribute("name", "nodeId");
+		nodeIdInput.setAttribute("value", {{ node.id }});
+		form.appendChild(nodeIdInput);
+		
+		var performerNameInput = document.createElement("input");
+		performerNameInput.setAttribute("type", "hidden");
+		performerNameInput.setAttribute("name", "performerName");
+		performerNameInput.setAttribute("value", nameVal);
+		form.appendChild(performerNameInput);
+    
+    var venueIdInput = document.createElement("input");
+		venueIdInput.setAttribute("type", "hidden");
+		venueIdInput.setAttribute("name", "venueId");
+		venueIdInput.setAttribute("value", 0);
+		form.appendChild(venueIdInput);
+    
+		document.body.appendChild(form);
+		form.submit();
+  }
+  
+</script>
+
+<h2>Here is the current state of the event in drupal:</h2>
+<p>
+  title: {{ node.title.value }}<br>
+  date: {{ node.field_event_date.value|date("l, F j g:i A", "America/New_York") }}<br>
+  {% if node.field_bill_performer_reference[0] %}
+    <h4>performering:</h4>
+    {% for performer in node.field_bill_performer_reference %}
+      {{ performer.entity.title.value }}<br>
+    {% endfor %}
+  {% endif %}
+</p>
+
+<h2>Here is the event as it is editable now</h2>
+
+{{ editable.id }}<br>
+{{ editable.event_drupal_node_id }}<br>
+
+<h4>Name:</h4>
+<form id="Title-update-form" action="/edit_event" method="post">
+  <textarea id="Event-name-imput" form="Title-update-form" name="name" rows="2" cols="100">{{ editable.name }}</textarea><br>
+  <input name="hasNewName" type="hidden" value="1">
+  <input name="databaseEventId" type="hidden" value="{{ editable.id }}">
+  <input type="submit" value="update event name">
+</form>
+<br>
+
+<div id="editable-performer-info">
+{% if editable.performer_ids %}
+  <h4>Performer List:</h4>
+  {% set dbPerfCount = 0 %}
+  {% for perf in databasePerformers %}
+    {% set dbPerfCount = dbPerfCount + 1 %}
+  {% endfor %}
+  {% set loopIndex = dbPerfCount - 1 %}
+  {% for i in 0..loopIndex %}
+    {{ databasePerformers[i][0] }}
+    {% if i > 0 %}
+      <button onclick="movePerformerUp({{ i }})">Move Up</button> 
+    {% endif %}
+    {% if i < loopIndex %}
+      <button onclick="movePerformerDown({{ i }})">Move Down</button> 
+    {% endif %}
+    <button onclick="removePerformer({{ i }})">Remove</button>
+    <br>
+  {% endfor %}
+  <div id="Performer-add-pick">
+    <h4>Add performer to bill:</h4>
+    
+    <input id="PerformerNameInput" type="text" name="performerName" onkeyup="showPerformerHint(this.value)"><br><br>
+    <p id="PerformerButtonArea"></p>
+  </div>
+{% else %}
+  <h4>Add a Performer to the Event if Desired:</h4>
+  <div id="Performer-add-pick">
+    <h4>Add performer to bill:</h4>
+    
+    <input id="PerformerNameInput" type="text" name="performerName" onkeyup="showPerformerHint(this.value)"><br><br>
+    <p id="PerformerButtonArea"></p>
+  </div>
+{% endif %}
+</div>
+
+<h4>Venue:</h4>
+<p>{{ databaseVenue }}</p>
+<div id="Venue-change-pick">
+  <h4>Select new Venue:</h4>
+  
+  <input id="VenueNameInput" type="text" name="venueName" onkeyup="showVenueHint(this.value)"><br><br>
+  <p id="VenueButtonArea"></p>
+</div>
+
+<h2>Here are the current event categories.  One or both secondary categories may be empty</h2>
+
+<form id="Categories-update-form" action="/edit_event" method="post">
+  <h4>Primary Category (required):</h4>
+  <select name="primaryCategory">
+    {% for tag in tags %}
+      <option value="{{ tag[1] }}"
+      {% if tag[1] == editable.event_primary_category_id %}
+        selected="selected"
+      {% endif %}
+      >{{ tag[0] }}</option>
+    {% endfor %}
+  </select>
+  <br>
+  <h4>Secodnary Categories (up to 2):</h4>
+  1: <select name="secondaryCategoryOne">
+    <option value="0">none</option>
+    {% for tag in tags %}
+      <option value="{{ tag[1] }}"
+      {% if tag[1] == editable.event_secondary_category_one_id %}
+        selected="selected"
+      {% endif %}
+      >{{ tag[0] }}</option>
+    {% endfor %}
+  </select><br>
+  2: <select name="secondaryCategoryTwo">
+    <option value="0">none</option>
+    {% for tag in tags %}
+      <option value="{{ tag[1] }}"
+      {% if tag[1] == editable.event_secondary_category_two_id %}
+        selected="selected"
+      {% endif %}
+      >{{ tag[0] }}</option>
+    {% endfor %}
+  </select><br>
+  <input name="hasNewCategories" type="hidden" value="1">
+  <input name="databaseEventId" type="hidden" value="{{ editable.id }}">
+  <input type="submit" value="update event categories">
+</form>
+<br>
+
+<h4>Blurb:</h4>
+<form id="Blurb-update-form" action="/edit_event" method="post">
+  <textarea id="Event-blurb-imput" name="blurb" form="Blurb-update-form" rows="6" cols="100"
+      placeholder="Enter or paste event blurb here">{{ editable.blurb }}</textarea><br>
+  <input name="hasNewBlurb" type="hidden" value="1">
+  <input name="databaseEventId" type="hidden" value="{{ editable.id }}">
+  <input type="submit" value="update event blurb">
+</form>
+<br>
+
+<h4>Date: {{ editable.time_of_event|date("F, j Y g:i A", "America/New_York") }}</h4>
+<form id="Date-update-form" action="/edit_event" method="post">
+  <span>Date of the event: </span><input type="date" name="date" value="{{ editable.time_of_event|date("Y-m-d", "America/New_York") }}" min="{{ "now"|date("Y-m-d", "America/New_York") }}" required><br>
+  <span>Start time: </span><input type="number" name="startHour" value="{{ editable.time_of_event|date("g", "America/New_York") }}" min="1" max="12" style="width:40px;" required> : 
+  <input type="number" name="startMinute" value="{{ editable.time_of_event|date("i", "America/New_York") }}" min="0" max="59" style="width:40px;">
+  <input type="radio" name="startAmPm" value="PM" 
+  {% if editable.time_of_event|date("A", "America/New_York") == "PM" %}
+    checked
+  {% endif %}> PM
+  <input type="radio" name="startAmPm" value="AM"
+  {% if editable.time_of_event|date("A", "America/New_York") == "AM" %}
+    checked
+  {% endif %}> AM
+  <br>
+  <input name="hasNewDate" type="hidden" value="1">
+  <input name="databaseEventId" type="hidden" value="{{ editable.id }}">
+  <input type="submit" value="update event date">
+</form>
+<br>
+
+<h4>Cost for this event is:
+  {% if editable.is_event_free %}
+    {{ free }}
+  {% else %}
+    {{ editable.event_cost }}
+    {% if editable.is_there_a_cost_range %}
+       - {{ editable.event_cost_range }}
+    {% endif %}
+  {% endif %}
+</h4>
+<form id="Cost-update-form" action="/edit_event" method="post">
+  <spam>Is the event free? </spam>
+	<input type="radio" name="hasCost" value="1"
+  {% if editable.is_event_free %}
+    checked
+  {% endif %}
+  onclick="hideCostInput()"> Yes
+	<input type="radio" name="hasCost" value="0"
+  {% if editable.is_event_free == 0 %}
+    checked
+  {% endif %}
+  onclick="showCostInput()"> No<br>
+	<div id="Cost-inputs" style="display:
+  {% if editable.is_event_free %}
+    none
+  {% else %}
+    block
+  {% endif %}
+  ;">
+		<span>Are you setting a single cost or a range?</span>
+		<input type="radio" name="hasCostRange" value="0"
+    {% if editable.is_there_a_cost_range == 0 %}
+      checked
+    {% endif %}
+    onclick="showSingleCostInput()"> Single Cost
+		<input type="radio" name="hasCostRange" value="1"
+    {% if editable.is_there_a_cost_range %}
+      checked
+    {% endif %}
+    onclick="showRangeCostInput()"> Cost Range<br>
+		<div id="Single-cost-inputs" style="display:
+    {% if editable.is_there_a_cost_range %}
+      none
+    {% else %}
+      block
+    {% endif %}
+    ;">
+			<span>Enter cost: </span>$<input type="number" name="costDollars" value="{{ databaseCost[0] }}" style="width:60px;">. 
+			<input type="number" name="costCents" value="{{ databaseCost[1] }}" min="0" max="99" style="width:40px;">
+		</div>
+		<div id="Range-cost-inputs" style="display:
+    {% if editable.is_there_a_cost_range == 0 %}
+      none
+    {% else %}
+      block
+    {% endif %}
+    ;">
+			<span>Enter cost: </span>$<input type="number" name="costDollarsForRange" value="{{ databaseCost[0] }}" style="width:60px;">. 
+			<input type="number" name="costCentsForRange" value="{{ databaseCost[1] }}" min="0" max="99" style="width:40px;">
+			<span> - </span>$<input type="number" name="rangeCostDollars" value="{{ databaseCostRange[0] }}" style="width:60px;">. 
+			<input type="number" name="rangeCostCents" value="{{ databaseCostRange[0] }}" min="0" max="99" style="width:40px;"><br>
+		</div>	
+	</div>
+  <input name="hasNewCost" type="hidden" value="1">
+  <input name="databaseEventId" type="hidden" value="{{ editable.id }}">
+  <input type="submit" value="update event cost">
+</form>
+
+<h2>Click here to harminize the node in drupal to the current editable version</h2>
+<form id="Harmonize-form" action="/edit_event" method="post">
+  <input name="amHarmonizing" type="hidden" value="1">
+  <input name="eventId" type="hidden" value="{{ node.id }}">
+  <input type="submit" value="Harmonize!">
+</form>
+
+<h2>Click here to revert the current editable version  to the node in drupal</h2>
+<form id="Harmonize-form" action="/edit_event" method="post">
+  <input name="amReverting" type="hidden" value="1">
+  <input name="eventId" type="hidden" value="{{ node.id }}">
+  <input name="databaseEventId" type="hidden" value="{{ editable.id }}">
+  <input type="submit" value="Revert!">
+</form>
+
+{% if dateClones %}
+  <h2>The Event has the following date clones:</h2>
+  {% for clone in dateClones %}
+    {{ clone.time_of_event|date("F, j Y g:i A", "America/New_York") }} 
+    <form action="/edit_event" method="post">
+      <input type="hidden" name="eventId" value="{{ clone.event_drupal_node_id }}">
+      <input type="submit" value="view and edit clone">
+    </form>
+  {% endfor %}
+{% endif %}
+<h2>Add new date clone for event:</h2>
+<form action="/edit_event" method="post">
+  <span>Date of the event: </span><input type="date" name="date" min="{{ "now"|date("Y-m-d", "America/New_York") }}" required><br>
+  <span>Start time: </span><input type="number"
+    name="startHour" value="{{ editable.time_of_event|date("g", "America/New_York") }}"
+    min="1" max="12" style="width:40px;" required> : 
+  <input type="number" name="startMinute"
+    value="{{ editable.time_of_event|date("i", "America/New_York") }}"
+    min="0" max="59" style="width:40px;">
+  <input type="radio" name="startAmPm" value="PM"
+    {% if editable.time_of_event|date("A", "America/New_York") == "PM" %}
+      checked
+    {% endif %}> PM
+  <input type="radio" name="startAmPm" value="AM"
+    {% if editable.time_of_event|date("A", "America/New_York") == "AM" %}
+      checked
+    {% endif %}> AM
+  <br>
+  <input type="hidden" name="eventId" value="{{ node.id }}">
+  <input type="hidden" name="isCloningEvent" value="1">
+  <input type="submit" value="clone event">
+</form>
+<h2>Add new date clone range for event:</h2>
+<form action="/edit_event" method="post">
+  <span>Range: </span><input type="date" name="dateBegin" min="{{ "now"|date("Y-m-d", "America/New_York") }}" required>
+   - <input type="date" name="dateEnd" min="{{ "now"|date("Y-m-d", "America/New_York") }}" required><br>
+  <span>Start time: </span><input type="number"
+    name="startHour" value="{{ editable.time_of_event|date("g", "America/New_York") }}"
+    min="1" max="12" style="width:40px;" required> : 
+  <input type="number" name="startMinute"
+    value="{{ editable.time_of_event|date("i", "America/New_York") }}"
+    min="0" max="59" style="width:40px;">
+  <input type="radio" name="startAmPm" value="PM"
+    {% if editable.time_of_event|date("A", "America/New_York") == "PM" %}
+      checked
+    {% endif %}> PM
+  <input type="radio" name="startAmPm" value="AM"
+    {% if editable.time_of_event|date("A", "America/New_York") == "AM" %}
+      checked
+    {% endif %}> AM
+  <br>
+  <input type="hidden" name="eventId" value="{{ node.id }}">
+  <input type="hidden" name="isCloningEventRange" value="1">
+  <input type="submit" value="clone event to range">
+</form>

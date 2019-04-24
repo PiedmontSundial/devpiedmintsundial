@@ -1,0 +1,56 @@
+<?php
+
+
+
+function sundial_new_event_module_theme($existing, $type, $theme, $path) {
+
+	return [
+	
+		'sundial_add_event'=>[
+			'variables' => ['venues' => NULL, 'performers' => NULL,
+				'event_types' => NULL, 'newVenueId' => NULL,
+				'newPerformerId' => NULL, 'venueId' => NULL],
+			'template' => 'sundial-add-event',
+			
+		],
+		
+		'show_provs'=>[
+			'variables' => ['objects' => NULL,],
+			'template' => 'show-provs',
+			
+		],
+		
+		'edit_event'=>[
+			'variables' => ['node' => NULL, 'editable' => NULL, 'performers' => NULL,
+				'venues' => NULL, 'tags' => NULL, 'databasePerformers' => NULL,
+				'databaseVenue' => NULL, 'databaseCost' => NULL,
+				'databaseCostRange' => NULL, 'dateClones' => NULL,],
+			'template' => 'edit-event',
+			
+		],
+		
+		'quick_add_venue'=>[
+			'variables' => ['dbEntryId' => NULL, 'node' => NULL,
+				'name' => NULL, 'cities' => NULL,],
+			'template' => 'quick-add-venue',
+			
+		],
+		
+		'quick_add_performer'=>[
+			'variables' => ['dbEntryId' => NULL, 'node' => NULL,
+				'name' => NULL, 'venueId' => NULL,],
+			'template' => 'quick-add-performer',
+			
+		],
+		
+		'list_upcoming_unpublished_events'=>[
+			'variables' => ['events' => NULL,],
+			'template' => 'list-upcoming-unpublished-events',
+			
+		],
+		
+	];
+
+}
+
+?>

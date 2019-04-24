@@ -1,0 +1,5 @@
+name: venue_read_module
+description: 'A module to build venues from an xml doc'
+package: Custom
+type: module
+core: 8.x

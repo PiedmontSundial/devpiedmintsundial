@@ -1,0 +1,23 @@
+send_form:
+  path: '/send_form'
+  defaults:
+    _controller: '\Drupal\form_test\Controller\FormTestController::sendForm'
+    _title: 'Send Form'
+  requirements:
+    _permission: 'access content'
+
+get_form:
+  path: '/get_form'
+  defaults:
+    _controller: '\Drupal\form_test\Controller\FormTestController::getForm'
+    _title: 'Get Form'
+  requirements:
+    _permission: 'access content'
+
+call_data:
+  path: '/call_data'
+  defaults:
+    _controller: '\Drupal\form_test\Controller\FormTestController::callData'
+    _title: 'Call Data'
+  requirements:
+    _permission: 'access content'

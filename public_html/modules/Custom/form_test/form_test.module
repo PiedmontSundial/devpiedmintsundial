@@ -1,0 +1,28 @@
+<?php
+
+
+
+function form_test_theme($existing, $type, $theme, $path) {
+
+	return [
+	
+		'send_form'=>[
+			'template' => 'send-form',
+		],
+		
+		'get_form'=>[
+			'variables' => ['objects' => NULL,],
+			'template' => 'get-form',
+		],
+		
+		'call_data'=>[
+			'variables' => ['objects' => NULL,],
+			'template' => 'call-data',
+		],
+		
+	];
+
+
+}
+
+?>

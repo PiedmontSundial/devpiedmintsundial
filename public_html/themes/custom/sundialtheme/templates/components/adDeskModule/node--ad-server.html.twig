@@ -1,0 +1,366 @@
+
+<article>
+
+	<div class="ad-carousel-box" id="AdBoxServer{{ node.id }}">
+	
+	{% set isAdvertisingManager = 0 %}
+	{% for role in user.roles %}
+	  {% if role == 'advertising_manager' %}
+	    {% set isAdvertisingManager = 1 %}
+      {% endif %}	
+	{% endfor %}
+	
+		<script>
+		
+			var isAdvertisingManager = {{ isAdvertisingManager }};
+		
+			var managmentURL{{node.id}} = "{{file_url("ad_desk_calendar")}}?serverID={{node.id}}";
+		
+		</script>
+		
+		<script>
+		
+		
+			function loadAjax{{ node.id }}(url, callback) {
+					var xhttp;
+					if (window.XMLHttpRequest) {
+						xhttp = new XMLHttpRequest();
+					} else {
+						// code for IE6, IE5
+						xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					xhttp.onreadystatechange = function() {
+					if (xhttp.readyState == 4 && xhttp.status == 200) {
+					
+					var texto = xhttp.responseText;
+					
+					callback(texto);
+					
+					}
+				};
+					xhttp.open("GET", url, true);
+					xhttp.send();
+				}
+		
+			function updateAd{{ node.id }}(texto) {
+				
+				if (texto) {
+				
+					document.getElementById("AdBox{{ node.id }}").innerHTML = texto;
+				
+				}
+				
+				
+			}
+		
+		</script>
+		
+		
+		
+		<div id="AdBox{{ node.id }}" style="height:100%;width:100%;">
+			<form id="VariablesForAdBox{{ node.id }}">
+				<input type="hidden" name="adBoxHandle" id="adBoxHandle" value="AdBox{{ node.id }}">
+				<input type="hidden" name="adLoaderId" value="0">
+				<input type="hidden" name="adServerLogId" value="0">
+				<input type="hidden" name="adLoaderLogId" value="0">
+				<input type="hidden" name="isPopulated" value="0">
+				<input type="hidden" name="newOrder" value="0">
+				<input type="hidden" name="orderIndex" value="0">
+				<input type="hidden" name="orderCount" value="0">
+			</form>
+		</div>
+		
+		
+		
+		
+		<script>
+			var deviceType = '';
+				
+				if (navigator.userAgent.match(/mobile/i)) {
+				
+					deviceType = "Mobile";
+				
+				} else if (navigator.userAgent.match(/iPad|Android|Touch/i)) {
+				
+					deviceType = "Tablet";
+				
+				} else {
+				
+					deviceType = "Desktop/Laptop";
+				
+				}
+				
+				var theURL = location.href;
+				
+				var initialTime = Math.floor(Date.now() / 1000);
+				
+				var browserType = "";
+
+				if (navigator.userAgent.match(/firefox/i)) {
+
+					browserType = "Firefox";
+
+				} else if (navigator.userAgent.match(/edge/i)) {
+
+					browserType = "Microsoft Edge";
+
+				} else if (navigator.userAgent.match(/safari/i)) {
+
+					if (!!window.chrome) {
+					
+						if (!!window.opr) {
+						
+							browserType = "Opera";
+						
+						} else {
+						
+							browserType = "Chrome";
+						
+						}
+					
+					} else {
+					
+						browserType = "Safari";
+					
+					}
+
+				} else {
+
+					if (!!document.documentMode) {
+						
+						browserType = "Internet Explorer";
+						
+					} else {
+						
+						browserType = "Other";
+						
+					}
+			
+				}//close
+				
+			 
+			var adBoxHandle = "AdBox{{ node.id }}";
+			
+			//loadAjax{{ node.id }}("{{ file_url("ad_desk_ad_initializer")}}?adServer={{ node.id }}&adBoxHandle=" + adBoxHandle + "&isAdvertisingManager=" + isAdvertisingManager + "&managmentURL=" + managmentURL{{node.id}} + "&nodeID={{node.id}}", updateAd{{ node.id }});
+			
+			loadAjax{{ node.id }}("{{ file_url("ad_desk_ad_initializer")}}?adServer={{ node.id }}&adBoxHandle=" + adBoxHandle + "&isAdvertisingManager=" + isAdvertisingManager + "&managmentURL=" + managmentURL{{node.id}} + "&nodeID={{node.id}}" + "&deviceType=" + deviceType + "&theURL=" + theURL + "&initialTime=" + initialTime + "&browserType=" + browserType, updateAd{{ node.id }});
+			
+		</script>
+		
+		
+		
+		<script>
+				
+				function ticUp{{ node.id }}() {
+				
+					var formObj = document.getElementById("VariablesForAdBox{{ node.id }}");
+					
+					var adBoxHandle = formObj.adBoxHandle.value;
+					var adLoaderId = formObj.adLoaderId.value;
+					var adServerLogId = formObj.adServerLogId.value;
+					var adLoaderLogId = formObj.adLoaderLogId.value;
+					var isPopulated = Number(formObj.isPopulated.value);
+					var newOrder = formObj.newOrder.value;
+					var orderIndex = formObj.orderIndex.value;
+					var orderCount = formObj.orderCount.value;
+					
+					initialTime = Math.floor(Date.now() / 1000);
+					
+					
+					if (isPopulated) {
+					
+						//alert(adBoxHandle + " " + adLoaderId + " " + adServerLogId + " " + adLoaderLogId + " " + isPopulated + " " + newOrder + " " + orderIndex + " " + orderCount + " " + initialTime);
+						
+						loadAjax{{ node.id }}("{{ file_url("ad_desk_ad_updater")}}?adBoxHandle=" + adBoxHandle + "&adLoaderId=" + adLoaderId + "&adServerLogId=" + adServerLogId + "&adLoaderLogId=" + adLoaderLogId + "&nodeID={{node.id}}" + "&isAdvertisingManager=" + isAdvertisingManager + "&managmentURL=" + managmentURL{{node.id}} + "&newOrder=" + newOrder + "&orderIndex=" + orderIndex + "&orderCount=" + orderCount + "&theURL=" + theURL + "&deviceType=" + deviceType + "&browserType=" + browserType + "&initialTime=" + initialTime, updateAd{{ node.id }});
+							//alert('yeet');
+					}
+					
+					//alert('yeet');
+					
+				}
+				
+				var adTime{{node.id}} = setInterval(ticUp{{ node.id }}, 4000);
+				
+				function clickAjax{{node.id}}(url) {
+				
+					var xhttp;
+					if (window.XMLHttpRequest) {
+						xhttp = new XMLHttpRequest();
+					} else {
+						// code for IE6, IE5
+						xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					
+					xhttp.open("GET", url, true);
+					xhttp.send();
+				
+				}
+				
+				
+				var clicks{{node.id}} = "";
+
+				function clickCapture{{node.id}}() {
+
+					clicks{{node.id}} += Math.floor(Date.now() / 1000) + "-";
+					
+					var formObj = document.getElementById("VariablesForAdBox{{ node.id }}");
+					
+					var adLoaderLogId = formObj.adLoaderLogId.value;
+					
+					//alert(adLoaderLogId);
+
+					//alert(clicks);
+					
+					clickAjax{{node.id}}("{{ file_url("ad_desk_click_capture")}}?clicks=" + clicks{{node.id}} + "&adLoaderLogId=" + adLoaderLogId);
+	
+
+				}
+				
+			//Viewport stuff
+			
+			function viewportAjax{{node.id}}(url) {
+				
+					var xhttp;
+					if (window.XMLHttpRequest) {
+						xhttp = new XMLHttpRequest();
+					} else {
+						// code for IE6, IE5
+						xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					
+					xhttp.open("GET", url, true);
+					xhttp.send();
+				
+			}
+			
+			var viewportCount{{node.id}} = 0;
+				
+			function viewportCheck{{node.id}}() {
+			
+				var screenTop = 0;
+        	
+				var screenBottom = window.innerHeight;
+				
+				var boxTop = outerShell{{node.id}}.getBoundingClientRect().top;
+				
+				var boxBottom = outerShell{{node.id}}.getBoundingClientRect().bottom;
+				
+				var boxHeight = outerShell{{node.id}}.getBoundingClientRect().height;
+				
+				/*
+				var boxTop = adBoxServer{{node.id}}.getBoundingClientRect().top;
+			
+				var boxBottom = adBoxServer{{node.id}}.getBoundingClientRect().bottom;
+				
+				var boxHeight = adBoxServer{{node.id}}.getBoundingClientRect().height;
+				*/
+				if (boxTop > screenTop) {
+        
+					if (boxBottom < screenBottom) {
+
+						viewportCount{{node.id}}++;
+                
+					} else if (boxTop < screenBottom) {
+            
+						var percent = (screenBottom - boxTop) / boxHeight;
+
+						if (percent >= .6) {
+						
+							viewportCount{{node.id}}++;
+						
+						}
+            
+					}
+        
+        
+				} else if (boxBottom > screenTop) {
+        
+					var percent = (boxBottom - screenTop) / boxHeight;        
+
+					if (percent >= .6) {
+						
+						viewportCount{{node.id}}++;
+						
+					}
+					
+        
+				} //else if
+				
+				
+			
+				
+				var formObj = document.getElementById("VariablesForAdBox{{ node.id }}");
+					
+				var adLoaderLogId = formObj.adLoaderLogId.value;
+				
+				viewportAjax{{node.id}}("{{ file_url("ad_desk_viewport_capture")}}?viewportCount=" + viewportCount{{node.id}} + "&adLoaderLogId=" + adLoaderLogId);
+				
+			
+				
+			}
+		
+			var viewCheck{{node.id}} = setInterval(viewportCheck{{node.id}}, 1000);
+				
+			
+			//Hover stuff
+			
+			function hoverAjax{{node.id}}(url) {
+				
+					var xhttp;
+					if (window.XMLHttpRequest) {
+						xhttp = new XMLHttpRequest();
+					} else {
+						// code for IE6, IE5
+						xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+					}
+					
+					xhttp.open("GET", url, true);
+					xhttp.send();
+				
+			}
+			
+			var hoverCount{{node.id}} = 0;
+		
+			var hoverCounterGo{{node.id}};
+		
+			function startHover{{node.id}}() {
+				
+				hoverCounterGo{{node.id}} = setInterval(hoverCounter{{node.id}}, 1000);
+				
+			}
+		
+			function hoverCounter{{node.id}}() {
+				
+				hoverCount{{node.id}}++;
+				
+				//document.getElementById("adVisOne{{node.id}}").innerHTML = hoverCount{{node.id}};
+				
+			}
+			
+			function endHover{{node.id}}() {
+				
+				clearInterval(hoverCounterGo{{node.id}});
+				
+				//This line would AJAX off the content of hoverCount.
+				
+				var formObj = document.getElementById("VariablesForAdBox{{ node.id }}");
+					
+				var adLoaderLogId = formObj.adLoaderLogId.value;
+				
+				if (hoverCount{{node.id}} < 30) {
+				
+					hoverAjax{{node.id}}("{{ file_url("ad_desk_hover_capture")}}?hoverCount=" + hoverCount{{node.id}} + "&adLoaderLogId=" + adLoaderLogId);
+				}
+				
+				hoverCount{{node.id}} = 0;
+				
+			}
+			
+				
+		</script>
+ 	</div>	
+	
+	<!-- For testing only-->
+	<!--<div stlye="z-index:3" id="adVisOne{{node.id}}"></div> -->
+	
+</article>

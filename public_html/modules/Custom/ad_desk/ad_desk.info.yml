@@ -1,0 +1,5 @@
+name: ad_desk
+type: module
+description: 'This is the complete ad manager'
+package: Custom
+core: 8.x

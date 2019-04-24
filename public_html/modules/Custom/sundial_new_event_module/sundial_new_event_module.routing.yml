@@ -1,0 +1,42 @@
+create_event:
+  path: '/create_event'
+  defaults:
+    _controller: '\Drupal\sundial_new_event_module\Controller\SundialNewEventModuleController::createEvent'
+    _title: 'Create Event'
+  requirements:
+    _permission: 'access content'
+show_provs:
+  path: '/show_provs'
+  defaults:
+    _controller: '\Drupal\sundial_new_event_module\Controller\SundialNewEventModuleController::showProvs'
+    _title: 'Show Provs'
+  requirements:
+    _permission: 'access content'
+edit_event:
+  path: '/edit_event'
+  defaults:
+    _controller: '\Drupal\sundial_new_event_module\Controller\SundialNewEventModuleController::editEvent'
+    _title: 'Edit Event'
+  requirements:
+    _permission: 'access content'
+quick_add_new_venue:
+  path: '/quick_add_new_venue'
+  defaults:
+    _controller: '\Drupal\sundial_new_event_module\Controller\SundialNewEventModuleController::quickAddNewVenue'
+    _title: 'Quick Add New Venue'
+  requirements:
+    _permission: 'access content'
+quick_add_new_performer:
+  path: '/quick_add_new_performer'
+  defaults:
+    _controller: '\Drupal\sundial_new_event_module\Controller\SundialNewEventModuleController::quickAddNewPerformer'
+    _title: 'Quick add new performer'
+  requirements:
+    _permission: 'access content'
+list_upcoming_unpublished_events:
+  path: '/list_upcoming_unpublished_events'
+  defaults:
+    _controller: '\Drupal\sundial_new_event_module\Controller\SundialNewEventModuleController::listUpcomingUnpublishedEvents'
+    _title: 'List Upcoming Unpublished Events'
+  requirements:
+    _permission: 'access content'

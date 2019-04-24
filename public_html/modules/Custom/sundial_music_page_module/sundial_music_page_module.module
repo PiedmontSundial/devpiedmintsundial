@@ -1,0 +1,20 @@
+<?php
+
+
+
+function sundial_music_page_module_theme($existing, $type, $theme, $path) {
+
+	return [
+	
+		'sundial_music_page'=>[
+			'variables' => ['nodes' => NULL],
+			'template' => 'sundial-music-page',
+			
+		],
+		
+	];
+
+
+}
+
+?>

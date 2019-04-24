@@ -1,0 +1,686 @@
+<article>
+	<div style="position:absolute;top:80px;width:100%;">
+		<div class="container" style="margin-bottom: 30px;">
+			<div class="date-bar clearfix">
+				<span class="float-left">Real News For North Carolina</span>
+				<span class="float-right">
+					{{ "now"|date("D, F j Y") }}
+				</span>
+			</div>
+			
+			<style>
+			
+				.normy {
+				
+					overflow:hidden;
+				
+				}
+			
+				.selecty{
+				
+					overflow:hidden;
+					
+					background-color:#00FFFF;
+				
+				
+				}
+			
+			</style>
+			
+			<div style="border-bottom: solid 1px #dedede">
+				<img src="/themes/custom/sundialtheme/images/Sundial_logo_banner.png" style="width: 100%;height: auto;margin-bottom: 1rem;">
+			</div>
+			
+			<div class="ad-manager-title">
+				Update Carousel
+			</div>
+			
+			<div>
+				
+				<p id="status" style="font-family:roboto slab;"></p>
+				
+				<script>
+					
+					//var carouselLength = 0;
+					//document.getElementById("status").innerHTML = "The carousel contains " + carouselLength + " ads.";
+				</script>
+				
+				
+				<div style="font-family:roboto slab;">
+					Carousel contains:
+						<ol id="adList"></ol>
+				</div>
+				
+				<br>
+				
+				<div style="font-family:roboto slab;">Choose Ad for Carousel</div>
+			
+				<select id='adSelector'>
+					{% set adTitlesCount = adTitles|length - 1 %}
+					{% set adIDsCount = adIDs|length - 1 %}
+					{% for i in 0..adTitlesCount %}
+						<option class="adOption" value ='{{ adIDs[i] }}'>{{ adTitles[i] }}</option>
+					{% endfor %}
+				</select>
+				
+				<br>
+				<br>
+			
+				<div style="font-family:roboto slab;">Set Duration</div>
+			
+				<input type="number" id="duration">
+				
+				<br>
+				<br>
+			
+				<img src="/themes/custom/sundialtheme/images/Add_Carousel.png" class="social-links" onclick="addAd()" title="Add Ad to Carousel" style="float: left;">
+				
+				<br>
+				<br>
+				<br>
+				
+				<span>
+					<img src="/themes/custom/sundialtheme/images/Return.png" class="social-links" onclick="returno()" title="Return to Scheduler" style="float: left;">
+					<img src="/themes/custom/sundialtheme/images/Submit_Carousel.png" class="social-links" onclick="submitCarousel()" title="Submit Carousel" style="float: left;">
+					<img src="/themes/custom/sundialtheme/images/Remove_From_Carousel.png" class="social-links" onclick="removeo()" title="Remove Selected Ads from Carousel" style="float: left;">
+					<img src="/themes/custom/sundialtheme/images/Always_1st.png" class="social-links" onclick="firstFixing()" title="Set first selected as always first" style="float: left;">
+					<img src="/themes/custom/sundialtheme/images/Remove_Always_1st.png" class="social-links" onclick="removeFirstFixed()" title="Remove always first" style="float: left;">
+					<img src="/themes/custom/sundialtheme/images/Always_2nd.png" class="social-links" onclick="secondFixing()" title="Set first selected as always second" style="float: left;">
+					<img src="/themes/custom/sundialtheme/images/Remove_Always_2nd.png" class="social-links" onclick="removeSecondFixed()" title="Remove always second" style="float: left;">
+				</span>
+				{#
+				<p id="testo"></p> 
+				
+				<p id="twesto"></p>
+				#}
+		
+				<script>
+				
+					var timestamp = {{timestamp}};
+					
+					var serverIDNumber = "{{serverIDNumber}}";
+					
+					var serverID = "{{serverIDNumber}}";
+					
+					var carouselAdIDs = "{{carouselAdIDs}}";
+					
+					var carouselAdDurations = "{{carouselAdDurations}}";
+					
+					var firstFixed = {{firstFixed}};
+					
+					var secondFixed = {{secondFixed}}; 
+					
+					var adStuff = "{{adList}}";
+					
+					var adStuffSplit = adStuff.split("^^^");
+					
+					
+					for (i = 0; i < adStuffSplit.length - 1; i++) {
+					
+					
+						document.getElementById("adList").innerHTML += '<li class="normy" onclick="selecto(this)">' + adStuffSplit[i] + '</li>';
+					
+					}
+					
+					
+					
+					function addAd() {
+					
+						var durVal = document.getElementById("duration").value;
+						
+						
+						if(durVal) {
+							
+							if (durVal >= 4) {
+						
+								if (durVal <= 24) {
+								
+									var remainder =  durVal % 4;
+									
+									if (!remainder) {
+									
+										var sum = 0;
+										
+										var durations = carouselAdDurations.split("-");
+										
+										if (durations[0]) {
+										
+											for (i = 0; i < durations.length - 1; i++) {
+											
+												sum = parseInt(sum) + parseInt(durations[i]);
+											
+											}
+										
+										}
+										
+										
+										
+										sum = parseInt(sum) + parseInt(durVal);
+										
+										
+										if (sum <= 30) {
+										
+											var adVal = document.getElementById("adSelector").value;
+											var adOptions = document.getElementsByClassName("adOption");
+											
+											var adName = '';
+											
+											for (i = 0; i < adOptions.length; i++) {
+													
+													if (adOptions[i].value == adVal) {
+														
+															adName = adOptions[i].innerHTML;
+														
+													}
+												}
+											
+											var adCheck = document.getElementById("adList").innerHTML.indexOf(adName);
+											
+											if (adCheck == -1) {
+											
+												
+												carouselAdIDs += document.getElementById("adSelector").value + "-";
+												carouselAdDurations += durVal + "-";
+												//carouselLength++;
+												//document.getElementById("status").innerHTML = "The carousel contains " + carouselLength + " ads.";
+												document.getElementById("duration").value = " ";
+												
+												//document.getElementById("testo").innerHTML = carouselAdIDs;
+												//document.getElementById("twesto").innerHTML = carouselAdDurations;
+												
+												//var adVal = document.getElementById("adSelector").value;
+												var adOptions = document.getElementsByClassName("adOption");
+												
+												for (i = 0; i < adOptions.length; i++) {
+													if (adOptions[i].value == adVal) {
+														document.getElementById("adList").innerHTML += '<li class="normy" onclick="selecto(this)">' + adOptions[i].innerHTML + ' - ' + durVal +' seconds</li>';
+													}
+												}
+											
+											
+											
+											} else {
+											
+											
+												alert("This ad is already in the carousel.");
+												
+												document.getElementById("duration").value = " ";
+											
+											
+											}
+						
+											
+						
+										} else {
+						
+											alert("Total durations exceed 30s cap");
+											
+											document.getElementById("duration").value = " ";
+						
+										}
+									
+									
+									} else {
+									
+										alert('Durations must be in multiples of 4.');
+										
+										document.getElementById("duration").value = " ";
+									
+									}
+								
+								
+								} else {
+								
+									alert("Max duration is 24 seconds.");
+								
+									document.getElementById("duration").value = " ";
+								
+								}
+						
+							} else {
+							
+								alert('Minimum duration is 4 seconds.');
+								
+								document.getElementById("duration").value = " ";
+								
+							
+							}
+						
+							
+							
+						} else {
+						
+							alert('You must set a Duration');
+						}
+						
+					} //end function
+					
+					function submitCarousel() {
+					
+						var carouselLength = document.getElementById("adList").childElementCount;
+						
+						if (carouselLength < 2) {
+						
+							alert('The Carousel must contain at least 2 Ads');
+							
+						} else  {
+						
+							var selecten = "{{selecten}}";
+							
+							
+							
+							carouselAjax("{{file_url("ad_desk_update_carousel_handler")}}", carouselDone, selecten, serverIDNumber, carouselAdIDs, carouselAdDurations, firstFixed, secondFixed);
+						}
+					} //end
+					
+					function carouselAjax(url, callback, selecten, serverIDNumber, carouselAdIDs, carouselAdDurations, firstFixed, secondFixed) {
+						var xhttp;	
+						if (window.XMLHttpRequest) {
+							xhttp = new XMLHttpRequest();
+						} else {
+							xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+						}
+						xhttp.onreadystatechange = function() {
+							if (xhttp.readyState == 4 && xhttp.status == 200) {
+								var text = xhttp.responseText;
+								callback(text);
+							}
+						};
+						
+						xhttp.open("POST", url, true);
+						xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+						xhttp.send("selecten=" + selecten + "&serverIDNumber=" + serverIDNumber + "&carouselAdIDs=" + carouselAdIDs + "&carouselAdDurations=" + carouselAdDurations + "&firstFixed=" + firstFixed + "&secondFixed=" + secondFixed);
+					} //end function
+					
+					function carouselDone(text) {
+						alert(text);
+						
+						 returno();
+						
+						
+						
+					}
+					
+					function returno() {
+					
+						 var formy = document.createElement("form");
+            
+						  formy.setAttribute("action", "{{ file_url("ad_desk_scheduler") }}");
+						  formy.setAttribute("method", "post");
+            
+						  var worth = document.createElement("input");
+						  worth.setAttribute("type", "hidden");
+						  worth.setAttribute("name", "timestamp");
+						  worth.setAttribute("value", timestamp);
+						  formy.appendChild(worth);
+          
+          
+						  var otherWorth = document.createElement("input");
+						  otherWorth.setAttribute("type", "hidden");
+						  otherWorth.setAttribute("name", "serverID");
+						  otherWorth.setAttribute("value", serverID);
+						  formy.appendChild(otherWorth);
+							
+						  document.body.appendChild(formy);
+						  formy.submit();
+					
+					}
+					
+					function selecto(item) {
+					
+						item.className = (item.className == "normy") ? "selecty" : "normy";
+					
+					}
+					
+					function removeo() {
+					
+						var selectos = document.getElementsByClassName("selecty");
+						
+						//So, we gather together the selected elements.
+						//We'll then iterate through them. 
+						//On each iteration, we'll grab all the ad options, 
+						//pull out their innerHTML, and see if there's a match.
+						//if so, we'll store the adID so we can cut it out of the 
+						//adIDs string. We'll then figure out how to pull out the corresponding part of the durations string. 
+						
+						
+						for (i = 0; i < selectos.length;) {
+						
+							var internals = selectos[i].innerHTML;
+							
+							var adOptions = document.getElementsByClassName("adOption");
+							
+							var adID = 0;
+							
+							for (j = 0; j < adOptions.length; j++) {
+							
+								var optionInternals = adOptions[j].innerHTML;
+								
+								var innerCheck = internals.indexOf(optionInternals);
+								
+								if (innerCheck > -1) {
+								
+									
+									adID = adOptions[j].value;
+									
+									var IDStrings = carouselAdIDs.split(adID + "-");
+									
+									//alert(IDStrings[0]);
+									
+									//alert(IDStrings[1]);
+									
+									if (IDStrings[0] && IDStrings[1]) {
+									
+										carouselAdIDs = IDStrings[0] + IDStrings[1];
+									
+									} else if (IDStrings[0]) {
+									
+										carouselAdIDs = IDStrings[0];
+									
+									} else {
+									
+										carouselAdIDs = IDStrings[1];
+									
+									}
+									
+									
+									var listies = document.getElementById("adList").children;
+									
+									var theIndex;
+									
+									for (k = 0; k < listies.length; k++) {
+									
+										if(listies[k].innerHTML == internals) {
+										
+											theIndex = k;
+										
+										}
+									
+									
+									}//k-loop
+									
+									var durations =  carouselAdDurations.split("-");
+									
+									carouselAdDurations = " ";
+									
+									for (l = 0; l < durations.length - 1; l++) {
+									
+										if(l != theIndex) {
+										
+											carouselAdDurations += durations[l] + "-";
+										
+										}
+									
+									}//l-loop
+									
+									
+									//document.getElementById("testo").innerHTML = carouselAdIDs;
+									//document.getElementById("twesto").innerHTML = carouselAdDurations;
+									
+									document.getElementById("adList").removeChild(selectos[i]);
+									
+								}//innerCheck
+								
+							
+							}//j-loop
+						
+						
+						}//i-loop
+						
+						var firstLook = 0;
+						
+						var secondLook = 0;
+						
+						var listies = document.getElementById("adList").children;
+						
+						for (i = 0; i < listies.length; i++) {
+						
+							var firstCheck = listies[i].innerHTML.indexOf(" - Always First");
+							
+							if(firstCheck > -1) {
+							
+								firstLook = 1;
+							
+							}
+							
+						}//i-loop
+						
+						for (i = 0; i < listies.length; i++) {
+						
+							var secondCheck = listies[i].innerHTML.indexOf(" - Always Second");
+							
+							if(secondCheck > -1) {
+							
+								secondLook = 1;
+							
+							}
+							
+						}//i-loop
+						
+						if(!secondLook) {
+						
+							removeSecondFixed();
+						
+						} 
+						
+						if (!firstLook) {
+						
+							removeFirstFixed();
+						
+						}
+					
+					
+					}//end function
+					
+					function firstFixing() {
+					
+						//alert(firstFixed);
+					
+						if (!firstFixed) {
+						
+							var selectos = document.getElementsByClassName("selecty");
+						
+							selectos[0].innerHTML += " - Always First" 
+							
+							
+							var adOptions = document.getElementsByClassName("adOption");
+							
+							
+							
+							for (i = 0; i < adOptions.length; i++) {
+							
+							
+								var nameCheck = selectos[0].innerHTML.indexOf(adOptions[i].innerHTML);
+							
+								
+								
+								if (nameCheck > -1) {
+								
+									firstFixed = adOptions[i].value;
+									
+									//alert(firstFixed);
+								
+								
+								}
+								
+								
+							}//i-loop
+							
+							
+							for (i = 0; i < selectos.length;) {
+							
+								selectos[i].className = "normy";
+							
+							
+							}
+							
+							
+							
+						
+						} else {
+						
+						
+							alert('An ad is already set to Always First');
+						
+						
+						}
+						
+						
+						
+					}//end function
+					
+					function removeFirstFixed() {
+					
+						firstFixed = 0;
+						
+						secondFixed = 0;
+						
+						var listies = document.getElementById("adList").children;
+						
+						for (i = 0; i < listies.length; i++) {
+						
+							var alwaysFirstCheck = listies[i].innerHTML.indexOf(" - Always First");
+							
+							if (alwaysFirstCheck > -1) {
+							
+								var amendedText = listies[i].innerHTML.split(" - Always First");
+								
+								listies[i].innerHTML = amendedText[0];
+							
+							
+							}
+						
+							var alwaysSecondCheck = listies[i].innerHTML.indexOf(" - Always Second");
+						
+							if (alwaysSecondCheck > -1) {
+							
+								var amendedText = listies[i].innerHTML.split(" - Always Second");
+								
+								listies[i].innerHTML = amendedText[0];
+							
+							
+							}
+						
+						}
+						
+						var selectos = document.getElementsByClassName("selecty");
+						
+						for (i = 0; i < selectos.length;) {
+							
+								selectos[i].className = "normy";
+							
+							
+							}
+						
+						
+					
+					}//end function
+					
+					function secondFixing() {
+					
+						if (firstFixed) {
+					
+							if(!secondFixed) {
+							
+								var selectos = document.getElementsByClassName("selecty");
+								
+								var firstCheck = selectos[0].innerHTML.indexOf(" - Always First");
+								
+								if (firstCheck == -1) {
+								
+									selectos[0].innerHTML += " - Always Second";
+									
+									var adOptions = document.getElementsByClassName("adOption");
+							
+							
+							
+									for (i = 0; i < adOptions.length; i++) {
+									
+									
+										var nameCheck = selectos[0].innerHTML.indexOf(adOptions[i].innerHTML);
+									
+										
+										
+										if (nameCheck > -1) {
+										
+											secondFixed = adOptions[i].value;
+											
+											//alert(firstFixed);
+										
+										
+										}
+										
+										
+									}//i-loop
+									
+									
+									for (i = 0; i < selectos.length;) {
+									
+										selectos[i].className = "normy";
+									
+									
+									}
+									
+								
+								
+								} else {
+								
+								
+									alert('This ad is already set to Always First.');
+								
+								}
+								
+							
+							
+							} else {
+							
+								alert('An ad is already set to Always Second');
+							
+							}
+						} else {
+						
+							alert('You cannot make an ad Always Second without making one Always First.');
+						
+						}
+					
+					}//end function
+					
+					function removeSecondFixed() {
+					
+						secondFixed = 0;
+						
+						var listies = document.getElementById("adList").children;
+						
+						for (i = 0; i < listies.length; i++) {
+						
+							var alwaysSecondCheck = listies[i].innerHTML.indexOf(" - Always Second");
+						
+							if (alwaysSecondCheck > -1) {
+							
+								var amendedText = listies[i].innerHTML.split(" - Always Second");
+								
+								listies[i].innerHTML = amendedText[0];
+							
+							
+							}
+						
+						}
+						
+						var selectos = document.getElementsByClassName("selecty");
+						
+						for (i = 0; i < selectos.length;) {
+							
+								selectos[i].className = "normy";
+							
+							
+							}
+					
+					}//end function
+					
+					
+					
+				</script>
+			</div>
+		</div>
+	</div>
+</article>

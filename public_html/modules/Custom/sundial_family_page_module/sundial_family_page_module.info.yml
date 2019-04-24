@@ -1,0 +1,5 @@
+name: sundial_family_page_module
+description: 'A module to allow for display of family friendly events and articles'
+package: Custom
+type: module
+core: 8.x

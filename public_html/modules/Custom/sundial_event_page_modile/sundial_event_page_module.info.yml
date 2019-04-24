@@ -1,0 +1,5 @@
+name: sundial_event_page_module
+description: 'A module to allow for date filtration of events'
+package: Custom
+type: module
+core: 8.x

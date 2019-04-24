@@ -1,0 +1,85 @@
+{%
+  set classes = [
+    'block',
+    'block-' ~ configuration.provider|clean_class,
+    'block-' ~ plugin_id|clean_class,
+  ]
+%}
+<div{{ attributes.addClass(classes) }}>
+  {{ title_prefix }}
+  {% if label %}
+  	<div class="block-header">
+    	<div class="block-title">{{ label }}</div>
+	</div>
+  {% endif %}
+  {{ title_suffix }}
+  
+  {% block content %}
+    <div class="block-body block">
+		<div class="item-list pt-2">
+			<ul class="list-unstyled row">
+				<li class="mb-2 col-6">
+					<div class="img-thumbnail mb-2 shadow" tabindex="-1">
+						<a href="/art-list" class="img-container">
+							<img src="/themes/custom/sundialtheme/images/temp/arts.jpg" width="960" height="540" alt="Arts Place Holder" typeof="foaf:Image" class="img-fluid">
+              <div class='img-credit' onclick="window.open('http://delta.piedmontsundial.com/credits','_blank');">
+                Art 1
+              </div>
+						</a>
+					</div>
+					<div class="h5 text-center" style="font-weight: 900;">
+						<a href="/art-list">
+							Arts
+						</a>
+					</div>
+				</li>
+				<li class="mb-2 col-6">
+					<div class="img-thumbnail mb-2 shadow" tabindex="-1">
+						<a href="/food-list" class="img-container">
+							<img src="/themes/custom/sundialtheme/images/temp/food.jpg" width="960" height="540" alt="Food Place Holder" typeof="foaf:Image" class="img-fluid">
+              <div class='img-credit' onclick="window.open('http://delta.piedmontsundial.com/credits','_blank');">
+                Food 1
+              </div>
+						</a>
+					</div>
+					<div class="h5 text-center" style="font-weight: 900;">
+						<a href="/food-list">
+							Food
+						</a>
+					</div>
+				</li>
+				<li class="mb-2 col-6">
+					<div class="img-thumbnail mb-2 shadow" tabindex="-1">
+						<a href="/music-list" class="img-container">
+							<img src="/themes/custom/sundialtheme/images/temp/music.jpg" width="960" height="540" alt="Music Place Holder" typeof="foaf:Image" class="img-fluid">
+              <div class='img-credit' onclick="window.open('http://delta.piedmontsundial.com/credits','_blank');">
+                Music 1
+              </div>
+						</a>
+					</div>
+					<div class="h5 text-center" style="font-weight: 900;">
+						<a href="/music-list">
+							Music
+						</a>
+					</div>
+				</li>
+				<li class="mb-2 col-6">
+					<div class="img-thumbnail mb-2 shadow" tabindex="-1">
+						<a href="/outside-list" class="img-container">
+							<img src="/themes/custom/sundialtheme/images/temp/outdoors.jpg" width="960" height="540" alt="Outdoors Place Holder" typeof="foaf:Image" class="img-fluid">
+              <div class='img-credit' onclick="window.open('http://delta.piedmontsundial.com/credits','_blank');">
+                Outdoor 1
+              </div>
+						</a>
+					</div>
+					<div class="h5 text-center" style="font-weight: 900;">
+						<a href="/outside-list">
+							Outdoors
+						</a>
+					</div>
+				</li>
+			</ul>
+		</div>
+	</div>
+  {% endblock %}
+</div>
